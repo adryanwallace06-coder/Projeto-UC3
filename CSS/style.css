@@ -1,0 +1,132 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html{
+    scroll-behavior: smooth;
+}
+
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f8f9fc;
+    color: #333;
+    line-height: 1.6;
+}
+
+
+.home{
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+nav img{
+    width:140px;
+    height: auto;
+}
+
+nav{
+    background-color: #ffffff;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    font-size: 20px;
+}
+
+nav ul{
+    display: flex;
+    justify-content: center;
+    list-style: none;
+}
+
+nav li{
+    margin: 0 20px;
+}
+
+nav a{
+    display: block;
+    text-decoration: none;
+    color: #333;
+    padding: 18px 0;
+    font-weight: bold;
+    transition: .3s;
+}
+
+nav a:hover{
+    color: #2d7ff9;
+}
+
+
+.hero{
+    margin: auto;
+    justify-content: space-between;
+    align-items: center;
+    gap: 60px;
+    padding: 80px 30px;
+}
+
+.hero p:first-child{
+    font-size: 20px;
+    color: #2d7ff9;
+    font-weight: bold;
+}
+
+.hero h1{
+    font-size: 48px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.hero p{
+    font-size: 18px;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.hero img{
+    width: 500px;
+    height: auto;
+}
+
+
+.baixa-app,
+.ver-planos{
+
+    padding: 15px 30px;
+    border-radius: 5px;
+    font-size: 18px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: .3s;
+
+}
+
+.baixa-app{
+
+    background: #2d7ff9;
+    color: white;
+}
+
+.baixa-app:hover{
+
+    background: #1b65d6;
+}
+
+.ver-planos{
+
+    background: white;
+    border: 2px solid #2d7ff9;
+    color: #2d7ff9;
+}
+
+.ver-planos:hover{
+
+    background: #2d7ff9;
+    color: white;
+}
