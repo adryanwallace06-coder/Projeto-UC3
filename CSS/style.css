@@ -5,7 +5,7 @@
 }
 
 html {
-    scroll-behavior: smooth;
+    scroll-behavior: smooth; 
 }
 
 body {
@@ -144,4 +144,189 @@ nav a:hover {
     color: #2d7ff9;
 }
 
+.planos {
+    background-color: #96dcff63;
+}
 
+.planos header p {
+    text-align: center;
+    padding: 10px;
+    color: #007EFF;
+    font-weight: bolder;
+    font-size: 19px;
+    padding: 20px;
+}
+
+.planos header h2 {
+    text-align: center;
+    font-size: 35px;
+}
+
+.planos .card {
+    display: flex;
+    flex-direction: row;
+   padding: 50px;
+    justify-content: center;
+    gap: 90px;
+    align-items: stretch;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+    font-weight: bolder;
+}
+
+.planos .card .card-basic{
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    text-align: center;
+    padding: 10px;
+    border-radius: 30px;
+    border: 1px solid black;
+}
+
+.planos .card .card-basic h3 {
+    font-size: 35px;
+    margin-bottom: -10px;
+    font-weight: bold;
+}
+
+.planos .card .card-basic span {
+    font-size: 50px;
+    font-weight: bold;
+}
+
+.planos .card .card-basic p {
+    font-size: 18px;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.planos .card .card-basic li {
+    font-size: 18px;
+} 
+
+.planos .card .card-basic button {
+    background-color: white;
+    color: #2d7ff9;
+    border: 2px solid #2d7ff9;
+    padding: 10px 20px;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 25px;
+    font-weight: bold;
+    margin-top: auto;
+    align-self: center; 
+}
+
+.planos .card .card-basic-mensal{
+    display: flex;
+    flex-direction: column;
+    background-color: #0069F2;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    border-radius: 30px;
+    border: 1px solid black;
+}
+
+.planos .card .card-basic-mensal h3 {
+    font-size: 35px;
+    margin-bottom: -10px;
+    font-weight: bold;
+}
+
+.planos .card .card-basic-mensal span {
+    font-size: 50px;
+    font-weight: bold;
+}
+
+.planos .card .card-basic-mensal p {
+    font-size: 18px;
+    margin-bottom: 5px;
+    font-weight: bold;;
+}
+
+.planos .card .card-basic-mensal li {
+    font-size: 18px;
+    text-shadow: 
+    -1px -1px 0 black,  
+     1px -1px 0 black,
+    -1px  1px 0 black,  
+     1px  1px 0 black;
+}
+
+.planos .card .card-basic-mensal button {
+    background-color: white;
+    color: #2d7ff9;
+    border: 2px solid #2d7ff9;
+    padding: 10px 20px;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 25px;
+    font-weight: bold;
+    margin-top: auto;
+    align-self: center; 
+}
+
+.planos .card .card-basic-anual{
+    display: flex;
+    flex-direction: column;
+    background-color: #27AE60;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    border-radius: 30px;
+    border: 1px solid black;
+}
+
+.planos .card .card-basic-anual p.popular {
+    background-color: #ffffff;
+    color: #27AE60;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 20px;
+}
+
+.planos .card .card-basic-anual h3 {
+    font-size: 35px;
+    margin-bottom: -10px;
+    font-weight: bold;
+}
+
+.planos .card .card-basic-anual span {
+    font-size: 50px;
+    font-weight: bold;
+}
+
+.planos .card .card-basic-anual p {
+    font-size: 18px;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.planos .card .card-basic-anual li {
+    font-size: 18px;
+    text-shadow: 
+    -1px -1px 0 black,  
+     1px -1px 0 black,
+    -1px  1px 0 black,  
+     1px  1px 0 black;
+}
+
+.planos .card .card-basic-anual button {
+    background-color: white;
+    color: #27AE60;
+    border: 2px solid #27AE60;
+    padding: 10px 20px;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 25px;
+    font-weight: bold;
+    margin-top: auto;
+    align-self: center; 
+}
