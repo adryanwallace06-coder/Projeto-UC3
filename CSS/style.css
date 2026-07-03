@@ -16,7 +16,7 @@ body {
 }
 
 nav img {
-    width: 140px;
+    width: 180px;
     height: auto;
 }
 
@@ -93,9 +93,10 @@ nav a:hover {
 }
 
 .hero-text p {
-    font-size: 18px;
+    font-size: 21px;
     color: #666;
     margin-bottom: 30px;
+    font-weight: bold;
 }
 
 .hero img {
@@ -171,6 +172,10 @@ nav a:hover {
     align-items: stretch;
 }
 
+.card {
+    
+}
+
 ul {
     list-style: none;
     padding: 0;
@@ -178,7 +183,7 @@ ul {
     font-weight: bolder;
 }
 
-.planos .card .card-basic{
+.planos .card .card-basic {
     display: flex;
     flex-direction: column;
     background-color: #ffffff;
@@ -186,7 +191,9 @@ ul {
     padding: 10px;
     border-radius: 30px;
     border: 1px solid black;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+
 
 .planos .card .card-basic h3 {
     font-size: 35px;
@@ -222,6 +229,12 @@ ul {
     align-self: center; 
 }
 
+.planos .card .card-basic button:hover {
+    border: 2px solid #90c8f5;
+    transform: scale(1.1);
+    transition: 0.4s;
+}
+
 .planos .card .card-basic-mensal{
     display: flex;
     flex-direction: column;
@@ -231,7 +244,9 @@ ul {
     padding: 10px;
     border-radius: 30px;
     border: 1px solid black;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+
 
 .planos .card .card-basic-mensal h3 {
     font-size: 35px;
@@ -272,6 +287,12 @@ ul {
     align-self: center; 
 }
 
+.planos .card .card-basic-mensal button:hover {
+    border: 2px solid #002b6b;
+    transform: scale(1.1);
+    transition: 0.4s;
+}
+
 .planos .card .card-basic-anual{
     display: flex;
     flex-direction: column;
@@ -281,7 +302,9 @@ ul {
     padding: 10px;
     border-radius: 30px;
     border: 1px solid black;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+
 
 .planos .card .card-basic-anual p.popular {
     background-color: #ffffff;
@@ -328,5 +351,78 @@ ul {
     font-size: 25px;
     font-weight: bold;
     margin-top: auto;
-    align-self: center; 
+    align-self: center;
+}
+
+.planos .card .card-basic-anual button:hover {
+    border: 2px solid #17462a;
+    transform: scale(1.1);
+    transition: 0.4s;
+}
+footer {
+    background-color: #0b1f3a;
+    color: #fff;
+    padding: 50px 30px;
+}
+ 
+.footer-container {
+    max-width: 1200px;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    justify-content: space-between;
+}
+ 
+.footer-logo img {
+    max-width: 400px;
+    height: auto;
+}
+ 
+.footer-links h3 {
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: #fff;
+}
+ 
+.footer-links ul {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 0;
+}
+ 
+.footer-links ul li a {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.65);
+    font-weight: normal;
+    font-size: 15px;
+    transition: .3s;
+}
+ 
+.footer-links ul li a:hover {
+    color: #2d7ff9;
+    padding-left: 4px;
+}
+ 
+.footer-contact h3 {
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: #fff;
+    font-style: normal;
+}
+ 
+.footer-contact p {
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 15px;
+    font-style: normal;
+    margin-bottom: 8px;
+}
+
+.footer-contact a{
+    color: rgba(255, 255, 255, 0.65);
+    text-decoration: underline;
+}
+.footer-contact a:hover{
+    color: #2d7ff9;
 }
