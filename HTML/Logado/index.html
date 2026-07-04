@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medica+ - Painel</title>
+    <link rel="stylesheet" href="../../CSS/style.css">
+</head>
+
+<body>
+
+    <nav>
+        <ul> <img src="../../img logo/img logo.png" alt="Logo Medica+">
+            <li><a href="logado.html" class="ativo">Início</a></li>
+            <li><a href="#monitoramento">Monitoramento</a></li>
+            <li><a href="#contatos">Contatos</a></li>
+            <li><a href="#suporte">Suporte Prioritário</a></li>
+            <li><a href="#">Perfil</a></li>
+        </ul>
+    </nav>
+
+    <main>
+
+        <section class="boas-vindas">
+
+            <div class="boas-vindas-text">
+                <h1>Olá, Maria! 👋</h1>
+
+                <p>
+                    Que bom te ver! Cuide todos os dias da sua saúde
+                    e da saúde de quem você ama.
+                </p>
+            </div>
+
+            <button class="Ver-perfil">Ver meu perfil ➡️</button>
+
+        </section>
+
+        <div class="cards">
+
+            <article class="card-picos">
+                <h3>Picos de pressão</h3>
+
+                <ul class="card-home">
+                    <li class="pico-alto">
+                        <span>📅 12/05/2026 11:30</span>
+                        <p class="tag tag-alto">Pico de pressão alta</p>
+                        <p class="valor">160/100 mmHg</p>
+                    </li>
+                    <li class="pico-baixo">
+                        <span>📅 14/05/2026 11:34</span>
+                        <p class="tag tag-baixo">Pico de pressão baixa</p>
+                        <p class="valor">70/40 mmHg</p>
+                    </li>
+                </ul>
+            </article>
+
+            <article class="card-contatos" id="contatos">
+                <h3>Contatos</h3>
+
+                <ul class="lista-contatos">
+                    <li><button type="button" class="btn-contato">🧑 Filha</button></li>
+                    <li><button type="button" class="btn-contato">🧑‍⚕️ Cuidador</button></li>
+                </ul>
+            </article>
+
+            <article class="card-suporte" id="suporte">
+                <h3>Suporte prioritário</h3>
+
+                <p>A próxima visita será em:</p>
+                <p class="proxima-visita">02/06/2026 <span>10:00</span></p>
+            </article>
+
+        </div>
+
+        <section class="monitoramento" id="monitoramento">
+
+            <header>
+                <h2>MONITORAMENTO</h2>
+                <p>Picos de Pressão</p>
+            </header>
+
+            <form class="filtros" id="filtrosForm">
+                <div class="filtro">
+                    <label for="periodoInicio">📅 Período</label>
+                    <input type="date" id="periodoInicio" name="inicio" value="2026-05-10">
+                    <span>–</span>
+                    <input type="date" id="periodoFim" name="fim" value="2026-05-16">
+                </div>
+
+                <p class="filtro-info">🕐 Última atualização: <strong>16/05/2026 12:00</strong></p>
+            </form>
+
+            <div class="chart-card">
+
+                <div class="legenda">
+                    <div class="legenda-item legenda-alto">
+                        <span>▲</span>
+                        <div>
+                            <h4>Muito alta</h4>
+                            <p>Risco de hipertensão</p>
+                        </div>
+                        <p class="faixa">&gt; 140 mmHg</p>
+                    </div>
+
+                    <div class="legenda-item legenda-normal">
+                        <span>✔</span>
+                        <div>
+                            <h4>Normal</h4>
+                            <p>Faixa ideal</p>
+                        </div>
+                        <p class="faixa">90–120 mmHg</p>
+                    </div>
+
+                    <div class="legenda-item legenda-baixo">
+                        <span>▼</span>
+                        <div>
+                            <h4>Muito baixa</h4>
+                            <p>Risco de hipotensão</p>
+                        </div>
+                        <p class="faixa">&lt; 60 mmHg</p>
+                    </div>
+                </div>
+
+                <canvas id="pressaoChart"
+                    aria-label="Gráfico da variação da pressão arterial de Maria entre 10 e 16 de maio de 2026"
+                    role="img"></canvas>
+
+                <ul class="badges">
+                    <li class="badge badge-alto">
+                        <span>01/05/2026 11:58</span>
+                        <p>Pico de pressão alta</p>
+                        <strong>160/100 mmHg</strong>
+                    </li>
+                    <li class="badge badge-baixo">
+                        <span>14/05/2026 15:34</span>
+                        <p>Pico de pressão baixa</p>
+                        <strong>70/40 mmHg</strong>
+                    </li>
+                    <li class="badge badge-alto">
+                        <span>17/05/2026 09:00</span>
+                        <p>Pico de pressão alta</p>
+                        <strong>170/110 mmHg</strong>
+                    </li>
+                </ul>
+
+            </div>
+
+            <p id="statusFiltro" role="status"></p>
+
+        </section>
+
+        <section>
+            <header>
+                <h2>Registro de humor</h2>
+            </header>
+
+            <form action=""></form>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="footer-container">
+
+            <div class="footer-logo">
+                <img src="../../img footer/img-footer.png" alt="Logo Footer">
+
+                <div class="social">
+                    <a href="#"><span></span></a>
+                    <a href="#"><span></span></a>
+                    <a href="#"><span></span></a>
+                </div>
+            </div>
+
+            <div class="footer-links">
+                <h3>Navegação</h3>
+
+                <ul>
+                    <li><a href="logado.html">Início</a></li>
+                    <li><a href="#monitoramento">Monitoramento</a></li>
+                    <li><a href="#contatos">Contatos</a></li>
+                    <li><a href="#suporte">Suporte Prioritário</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-links">
+                <h3>Suporte</h3>
+
+                <ul>
+                    <li><a href="#">Central de ajuda</a></li>
+                    <li><a href="#">Termos de uso</a></li>
+                    <li><a href="#">Política de privacidade</a></li>
+                </ul>
+            </div>
+
+            <address class="footer-contact">
+                <h3>Contato</h3>
+
+                <p><a href="medicamais@gmail.com">medicamais@gmail.com</a></p>
+                <p>(11) 99999-9999</p>
+                <p>São Paulo, SP</p>
+            </address>
+
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
+    <script src="script.js"></script>
+
+</body>
+
+</html>

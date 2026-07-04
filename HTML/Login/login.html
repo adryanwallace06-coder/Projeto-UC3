@@ -1,13 +1,185 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>Login Medica+</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Medica+ | Painel de Monitoramento</title>
+<meta name="description" content="Painel de monitoramento de saúde Medica+, com histórico de picos de pressão, contatos e suporte prioritário.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-    
-</body>
+
+<a class="skip-link" href="#conteudo-principal">Pular para o conteúdo principal</a>
+
+<!-- CABEÇALHO -->
+<header class="topbar">
+  <div class="topbar__inner">
+    <a class="brand" href="#" aria-label="Medica+, página inicial">
+      <span class="brand__icon" aria-hidden="true">💊</span>
+      <span class="brand__name">Medica<span class="brand__plus">+</span></span>
+    </a>
+
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mainNav" aria-label="Abrir menu de navegação">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="main-nav" id="mainNav" aria-label="Navegação principal">
+      <ul>
+        <li><a href="#conteudo-principal" class="is-active">Início</a></li>
+        <li><a href="#monitoramento">Monitoramento</a></li>
+        <li><a href="#contatos">Contatos</a></li>
+        <li><a href="#suporte">Suporte Prioritário</a></li>
+      </ul>
+    </nav>
+
+    <div class="user-chip">
+      <div class="user-chip__text">
+        <span class="user-chip__name">Maria da Silva</span>
+        <span class="user-chip__plan">Basic <span aria-hidden="true">▾</span></span>
+      </div>
+      <img class="user-chip__avatar" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Maria" alt="Foto de perfil de Maria da Silva">
+    </div>
+  </div>
+</header>
+
+<main id="conteudo-principal">
+
+  <!-- BOAS-VINDAS -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero__row">
+      <div>
+        <h1 id="hero-title">Olá, Maria! <span aria-hidden="true">👋</span></h1>
+        <p class="hero__subtitle">Que bom te ver! Cuide todos os dias da sua saúde e da saúde de quem você ama.</p>
+      </div>
+      <button class="btn btn--ghost" type="button" id="verPerfilBtn">
+        Ver meu perfil <span aria-hidden="true">→</span>
+      </button>
+    </div>
+
+    <!-- CARTÕES DE RESUMO -->
+    <div class="cards" role="list">
+
+      <article class="card card--mint" role="listitem" aria-labelledby="card-picos-title">
+        <h2 id="card-picos-title">Picos de pressão</h2>
+        <ul class="event-list">
+          <li class="event event--high">
+            <span class="event__icon" aria-hidden="true">📅</span>
+            <div class="event__body">
+              <span class="event__date">12/05/2026 &nbsp;11:30</span>
+              <span class="event__tag event__tag--high">Pico de pressão alta</span>
+              <span class="event__value">160/100 mmHg</span>
+            </div>
+          </li>
+          <li class="event event--low">
+            <span class="event__icon" aria-hidden="true">📅</span>
+            <div class="event__body">
+              <span class="event__date">14/05/2026 &nbsp;11:34</span>
+              <span class="event__tag event__tag--low">Pico de pressão baixa</span>
+              <span class="event__value">70/40 mmHg</span>
+            </div>
+          </li>
+        </ul>
+      </article>
+
+      <article class="card card--sky" id="contatos" role="listitem" aria-labelledby="card-contatos-title">
+        <h2 id="card-contatos-title">Contatos</h2>
+        <ul class="contact-list">
+          <li><button type="button" class="contact-btn"><span aria-hidden="true">🧑</span> Filha</button></li>
+          <li><button type="button" class="contact-btn"><span aria-hidden="true">🧑‍⚕️</span> Cuidador</button></li>
+        </ul>
+      </article>
+
+      <article class="card card--mint" id="suporte" role="listitem" aria-labelledby="card-suporte-title">
+        <h2 id="card-suporte-title">Suporte prioritário</h2>
+        <div class="next-visit">
+          <p>A próxima visita será em:</p>
+          <p class="next-visit__date">02/06/2026 <span class="next-visit__time">10:00</span></p>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- MONITORAMENTO -->
+  <section class="monitoring" id="monitoramento" aria-labelledby="monitoring-title">
+    <h2 id="monitoring-title">Monitoramento</h2>
+    <h3 class="monitoring__subtitle">Picos de pressão</h3>
+
+    <form class="filters" id="filtersForm">
+      <div class="filter">
+        <label for="periodoInicio"><span aria-hidden="true">📅</span> Período</label>
+        <div class="filter__range">
+          <input type="date" id="periodoInicio" name="inicio" value="2026-05-10">
+          <span aria-hidden="true">–</span>
+          <input type="date" id="periodoFim" name="fim" value="2026-05-16">
+        </div>
+      </div>
+      <div class="filter filter--static">
+        <span aria-hidden="true">🕐</span>
+        <span>Última atualização:<br><strong id="ultimaAtualizacao">16/05/2026 12:00</strong></span>
+      </div>
+    </form>
+
+    <div class="chart-card">
+      <div class="chart-card__legend" aria-hidden="false">
+        <div class="legend-item legend-item--high">
+          <span class="legend-item__icon">▲</span>
+          <div>
+            <strong>Muito alta</strong>
+            <span>Risco de hipertensão</span>
+          </div>
+          <div class="legend-item__range">&gt; 140 mmHg<br><span>Pressão alta (Hipertensão)</span></div>
+        </div>
+        <div class="legend-item legend-item--ok">
+          <span class="legend-item__icon">✔</span>
+          <div>
+            <strong>Normal</strong>
+            <span>Faixa ideal</span>
+          </div>
+          <div class="legend-item__range">90–120 mmHg<br><span>Ideal (Normal)</span></div>
+        </div>
+        <div class="legend-item legend-item--low">
+          <span class="legend-item__icon">▼</span>
+          <div>
+            <strong>Muito baixa</strong>
+            <span>Risco de hipotensão</span>
+          </div>
+          <div class="legend-item__range">&lt; 60 mmHg<br><span>Pressão baixa (Hipotensão)</span></div>
+        </div>
+      </div>
+
+      <div class="chart-card__canvas-wrap">
+        <canvas id="pressaoChart" role="img" aria-label="Gráfico de linha mostrando a variação da pressão arterial de Maria entre 10 e 16 de maio de 2026, com dois picos de pressão alta e um episódio de pressão baixa."></canvas>
+      </div>
+
+      <ul class="event-badges" id="eventBadges">
+        <li class="badge badge--high">
+          <span class="badge__date">01/05/2026 11:58</span>
+          <span class="badge__label">Pico de pressão alta</span>
+          <span class="badge__value">160/100 mmHg</span>
+        </li>
+        <li class="badge badge--low">
+          <span class="badge__date">14/05/2026 15:34</span>
+          <span class="badge__label">Pico de pressão baixa</span>
+          <span class="badge__value">70/40 mmHg</span>
+        </li>
+        <li class="badge badge--high">
+          <span class="badge__date">17/05/2026 09:00</span>
+          <span class="badge__label">Pico de pressão alta</span>
+          <span class="badge__value">170/110 mmHg</span>
+        </li>
+      </ul>
+    </div>
+
+    <p class="chart-status" id="chartStatus" role="status" aria-live="polite"></p>
+  </section>
+
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
 <script src="script.js"></script>
+</body>
 </html>
