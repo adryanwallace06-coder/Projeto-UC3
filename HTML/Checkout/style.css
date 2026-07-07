@@ -1,0 +1,264 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f8f9fc;
+    color: #333;
+    line-height: 1.6;
+    padding: 30px 16px;
+}
+
+.checkout {
+    max-width: 460px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 18px;
+    padding: 30px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+.voltar {
+    display: inline-block;
+    color: #2d7ff9;
+    text-decoration: none;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.voltar:hover {
+    text-decoration: underline;
+}
+
+.checkout h1 {
+    color: #0b1f3a;
+    font-size: 26px;
+    margin-bottom: 20px;
+}
+
+/* Resumo do plano */
+.resumo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #eef5ff;
+    border: 1px solid #cfe1ff;
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin-bottom: 24px;
+}
+
+.resumo-label {
+    font-size: 13px;
+    color: #666;
+}
+
+.resumo-plano {
+    font-size: 20px;
+    font-weight: bold;
+    color: #0b1f3a;
+}
+
+.resumo-preco {
+    font-size: 22px;
+    font-weight: bold;
+    color: #27AE60;
+    white-space: nowrap;
+}
+
+/* Métodos de pagamento */
+.metodos {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 22px;
+}
+
+.metodo {
+    flex: 1;
+    padding: 12px;
+    border: 2px solid #ddd;
+    background: #fff;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #555;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.metodo.ativo {
+    border-color: #2d7ff9;
+    color: #2d7ff9;
+    background: #eef5ff;
+}
+
+/* Formulários */
+.form-pagamento label {
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    color: #0b1f3a;
+    margin-bottom: 6px;
+    margin-top: 16px;
+}
+
+.form-pagamento input {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    outline: none;
+}
+
+.form-pagamento input:focus {
+    border-color: #2d7ff9;
+    box-shadow: 0 0 0 2px rgba(45, 127, 249, 0.2);
+}
+
+.linha-dupla {
+    display: flex;
+    gap: 14px;
+}
+
+.linha-dupla > div {
+    flex: 1;
+}
+
+.escondido {
+    display: none;
+}
+
+.btn-pagar {
+    display: block;
+    width: 100%;
+    text-align: center;
+    text-decoration: none;
+    margin-top: 24px;
+    background-color: #27AE60;
+    color: #fff;
+    border: none;
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color .2s;
+}
+
+.btn-pagar:hover {
+    background-color: #219150;
+}
+
+/* Mensagens */
+.mensagem {
+    font-size: 14px;
+    margin-top: 12px;
+    display: none;
+}
+
+.mensagem.mostrar {
+    display: block;
+}
+
+.mensagem.erro {
+    color: #e53935;
+}
+
+.mensagem.sucesso {
+    color: #2e7d32;
+}
+
+/* Pix */
+.pix-qr {
+    font-size: 120px;
+    text-align: center;
+    color: #0b1f3a;
+    line-height: 1;
+    margin: 10px 0 20px;
+}
+
+.pix-texto {
+    font-size: 14px;
+    color: #555;
+    text-align: center;
+    margin-bottom: 14px;
+}
+
+.pix-codigo {
+    display: flex;
+    gap: 8px;
+}
+
+.pix-codigo input {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #666;
+    outline: none;
+}
+
+.pix-codigo button {
+    padding: 0 18px;
+    border: none;
+    border-radius: 8px;
+    background: #2d7ff9;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.pix-codigo button:hover {
+    background: #1b65d6;
+}
+
+/* Overlay de sucesso */
+.overlay-sucesso {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    padding: 16px;
+    z-index: 50;
+}
+
+.overlay-sucesso.ativo {
+    display: flex;
+}
+
+.caixa-sucesso {
+    background: #fff;
+    border-radius: 18px;
+    padding: 36px 28px;
+    text-align: center;
+    max-width: 380px;
+    width: 100%;
+}
+
+.caixa-sucesso .check {
+    width: 74px;
+    height: 74px;
+    margin: 0 auto 18px;
+    border-radius: 50%;
+    background: #27AE60;
+    color: #fff;
+    font-size: 42px;
+    line-height: 74px;
+}
+
+.caixa-sucesso h2 {
+    color: #0b1f3a;
+    margin-bottom: 10px;
+}
+
+.caixa-sucesso p {
+    color: #555;
+    margin-bottom: 20px;
+}

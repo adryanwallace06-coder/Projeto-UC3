@@ -238,12 +238,12 @@ function formatarDataCurta(data) {
 
 /* --- "Banco de dados" falso, simulando o que viria do servidor --- */
 let dadosUsuario = {
-    nome: 'Maria da Silva',
-    email: 'maria.silva@email.com',
+    nome: 'Adryan Ernandes',
+    email: 'adryan@gmail.com',
     cpf: '123.456.789-00',
     telefone: '(11) 91234-5678',
     tipo: 'paciente',
-    plano: 'Basic +',
+    plano: 'Basic + Anual',
     foto: null // vai virar uma string base64 se o usuário enviar uma foto
 };
 
