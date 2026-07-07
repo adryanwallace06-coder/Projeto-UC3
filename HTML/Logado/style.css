@@ -86,10 +86,6 @@ nav a.ativo {
     border-bottom: 3px solid var(--azul);
 }
 
-/* ==========================================================
-   MAIN / BOAS-VINDAS
-   ========================================================== */
-
 main {
     max-width: 1200px;
     margin: 0 auto;
@@ -106,13 +102,13 @@ main {
 }
 
 .boas-vindas-text h1 {
-    font-size: 32px;
+    font-size: 36px;
     color: var(--cor-titulo);
     margin-bottom: 10px;
 }
 
 .boas-vindas-text p {
-    font-size: 16px;
+    font-size: 18px;
     color: var(--cor-texto);
     max-width: 500px;
 }
@@ -125,7 +121,7 @@ main {
     padding: 12px 22px;
     border-radius: 30px;
     cursor: pointer;
-    font-size: 15px;
+    font-size: 17px;
     transition: 0.3s;
     white-space: nowrap;
 }
@@ -135,10 +131,6 @@ main {
     color: #fff;
     border-color: var(--azul);
 }
-
-/* ==========================================================
-   GRID DOS 3 CARDS
-   ========================================================== */
 
 .cards {
     display: grid;
@@ -153,7 +145,7 @@ main {
 }
 
 .cards h3 {
-    font-size: 18px;
+    font-size: 20px;
     color: var(--cor-titulo);
     margin-bottom: 16px;
 }
@@ -176,7 +168,6 @@ main {
     }
 }
 
-/* Lista "Picos de pressão" */
 .card-home {
     list-style: none;
 }
@@ -194,14 +185,14 @@ main {
 
 .card-home span {
     display: block;
-    font-size: 13px;
+    font-size: 15px;
     color: var(--cor-texto);
     margin-bottom: 6px;
 }
 
 .card-home .valor {
     display: inline-block;
-    font-size: 20px;
+    font-size: 22px;
     font-weight: bold;
     color: var(--cor-titulo);
 }
@@ -211,15 +202,24 @@ main {
 }
 
 @keyframes pulso {
-    0%   { transform: scale(1); }
-    30%  { transform: scale(1.15); color: var(--azul); }
-    100% { transform: scale(1); }
+    0% {
+        transform: scale(1);
+    }
+
+    30% {
+        transform: scale(1.15);
+        color: var(--azul);
+    }
+
+    100% {
+        transform: scale(1);
+    }
 }
 
 .tag-alto,
 .tag-baixo {
     display: inline-block;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: bold;
     padding: 2px 8px;
     border-radius: 20px;
@@ -254,7 +254,6 @@ main {
     }
 }
 
-/* Card "Contatos" */
 .lista-contatos {
     list-style: none;
     display: flex;
@@ -268,7 +267,7 @@ main {
     border: none;
     border-radius: 30px;
     padding: 12px 20px;
-    font-size: 15px;
+    font-size: 17px;
     font-weight: bold;
     color: var(--cor-titulo);
     text-align: left;
@@ -281,9 +280,8 @@ main {
     color: #fff;
 }
 
-/* Card "Suporte prioritário" */
 .card-suporte p {
-    font-size: 15px;
+    font-size: 17px;
     color: var(--cor-texto);
 }
 
@@ -292,7 +290,7 @@ main {
     border-radius: 14px;
     padding: 16px;
     margin-top: 10px;
-    font-size: 18px;
+    font-size: 20px;
     font-weight: bold;
     color: var(--azul);
     text-align: center;
@@ -300,13 +298,9 @@ main {
 
 .proxima-visita span {
     display: block;
-    font-size: 16px;
+    font-size: 18px;
     margin-top: 4px;
 }
-
-/* ==========================================================
-   MONITORAMENTO
-   ========================================================== */
 
 .monitoramento {
     background-color: var(--verde-claro);
@@ -321,13 +315,13 @@ main {
 }
 
 .monitoramento header h2 {
-    font-size: 26px;
+    font-size: 29px;
     color: var(--cor-titulo);
     letter-spacing: 1px;
 }
 
 .monitoramento header p {
-    font-size: 15px;
+    font-size: 17px;
     color: var(--cor-texto);
     margin-top: 4px;
 }
@@ -348,7 +342,7 @@ main {
     background-color: #fff;
     border-radius: 30px;
     padding: 10px 18px;
-    font-size: 14px;
+    font-size: 16px;
 }
 
 .filtro label {
@@ -367,7 +361,7 @@ main {
     background-color: #fff;
     border-radius: 30px;
     padding: 10px 18px;
-    font-size: 14px;
+    font-size: 16px;
     color: var(--cor-texto);
 }
 
@@ -396,34 +390,52 @@ main {
 }
 
 .legenda-item span {
-    font-size: 20px;
+    font-size: 22px;
 }
 
 .legenda-item h4 {
-    font-size: 14px;
+    font-size: 16px;
     color: var(--cor-titulo);
 }
 
 .legenda-item p {
-    font-size: 12px;
+    font-size: 13px;
     color: var(--cor-texto);
 }
 
 .legenda-item .faixa {
     margin-left: auto;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: bold;
     white-space: nowrap;
 }
 
-.legenda-alto { background-color: var(--vermelho-claro); }
-.legenda-alto span, .legenda-alto .faixa { color: var(--vermelho); }
+.legenda-alto {
+    background-color: var(--vermelho-claro);
+}
 
-.legenda-normal { background-color: var(--verde-claro); }
-.legenda-normal span, .legenda-normal .faixa { color: #2e9e3f; }
+.legenda-alto span,
+.legenda-alto .faixa {
+    color: var(--vermelho);
+}
 
-.legenda-baixo { background-color: var(--azul-claro); }
-.legenda-baixo span, .legenda-baixo .faixa { color: var(--azul); }
+.legenda-normal {
+    background-color: var(--verde-claro);
+}
+
+.legenda-normal span,
+.legenda-normal .faixa {
+    color: #2e9e3f;
+}
+
+.legenda-baixo {
+    background-color: var(--azul-claro);
+}
+
+.legenda-baixo span,
+.legenda-baixo .faixa {
+    color: var(--azul);
+}
 
 #pressaoChart {
     width: 100%;
@@ -449,53 +461,59 @@ main {
 
 .badge span {
     display: block;
-    font-size: 12px;
+    font-size: 13px;
     color: var(--cor-texto);
     margin-bottom: 6px;
 }
 
 .badge p {
-    font-size: 13px;
+    font-size: 15px;
     font-weight: bold;
     margin-bottom: 4px;
 }
 
 .badge strong {
-    font-size: 16px;
+    font-size: 18px;
 }
 
-.badge-alto { background-color: var(--vermelho-claro); }
-.badge-alto p, .badge-alto strong { color: var(--vermelho); }
+.badge-alto {
+    background-color: var(--vermelho-claro);
+}
 
-.badge-baixo { background-color: var(--azul-claro); }
-.badge-baixo p, .badge-baixo strong { color: var(--azul); }
+.badge-alto p,
+.badge-alto strong {
+    color: var(--vermelho);
+}
+
+.badge-baixo {
+    background-color: var(--azul-claro);
+}
+
+.badge-baixo p,
+.badge-baixo strong {
+    color: var(--azul);
+}
 
 #statusFiltro {
     text-align: center;
     margin-top: 16px;
-    font-size: 14px;
+    font-size: 16px;
     color: var(--cor-texto);
 }
 
-/* ==========================================================
-   SOBREPOSIÇÃO (MODAL) DE PERFIL
-   ========================================================== */
-
 .overlay {
     position: fixed;
-    inset: 0;               /* atalho pra top:0; right:0; bottom:0; left:0; */
+    inset: 0;
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 2000;
 
-    /* Começa escondida e sem interação */
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.3s ease;
 }
 
-/* Classe adicionada via JS quando o perfil é aberto */
 .overlay.aberto {
     opacity: 1;
     visibility: visible;
@@ -504,7 +522,7 @@ main {
 .overlay-fundo {
     position: absolute;
     inset: 0;
-    background-color: rgba(11, 31, 58, 0.55); /* fundo escurecido, com transparência */
+    background-color: rgba(11, 31, 58, 0.55);
 }
 
 .overlay-caixa {
@@ -516,8 +534,6 @@ main {
     max-width: 480px;
     max-height: 90vh;
     overflow-y: auto;
-
-    /* Efeito de "crescer suavemente" ao abrir */
     transform: scale(0.92) translateY(10px);
     transition: transform 0.3s ease;
 }
@@ -532,7 +548,7 @@ main {
     right: 20px;
     background: none;
     border: none;
-    font-size: 20px;
+    font-size: 22px;
     color: var(--cor-texto);
     cursor: pointer;
     width: 36px;
@@ -546,7 +562,7 @@ main {
 }
 
 .overlay-caixa h2 {
-    font-size: 22px;
+    font-size: 25px;
     color: var(--cor-titulo);
     margin-bottom: 24px;
     text-align: center;
@@ -570,7 +586,7 @@ main {
 }
 
 .perfil-foto-label {
-    font-size: 13px;
+    font-size: 15px;
     font-weight: bold;
     color: var(--azul);
     cursor: pointer;
@@ -588,7 +604,7 @@ main {
 }
 
 .campo label {
-    font-size: 13px;
+    font-size: 15px;
     font-weight: bold;
     color: var(--cor-titulo);
 }
@@ -598,7 +614,7 @@ main {
     padding: 10px 14px;
     border: 1px solid var(--cinza-borda);
     border-radius: 10px;
-    font-size: 15px;
+    font-size: 17px;
     font-family: inherit;
     color: var(--cor-titulo);
 }
@@ -608,13 +624,12 @@ main {
     border-color: var(--azul);
 }
 
-/* Estado de erro: adicionado via JS na classe do .campo */
 .campo.campo-invalido input {
     border-color: var(--vermelho);
 }
 
 .campo .erro {
-    font-size: 12px;
+    font-size: 13px;
     color: var(--vermelho);
     min-height: 14px;
 }
@@ -626,19 +641,24 @@ main {
 
 .campo-plano small {
     color: var(--cor-texto);
-    font-size: 12px;
+    font-size: 13px;
 }
 
 .mensagem-status {
     text-align: center;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: bold;
     min-height: 20px;
     margin-bottom: 10px;
 }
 
-.mensagem-status.sucesso { color: #2e9e3f; }
-.mensagem-status.erro-geral { color: var(--vermelho); }
+.mensagem-status.sucesso {
+    color: #2e9e3f;
+}
+
+.mensagem-status.erro-geral {
+    color: var(--vermelho);
+}
 
 .perfil-botoes {
     display: flex;
@@ -651,7 +671,7 @@ main {
     flex: 1;
     padding: 12px;
     border-radius: 30px;
-    font-size: 15px;
+    font-size: 17px;
     font-weight: bold;
     cursor: pointer;
     border: none;
@@ -690,28 +710,24 @@ main {
     }
 }
 
-/* ==========================================================
-   CONTATOS (completo)
-   ========================================================== */
-
 .secao-contatos {
     margin-bottom: 50px;
 }
 
-.secao-contatos > header {
+.secao-contatos>header {
     text-align: center;
     margin-bottom: 24px;
 }
 
 .secao-contatos h2 {
-    font-size: 26px;
+    font-size: 29px;
     color: var(--cor-titulo);
 }
 
 .contatos-card {
     background-color: var(--azul-claro);
     border-radius: 24px;
-    overflow: hidden; /* garante que as bordas arredondadas cortem o conteúdo interno */
+    overflow: hidden;
 }
 
 .contatos-abas {
@@ -723,7 +739,7 @@ main {
     background-color: #fff;
     border: none;
     padding: 18px;
-    font-size: 15px;
+    font-size: 17px;
     font-weight: bold;
     color: var(--cor-texto);
     cursor: pointer;
@@ -735,7 +751,6 @@ main {
     color: var(--azul);
 }
 
-/* Estilo da aba ativa - controlado via JS trocando aria-selected */
 .aba[aria-selected="true"] {
     color: var(--azul);
     border-bottom-color: var(--azul);
@@ -766,16 +781,16 @@ main {
 .contato-item .contato-info strong {
     display: block;
     color: var(--cor-titulo);
-    font-size: 16px;
+    font-size: 18px;
 }
 
 .contato-item .contato-info span {
-    font-size: 13px;
+    font-size: 15px;
     color: var(--cor-texto);
 }
 
 .contato-tipo {
-    font-size: 11px;
+    font-size: 12px;
     font-weight: bold;
     padding: 3px 10px;
     border-radius: 20px;
@@ -790,7 +805,7 @@ main {
     color: var(--vermelho);
     border-radius: 30px;
     padding: 6px 14px;
-    font-size: 13px;
+    font-size: 15px;
     cursor: pointer;
     transition: 0.2s;
 }
@@ -803,13 +818,9 @@ main {
 .contatos-painel .mensagem-vazio {
     text-align: center;
     color: var(--cor-texto);
-    font-size: 14px;
+    font-size: 16px;
     padding: 20px 0;
 }
-
-/* ==========================================================
-   SUPORTE PRIORITÁRIO (completo)
-   ========================================================== */
 
 .secao-suporte {
     background-color: var(--verde-claro);
@@ -820,7 +831,7 @@ main {
 }
 
 .secao-suporte h2 {
-    font-size: 26px;
+    font-size: 29px;
     color: var(--cor-titulo);
     margin-bottom: 6px;
 }
@@ -849,12 +860,12 @@ main {
 }
 
 .suporte-visita-card p:first-child {
-    font-size: 15px;
+    font-size: 17px;
     margin-bottom: 4px;
 }
 
 .suporte-data {
-    font-size: 20px;
+    font-size: 22px;
     font-weight: bold;
 }
 
@@ -863,7 +874,7 @@ main {
 }
 
 .suporte-aviso {
-    font-size: 15px;
+    font-size: 17px;
     color: var(--cor-texto);
 }
 
@@ -872,7 +883,7 @@ main {
     border: none;
     color: var(--azul);
     font-weight: bold;
-    font-size: 15px;
+    font-size: 17px;
     cursor: pointer;
     text-decoration: underline;
     padding: 0 4px;
@@ -882,10 +893,6 @@ main {
     color: var(--azul-hover);
 }
 
-/* ==========================================================
-   REGISTRO DE HUMOR (completo)
-   ========================================================== */
-
 .secao-humor {
     background-color: var(--verde-claro);
     border-radius: 24px;
@@ -893,13 +900,13 @@ main {
     margin-bottom: 50px;
 }
 
-.secao-humor > header {
+.secao-humor>header {
     text-align: center;
     margin-bottom: 30px;
 }
 
 .secao-humor h2 {
-    font-size: 26px;
+    font-size: 29px;
     color: var(--cor-titulo);
 }
 
@@ -944,7 +951,7 @@ main {
     padding: 20px;
     display: flex;
     gap: 20px;
-    overflow-x: auto; /* se tiver muitos dias, aparece uma rolagem horizontal */
+    overflow-x: auto;
 }
 
 .humor-dia {
@@ -958,11 +965,11 @@ main {
 }
 
 .humor-dia .emoji {
-    font-size: 26px;
+    font-size: 29px;
 }
 
 .humor-dia .data {
-    font-size: 11px;
+    font-size: 12px;
     color: var(--cor-texto);
     line-height: 1.3;
 }
@@ -978,10 +985,6 @@ main {
         gap: 16px;
     }
 }
-
-/* ==========================================================
-   FOOTER
-   ========================================================== */
 
 footer {
     background-color: #0b1f3a;
@@ -1004,7 +1007,7 @@ footer {
 }
 
 .footer-links h3 {
-    font-size: 18px;
+    font-size: 20px;
     margin-bottom: 20px;
     color: #fff;
 }
@@ -1014,13 +1017,14 @@ footer {
     flex-direction: column;
     gap: 12px;
     margin: 0;
+    text-decoration: none;
 }
 
 .footer-links ul li a {
     text-decoration: none;
     color: rgba(255, 255, 255, 0.65);
     font-weight: normal;
-    font-size: 15px;
+    font-size: 17px;
     transition: .3s;
 }
 
@@ -1030,7 +1034,7 @@ footer {
 }
 
 .footer-contact h3 {
-    font-size: 18px;
+    font-size: 20px;
     margin-bottom: 20px;
     color: #fff;
     font-style: normal;
@@ -1038,7 +1042,7 @@ footer {
 
 .footer-contact p {
     color: rgba(255, 255, 255, 0.65);
-    font-size: 15px;
+    font-size: 17px;
     font-style: normal;
     margin-bottom: 8px;
 }
@@ -1050,4 +1054,58 @@ footer {
 
 .footer-contact a:hover {
     color: var(--azul);
+}
+
+/* ==========================================================
+   RESPONSIVIDADE - menu mobile
+   ========================================================== */
+
+@media (max-width: 768px) {
+    .nav-container {
+        padding: 14px 20px;
+        position: relative;
+    }
+
+    .menu-toggle {
+        display: flex;
+    }
+
+    nav ul {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: #fff;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height .3s ease;
+        box-shadow: 0 8px 10px rgba(0, 0, 0, 0.08);
+        padding: 0;
+    }
+
+    /* Classe adicionada/removida pelo script.js ao clicar no hamburguer */
+    nav ul.aberto {
+        max-height: 400px;
+    }
+
+    nav li {
+        margin: 0;
+        width: 100%;
+    }
+
+    nav a {
+        padding: 16px 20px;
+        width: 100%;
+    }
+
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+    .humor-conteudo {
+        flex-direction: column;
+    }
 }
