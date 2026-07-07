@@ -36,9 +36,6 @@ select:focus-visible {
     outline-offset: 2px;
 }
 
-/* ==========================================================
-   NAV
-   ========================================================== */
 
 nav img {
     width: 180px;
@@ -51,7 +48,36 @@ nav {
     top: 0;
     z-index: 1000;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
-    font-size: 20px;
+    font-size: 22px;
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30px;
+}
+
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 28px;
+    height: 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.menu-toggle span {
+    display: block;
+    height: 3px;
+    width: 100%;
+    background-color: var(--cor-titulo);
+    border-radius: 2px;
 }
 
 nav ul {

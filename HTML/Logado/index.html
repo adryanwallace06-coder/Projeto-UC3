@@ -11,13 +11,24 @@
 <body>
 
     <nav>
-        <ul> <img src="../../img logo/img logo.png" alt="Logo Medica+">
-            <li><a href="logado.html" class="ativo">Início</a></li>
-            <li><a href="#monitoramento">Monitoramento</a></li>
-            <li><a href="#contatos">Contatos</a></li>
-            <li><a href="#suporte">Suporte Prioritário</a></li>
-            <li><a href="#" id="linkPerfilNav">Perfil</a></li>
-        </ul>
+        <div class="nav-container">
+            <img src="../../img logo/img logo.png" alt="Logo Medica+">
+
+            <button type="button" class="menu-toggle" id="menuToggle" aria-expanded="false"
+                aria-controls="menuNav" aria-label="Abrir menu de navegação">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <ul id="menuNav">
+                <li><a href="logado.html" class="ativo">Início</a></li>
+                <li><a href="#monitoramento">Monitoramento</a></li>
+                <li><a href="#contatos">Contatos</a></li>
+                <li><a href="#suporte">Suporte Prioritário</a></li>
+                <li><a href="#" id="linkPerfilNav">Perfil</a></li>
+            </ul>
+        </div>
     </nav>
 
     <main>
