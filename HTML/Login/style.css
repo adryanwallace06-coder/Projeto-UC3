@@ -21,7 +21,7 @@ html, body {
   position: absolute;
   top: 20px;
   right: 25px;
-  font-size: 28px;
+  font-size: 35px;
   color: #0a1a3c;
   text-decoration: none;
   font-weight: bold;
@@ -33,12 +33,12 @@ html, body {
  
 .hero h1 {
   color: #0a1a3c;
-  font-size: 32px;
+  font-size: 60px;
   margin: 0 0 10px 0;
 }
  
 .hero img {
-  width: 180px;
+  width: 300px;
   margin-bottom: 20px;
 }
  
@@ -58,7 +58,7 @@ input[type="email"],
   padding: 15px;
   border: 1px solid #ccc;
   border-radius: 8px;
-  font-size: 16px;
+  font-size: 18px;
   outline: none;
 }
  
@@ -85,7 +85,7 @@ input[type="email"]:focus,
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 18px;
+  font-size: 21px;
 }
  
 .linha-opcoes {
@@ -93,7 +93,7 @@ input[type="email"]:focus,
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  font-size: 14px;
+  font-size: 17px;
   color: #333;
 }
  
@@ -134,8 +134,8 @@ input[type="email"]:focus,
  
 .cadastro {
   margin-top: auto;
-  margin-bottom: 30px;
-  font-size: 15px;
+  margin-bottom: 62px;
+  font-size: 19px;
   color: #333;
   text-align: center;
 }
@@ -225,6 +225,7 @@ input[type="email"]:focus,
   font-weight: bold;
   cursor: pointer;
   margin-bottom: 15px;
+  margin-top: 15px;
 }
  
 .btn-enviar:hover {
@@ -302,7 +303,7 @@ input[type="email"]:focus,
  
 .erro-campo {
   color: #e53935;
-  font-size: 13px;
+  font-size: 15px;
   margin: 6px 0 5px 0;
   display: none;
 }
