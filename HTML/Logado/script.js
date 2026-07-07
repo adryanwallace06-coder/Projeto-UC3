@@ -646,9 +646,6 @@ function iniciarFormularioContato() {
 
 let proximaVisita = new Date('2026-06-02T10:00:00');
 
-/* Atualiza TODOS os elementos que mostram a data/hora da visita de uma vez -
-   tanto o card pequeno no topo quanto a seção completa, porque os dois
-   usam as mesmas classes (.js-visita-data e .js-visita-hora) */
 function atualizarVisualVisita() {
     const dia = String(proximaVisita.getDate()).padStart(2, '0');
     const mes = String(proximaVisita.getMonth() + 1).padStart(2, '0');
@@ -668,7 +665,6 @@ function atualizarVisualVisita() {
 function reagendarVisitaNoServidor() {
     return new Promise(resolve => {
         setTimeout(() => {
-            // soma 14 dias à data atual da visita (2 semanas depois)
             proximaVisita.setDate(proximaVisita.getDate() + 14);
             resolve(proximaVisita);
         }, 600);
@@ -698,7 +694,7 @@ function iniciarReagendamento() {
 
 
 /* ==========================================================
-   PARTE 8: REGISTRO DE HUMOR (timeline + filtro)
+   PARTE 8: REGISTRO DE HUMOR 
    ========================================================== */
 
 const emojisPorHumor = {
@@ -779,7 +775,7 @@ function aplicarFiltroHumor() {
 
 
 /* ==========================================================
-   PARTE 9: INICIALIZAÇÃO
+   PARTE 9: INICIALIZAÇÃO DE TUDO AO CARREGAR A PÁGINA
    ========================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {

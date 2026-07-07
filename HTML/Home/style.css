@@ -16,7 +16,7 @@ body {
 }
 
 /* ==========================================================
-   ACESSIBILIDADE: link "pular para o conteúdo" e foco visível
+                        ACESSIBILIDADE
    ========================================================== */
 
 .skip-link {
@@ -31,12 +31,10 @@ body {
     transition: top .2s;
 }
 
-/* Quando o link recebe foco (navegação por Tab), ele desce e fica visível */
 .skip-link:focus {
     top: 10px;
 }
 
-/* Contorno de foco consistente em toda a página, pra quem navega por teclado */
 a:focus-visible,
 button:focus-visible,
 input:focus-visible {
@@ -45,7 +43,7 @@ input:focus-visible {
 }
 
 /* ==========================================================
-   NAV
+                          NAV
    ========================================================== */
 
 nav img {
@@ -96,13 +94,11 @@ nav a:hover {
     color: #2d7ff9;
 }
 
-/* Destaca a página atual (aria-current="page") sem precisar de mais uma classe */
 nav a[aria-current="page"] {
     color: #2d7ff9;
     border-bottom: 3px solid #2d7ff9;
 }
 
-/* Botão hamburguer: escondido no desktop, some só aparece no mobile (media query abaixo) */
 .menu-toggle {
     display: none;
     flex-direction: column;
@@ -124,7 +120,7 @@ nav a[aria-current="page"] {
 }
 
 /* ==========================================================
-   HERO
+                         HERO
    ========================================================== */
 
 .hero {
@@ -220,46 +216,58 @@ nav a[aria-current="page"] {
 }
 
 /* ==========================================================
-   FUNCIONALIDADES (cards que estavam sem estilo)
+                        FUNCIONALIDADES
    ========================================================== */
 
 .funcionalidades {
+    background-color: #E8F9E5;
+    position: relative;
     max-width: 1200px;
-    margin: 0 auto;
+    margin:  auto;
     padding: 60px 30px;
+    z-index: 1;
 }
-
+ 
+.funcionalidades::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 100vw;
+    transform: translateX(-50%);
+    background-color: #E8F9E5;
+    z-index: -1;
+}
+ 
 .funcionalidades header {
     text-align: center;
     margin-bottom: 40px;
 }
-
+ 
 .funcionalidades header p {
     display: inline-block;
-    color: #2d7ff9;
-    background-color: #DCEEFF;
+    color: #0ad06a;
     font-weight: bold;
-    font-size: 14px;
+    font-size: 18px;
     letter-spacing: 1px;
     padding: 8px 18px;
     border-radius: 30px;
     margin-bottom: 16px;
 }
-
+ 
 .funcionalidades header h2 {
     font-size: 32px;
     color: #0b1f3a;
 }
-
+ 
 .cards {
     display: grid;
-    /* auto-fit + minmax é o pulo do gato da responsividade:
-       o navegador calcula sozinho quantas colunas cabem,
-       sem precisarmos escrever uma media query pra cada tamanho de tela */
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 24px;
+   
 }
-
+ 
 .card-func {
     background-color: #fff;
     border-radius: 18px;
@@ -267,34 +275,45 @@ nav a[aria-current="page"] {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
     transition: transform .3s, box-shadow .3s;
     position: relative;
+     border: 2px solid #27AE60;
 }
-
+ 
 .card-func:hover {
     transform: translateY(-6px);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+ 
 }
-
+ 
 .card-func span {
     font-size: 32px;
     display: block;
     margin-bottom: 14px;
 }
-
+ 
+.card-func.sos {
+    background-color: ffffrgb(240, 108, 108);
+    border: 2px solid red
+}
+ 
+.card-func.sos h3 {
+    color: red
+}
+ 
 .card-func h3 {
     font-size: 19px;
     color: #0b1f3a;
     margin-bottom: 8px;
 }
-
+ 
 .card-func p {
     font-size: 15px;
     color: #666;
 }
-
+ 
 .card-func--destaque {
     border: 2px solid #27AE60;
 }
-
+ 
 .brinde {
     position: absolute;
     top: -14px;
@@ -306,9 +325,8 @@ nav a[aria-current="page"] {
     padding: 6px 14px;
     border-radius: 20px;
 }
-
 /* ==========================================================
-   PLANOS
+                         PLANOS
    ========================================================== */
 
 .planos {
@@ -444,7 +462,7 @@ ul {
 }
 
 /* ==========================================================
-   FOOTER
+                           FOOTER
    ========================================================== */
 
 footer {
@@ -517,7 +535,7 @@ footer {
 }
 
 /* ==========================================================
-   RESPONSIVIDADE
+                       RESPONSIVIDADE
    ========================================================== */
 
 /* Tablet: hero e planos empilham, mas o menu ainda cabe */
@@ -545,7 +563,6 @@ footer {
     }
 }
 
-/* Mobile: menu vira hamburguer */
 @media (max-width: 768px) {
     .nav-container {
         padding: 14px 20px;
@@ -571,7 +588,6 @@ footer {
         box-shadow: 0 8px 10px rgba(0, 0, 0, 0.08);
     }
 
-    /* Essa classe é adicionada/removida pelo script.js quando clica no hamburguer */
     nav ul.aberto {
         max-height: 400px;
     }

@@ -39,7 +39,6 @@ body {
     margin-bottom: 20px;
 }
 
-/* Resumo do plano */
 .resumo {
     display: flex;
     justify-content: space-between;
@@ -69,7 +68,6 @@ body {
     white-space: nowrap;
 }
 
-/* Métodos de pagamento */
 .metodos {
     display: flex;
     gap: 10px;
@@ -95,7 +93,6 @@ body {
     background: #eef5ff;
 }
 
-/* Formulários */
 .form-pagamento label {
     display: block;
     font-size: 14px;
@@ -153,7 +150,6 @@ body {
     background-color: #219150;
 }
 
-/* Mensagens */
 .mensagem {
     font-size: 14px;
     margin-top: 12px;
@@ -172,7 +168,6 @@ body {
     color: #2e7d32;
 }
 
-/* Pix */
 .pix-qr {
     font-size: 120px;
     text-align: center;
@@ -217,7 +212,6 @@ body {
     background: #1b65d6;
 }
 
-/* Overlay de sucesso */
 .overlay-sucesso {
     display: none;
     position: fixed;

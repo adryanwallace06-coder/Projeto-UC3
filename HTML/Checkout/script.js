@@ -1,8 +1,3 @@
-/* =========================================================
-   Medica+  -  Checkout simulado
-   ========================================================= */
-
-/* ---------- Leitura do plano (query string) ---------- */
 var params = new URLSearchParams(window.location.search);
 var nomePlano = params.get('plano') || 'Basic';
 var precoStr = params.get('preco') || '0,00';
