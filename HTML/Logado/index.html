@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Medica+ - Painel</title>
-    <link rel="stylesheet" href="../../CSS/style.css">
+    <link rel="stylesheet" href="../Logado/style.css">
 </head>
 
 <body>
@@ -16,7 +16,7 @@
             <li><a href="#monitoramento">Monitoramento</a></li>
             <li><a href="#contatos">Contatos</a></li>
             <li><a href="#suporte">Suporte Prioritário</a></li>
-            <li><a href="#">Perfil</a></li>
+            <li><a href="#" id="linkPerfilNav">Perfil</a></li>
         </ul>
     </nav>
 
@@ -25,7 +25,7 @@
         <section class="boas-vindas">
 
             <div class="boas-vindas-text">
-                <h1>Olá, Maria! 👋</h1>
+                <h1 id="saudacaoNome">Olá, Maria! 👋</h1>
 
                 <p>
                     Que bom te ver! Cuide todos os dias da sua saúde
@@ -33,7 +33,7 @@
                 </p>
             </div>
 
-            <button class="Ver-perfil">Ver meu perfil ➡️</button>
+            <button type="button" class="Ver-perfil" id="btnVerPerfil">Ver meu perfil ➡️</button>
 
         </section>
 
@@ -45,18 +45,18 @@
                 <ul class="card-home">
                     <li class="pico-alto">
                         <span>📅 12/05/2026 11:30</span>
-                        <p class="tag tag-alto">Pico de pressão alta</p>
+                        <p class="tag-alto">Pico de pressão alta</p>
                         <p class="valor">160/100 mmHg</p>
                     </li>
                     <li class="pico-baixo">
                         <span>📅 14/05/2026 11:34</span>
-                        <p class="tag tag-baixo">Pico de pressão baixa</p>
+                        <p class="tag-baixo">Pico de pressão baixa</p>
                         <p class="valor">70/40 mmHg</p>
                     </li>
                 </ul>
             </article>
 
-            <article class="card-contatos" id="contatos">
+            <article class="card-contatos">
                 <h3>Contatos</h3>
 
                 <ul class="lista-contatos">
@@ -65,11 +65,14 @@
                 </ul>
             </article>
 
-            <article class="card-suporte" id="suporte">
+            <article class="card-suporte">
                 <h3>Suporte prioritário</h3>
 
                 <p>A próxima visita será em:</p>
-                <p class="proxima-visita">02/06/2026 <span>10:00</span></p>
+                <p class="proxima-visita">
+                    <span class="js-visita-data">02/06/2026</span>
+                    <span class="js-visita-hora">10:00</span>
+                </p>
             </article>
 
         </div>
@@ -124,7 +127,7 @@
                 </div>
 
                 <canvas id="pressaoChart"
-                    aria-label="Gráfico da variação da pressão arterial de Maria entre 10 e 16 de maio de 2026"
+                    aria-label="Gráfico da variação da pressão arterial de Maria"
                     role="img"></canvas>
 
                 <ul class="badges">
@@ -151,15 +154,217 @@
 
         </section>
 
-        <section>
+        <!-- ==========================================================
+             CONTATOS (completo)
+             ========================================================== -->
+        <section class="secao-contatos" id="contatos">
+
             <header>
-                <h2>Registro de humor</h2>
+                <h2>Contatos</h2>
             </header>
 
-            <form action=""></form>
+            <div class="contatos-card">
+
+                <div class="contatos-abas" role="tablist" aria-label="Seções de contatos">
+                    <button type="button" class="aba" id="abaMeusContatos" role="tab"
+                        aria-selected="true" aria-controls="painelMeusContatos">Meus contatos</button>
+                    <button type="button" class="aba" id="abaAdicionarContato" role="tab"
+                        aria-selected="false" aria-controls="painelAdicionarContato">Adicionar contato</button>
+                </div>
+
+                <!-- Painel: lista de contatos -->
+                <div class="contatos-painel" id="painelMeusContatos" role="tabpanel"
+                    aria-labelledby="abaMeusContatos">
+                    <ul class="lista-contatos-completa" id="listaContatosCompleta">
+                        <!-- Os <li> são gerados dinamicamente pelo script.js -->
+                    </ul>
+                </div>
+
+                <!-- Painel: formulário de novo contato -->
+                <div class="contatos-painel" id="painelAdicionarContato" role="tabpanel"
+                    aria-labelledby="abaAdicionarContato" hidden>
+
+                    <form id="formNovoContato" novalidate>
+                        <div class="campo">
+                            <label for="novoContatoNome">Nome</label>
+                            <input type="text" id="novoContatoNome" required>
+                            <span class="erro" id="erroNovoContatoNome"></span>
+                        </div>
+
+                        <div class="campo">
+                            <label for="novoContatoTelefone">Telefone</label>
+                            <input type="text" id="novoContatoTelefone" maxlength="15"
+                                placeholder="(00) 00000-0000" required>
+                            <span class="erro" id="erroNovoContatoTelefone"></span>
+                        </div>
+
+                        <div class="campo">
+                            <label for="novoContatoTipo">Tipo de contato</label>
+                            <select id="novoContatoTipo">
+                                <option value="familiar">Familiar</option>
+                                <option value="cuidador">Cuidador(a)</option>
+                                <option value="medico">Médico(a)</option>
+                                <option value="outro">Outro</option>
+                            </select>
+                        </div>
+
+                        <p class="mensagem-status" id="mensagemStatusContato" role="status" aria-live="polite"></p>
+
+                        <button type="submit" class="btn-salvar" id="btnSalvarContato">Adicionar contato</button>
+                    </form>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ==========================================================
+             SUPORTE PRIORITÁRIO (completo)
+             ========================================================== -->
+        <section class="secao-suporte" id="suporte">
+
+            <header>
+                <h2>Suporte prioritário</h2>
+                <p>Visita de um especialista em domicílio</p>
+            </header>
+
+            <!-- Troque pelo caminho da sua própria foto quando tiver uma -->
+            <img class="suporte-foto" src="../../img suporte/visita-especialista.jpg"
+                alt="Profissional de saúde visitando uma paciente em casa">
+
+            <div class="suporte-visita-card">
+                <p>A próxima visita será em:</p>
+                <p class="suporte-data">
+                    <span class="js-visita-data">02/06/2026</span>
+                    <span class="js-visita-hora">10:00</span>
+                </p>
+            </div>
+
+            <p class="suporte-aviso">
+                Não poderá receber a visita? Toque em
+                <button type="button" id="btnReagendar" class="btn-reagendar">Reagendar</button>
+                e veja a próxima visita.
+            </p>
+
+            <p class="mensagem-status" id="mensagemStatusVisita" role="status" aria-live="polite"></p>
+
+        </section>
+
+        <!-- ==========================================================
+             REGISTRO DE HUMOR (completo)
+             ========================================================== -->
+        <section class="secao-humor" id="humor">
+
+            <header>
+                <h2>Registros de humor</h2>
+            </header>
+
+            <div class="humor-conteudo">
+
+                <ul class="humor-legenda">
+                    <li><span class="humor-numero">1</span> Feliz 😄</li>
+                    <li><span class="humor-numero">2</span> Triste 😢</li>
+                    <li><span class="humor-numero">3</span> Estresse 😠</li>
+                    <li><span class="humor-numero">4</span> Neutro 😐</li>
+                </ul>
+
+                <div class="humor-principal">
+
+                    <form class="filtros" id="filtrosHumorForm">
+                        <div class="filtro">
+                            <label for="humorInicio">📅 Período</label>
+                            <input type="date" id="humorInicio" name="inicio" value="2026-05-10">
+                            <span>–</span>
+                            <input type="date" id="humorFim" name="fim" value="2026-05-18">
+                        </div>
+
+                        <p class="filtro-info">🕐 Última atualização: <strong id="ultimaAtualizacaoHumor">18/05/2026 12:00</strong></p>
+                    </form>
+
+                    <div class="humor-timeline" id="humorTimeline">
+                        <!-- Os itens de emoji + data são gerados dinamicamente pelo script.js -->
+                    </div>
+
+                </div>
+
+            </div>
+
         </section>
 
     </main>
+
+    <!-- ==========================================================
+         SOBREPOSIÇÃO (MODAL) DE PERFIL
+         Fica escondida por padrão (classe "aberto" controla isso via CSS/JS)
+         ========================================================== -->
+    <div class="overlay" id="perfilOverlay" aria-hidden="true">
+        <div class="overlay-fundo" id="perfilFundo"></div>
+
+        <div class="overlay-caixa" role="dialog" aria-modal="true" aria-labelledby="perfilTitulo">
+
+            <button type="button" class="overlay-fechar" id="btnFecharPerfil" aria-label="Fechar janela de perfil">✕</button>
+
+            <h2 id="perfilTitulo">Meu perfil</h2>
+
+            <form id="formPerfil" novalidate>
+
+                <div class="perfil-foto">
+                    <img src="" alt="Foto de perfil de Maria" id="fotoPreview">
+                    <label for="inputFoto" class="perfil-foto-label">
+                        📷 Trocar foto
+                        <input type="file" id="inputFoto" accept="image/png, image/jpeg" hidden>
+                    </label>
+                </div>
+
+                <div class="campo">
+                    <label for="campoNome">Nome completo</label>
+                    <input type="text" id="campoNome" name="nome" required>
+                    <span class="erro" id="erroNome"></span>
+                </div>
+
+                <div class="campo">
+                    <label for="campoEmail">E-mail</label>
+                    <input type="email" id="campoEmail" name="email" required>
+                    <span class="erro" id="erroEmail"></span>
+                </div>
+
+                <div class="campo">
+                    <label for="campoCpf">CPF</label>
+                    <input type="text" id="campoCpf" name="cpf" maxlength="14" placeholder="000.000.000-00" required>
+                    <span class="erro" id="erroCpf"></span>
+                </div>
+
+                <div class="campo">
+                    <label for="campoTelefone">Número de telefone</label>
+                    <input type="text" id="campoTelefone" name="telefone" maxlength="15" placeholder="(00) 00000-0000" required>
+                    <span class="erro" id="erroTelefone"></span>
+                </div>
+
+                <div class="campo">
+                    <label for="campoTipo">Você é</label>
+                    <select id="campoTipo" name="tipo">
+                        <option value="paciente">Paciente</option>
+                        <option value="cuidador">Cuidador(a)</option>
+                        <option value="parente">Parente</option>
+                    </select>
+                </div>
+
+                <div class="campo campo-plano">
+                    <label>Plano atual</label>
+                    <p id="campoPlano">Basic +</p>
+                    <small>Para trocar de plano, acesse a seção "Planos" no site.</small>
+                </div>
+
+                <p class="mensagem-status" id="mensagemStatus" role="status" aria-live="polite"></p>
+
+                <div class="perfil-botoes">
+                    <button type="button" class="btn-cancelar" id="btnCancelarPerfil">Cancelar</button>
+                    <button type="submit" class="btn-salvar" id="btnSalvarPerfil">Salvar alterações</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
 
     <footer>
         <div class="footer-container">
@@ -198,7 +403,7 @@
             <address class="footer-contact">
                 <h3>Contato</h3>
 
-                <p><a href="medicamais@gmail.com">medicamais@gmail.com</a></p>
+                <p><a href="mailto:medicamais@gmail.com">medicamais@gmail.com</a></p>
                 <p>(11) 99999-9999</p>
                 <p>São Paulo, SP</p>
             </address>
@@ -206,7 +411,7 @@
         </div>
     </footer>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
     <script src="script.js"></script>
 
 </body>

@@ -1,0 +1,618 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f8f9fc;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* ==========================================================
+   ACESSIBILIDADE: link "pular para o conteúdo" e foco visível
+   ========================================================== */
+
+.skip-link {
+    position: absolute;
+    top: -60px;
+    left: 10px;
+    background: #2d7ff9;
+    color: #fff;
+    padding: 10px 18px;
+    border-radius: 8px;
+    z-index: 2000;
+    transition: top .2s;
+}
+
+/* Quando o link recebe foco (navegação por Tab), ele desce e fica visível */
+.skip-link:focus {
+    top: 10px;
+}
+
+/* Contorno de foco consistente em toda a página, pra quem navega por teclado */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible {
+    outline: 3px solid #2d7ff9;
+    outline-offset: 2px;
+}
+
+/* ==========================================================
+   NAV
+   ========================================================== */
+
+nav img {
+    width: 180px;
+    height: auto;
+}
+
+nav {
+    background-color: #ffffff;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+    font-size: 20px;
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30px;
+}
+
+nav ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    gap: 20px;
+}
+
+nav li {
+    margin: 0 20px;
+}
+
+nav a {
+    display: block;
+    text-decoration: none;
+    color: #333;
+    padding: 18px 0;
+    font-weight: bold;
+    transition: .3s;
+}
+
+nav a:hover {
+    color: #2d7ff9;
+}
+
+/* Destaca a página atual (aria-current="page") sem precisar de mais uma classe */
+nav a[aria-current="page"] {
+    color: #2d7ff9;
+    border-bottom: 3px solid #2d7ff9;
+}
+
+/* Botão hamburguer: escondido no desktop, some só aparece no mobile (media query abaixo) */
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 28px;
+    height: 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.menu-toggle span {
+    display: block;
+    height: 3px;
+    width: 100%;
+    background-color: #0b1f3a;
+    border-radius: 2px;
+}
+
+/* ==========================================================
+   HERO
+   ========================================================== */
+
+.hero {
+    display: flex;
+    flex-direction: row;
+    max-width: 1200px;
+    margin: auto;
+    justify-content: space-between;
+    align-items: center;
+    gap: 60px;
+    padding: 80px 30px;
+}
+
+.hero-text {
+    flex: 1;
+    max-width: 550px;
+}
+
+.hero-text p:first-child {
+    display: inline-block;
+    color: #27AE60;
+    background-color: #9FFFBF;
+    font-size: 18px;
+    border-radius: 30px;
+    padding: 10px 20px;
+    margin-bottom: 40px;
+}
+
+.hero-text h1 {
+    font-size: 80px;
+    color: #0b1f3a;
+    line-height: 1.2;
+    margin-bottom: 20px;
+}
+
+.hero-text h1 span {
+    color: #27AE60;
+}
+
+.hero-text p {
+    font-size: 21px;
+    color: #666;
+    margin-bottom: 30px;
+    font-weight: bold;
+}
+
+.hero img {
+    width: 380px;
+    max-width: 100%;
+    height: auto;
+    flex-shrink: 0;
+}
+
+.hero-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.Baixa-app,
+.Ver-planos {
+    padding: 15px 30px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: .3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+}
+
+.Baixa-app {
+    background: #2d7ff9;
+    color: white;
+}
+
+.Baixa-app:hover {
+    background: #1b65d6;
+}
+
+.Ver-planos {
+    background: white;
+    border: 2px solid #ddd;
+    color: #333;
+}
+
+.Ver-planos:hover {
+    border-color: #2d7ff9;
+    color: #2d7ff9;
+}
+
+/* ==========================================================
+   FUNCIONALIDADES (cards que estavam sem estilo)
+   ========================================================== */
+
+.funcionalidades {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 30px;
+}
+
+.funcionalidades header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.funcionalidades header p {
+    display: inline-block;
+    color: #2d7ff9;
+    background-color: #DCEEFF;
+    font-weight: bold;
+    font-size: 14px;
+    letter-spacing: 1px;
+    padding: 8px 18px;
+    border-radius: 30px;
+    margin-bottom: 16px;
+}
+
+.funcionalidades header h2 {
+    font-size: 32px;
+    color: #0b1f3a;
+}
+
+.cards {
+    display: grid;
+    /* auto-fit + minmax é o pulo do gato da responsividade:
+       o navegador calcula sozinho quantas colunas cabem,
+       sem precisarmos escrever uma media query pra cada tamanho de tela */
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+}
+
+.card-func {
+    background-color: #fff;
+    border-radius: 18px;
+    padding: 28px 24px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    transition: transform .3s, box-shadow .3s;
+    position: relative;
+}
+
+.card-func:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.card-func span {
+    font-size: 32px;
+    display: block;
+    margin-bottom: 14px;
+}
+
+.card-func h3 {
+    font-size: 19px;
+    color: #0b1f3a;
+    margin-bottom: 8px;
+}
+
+.card-func p {
+    font-size: 15px;
+    color: #666;
+}
+
+.card-func--destaque {
+    border: 2px solid #27AE60;
+}
+
+.brinde {
+    position: absolute;
+    top: -14px;
+    left: 20px;
+    background-color: #27AE60;
+    color: #fff;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 6px 14px;
+    border-radius: 20px;
+}
+
+/* ==========================================================
+   PLANOS
+   ========================================================== */
+
+.planos {
+    background-color: #96dcff63;
+}
+
+.planos header p {
+    text-align: center;
+    padding: 10px;
+    color: #007EFF;
+    font-weight: bolder;
+    font-size: 19px;
+    padding: 20px;
+}
+
+.planos header h2 {
+    text-align: center;
+    font-size: 35px;
+}
+
+.planos .card {
+    display: flex;
+    flex-direction: row;
+    padding: 50px;
+    justify-content: center;
+    gap: 40px;
+    align-items: stretch;
+    flex-wrap: wrap;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+    font-weight: bolder;
+}
+
+.planos .card .card-basic,
+.planos .card .card-basic-mensal,
+.planos .card .card-basic-anual {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    padding: 20px;
+    border-radius: 30px;
+    border: 1px solid black;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    flex: 1 1 280px;
+    max-width: 340px;
+}
+
+.planos .card .card-basic {
+    background-color: #ffffff;
+}
+
+.planos .card .card-basic-mensal {
+    background-color: #0069F2;
+    color: white;
+}
+
+.planos .card .card-basic-anual {
+    background-color: #27AE60;
+    color: white;
+}
+
+.planos .card h3 {
+    font-size: 35px;
+    margin-bottom: -10px;
+    font-weight: bold;
+}
+
+.planos .card span {
+    font-size: 50px;
+    font-weight: bold;
+}
+
+.planos .card p {
+    font-size: 18px;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.planos .card li {
+    font-size: 18px;
+}
+
+.planos .card .card-basic-mensal li,
+.planos .card .card-basic-anual li {
+    text-shadow:
+        -1px -1px 0 black,
+         1px -1px 0 black,
+        -1px  1px 0 black,
+         1px  1px 0 black;
+}
+
+.planos .card .card-basic-anual p.popular {
+    background-color: #ffffff;
+    color: #27AE60;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 20px;
+    align-self: center;
+    max-width: fit-content;
+}
+
+.planos .card button {
+    background-color: white;
+    border: 2px solid #2d7ff9;
+    color: #2d7ff9;
+    padding: 10px 20px;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 25px;
+    font-weight: bold;
+    margin-top: auto;
+    align-self: center;
+    transition: transform .3s, border-color .3s;
+}
+
+.planos .card .card-basic-mensal button {
+    border-color: #2d7ff9;
+    color: #2d7ff9;
+}
+
+.planos .card .card-basic-anual button {
+    border-color: #27AE60;
+    color: #27AE60;
+}
+
+.planos .card button:hover {
+    transform: scale(1.08);
+}
+
+/* ==========================================================
+   FOOTER
+   ========================================================== */
+
+footer {
+    background-color: #0b1f3a;
+    color: #fff;
+    padding: 50px 30px;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    justify-content: space-between;
+}
+
+.footer-logo img {
+    max-width: 400px;
+    height: auto;
+}
+
+.footer-links h3 {
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+.footer-links ul {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 0;
+}
+
+.footer-links ul li a {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.65);
+    font-weight: normal;
+    font-size: 15px;
+    transition: .3s;
+}
+
+.footer-links ul li a:hover {
+    color: #2d7ff9;
+    padding-left: 4px;
+}
+
+.footer-contact h3 {
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: #fff;
+    font-style: normal;
+}
+
+.footer-contact p {
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 15px;
+    font-style: normal;
+    margin-bottom: 8px;
+}
+
+.footer-contact a {
+    color: rgba(255, 255, 255, 0.65);
+    text-decoration: underline;
+}
+
+.footer-contact a:hover {
+    color: #2d7ff9;
+}
+
+/* ==========================================================
+   RESPONSIVIDADE
+   ========================================================== */
+
+/* Tablet: hero e planos empilham, mas o menu ainda cabe */
+@media (max-width: 992px) {
+    .hero {
+        flex-direction: column;
+        text-align: center;
+        padding: 50px 20px;
+    }
+
+    .hero-text {
+        max-width: 100%;
+    }
+
+    .hero-text h1 {
+        font-size: 52px;
+    }
+
+    .hero-buttons {
+        justify-content: center;
+    }
+
+    .planos .card {
+        padding: 30px 20px;
+    }
+}
+
+/* Mobile: menu vira hamburguer */
+@media (max-width: 768px) {
+    .nav-container {
+        padding: 14px 20px;
+        position: relative;
+    }
+
+    .menu-toggle {
+        display: flex;
+    }
+
+    nav ul {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: #fff;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height .3s ease;
+        box-shadow: 0 8px 10px rgba(0, 0, 0, 0.08);
+    }
+
+    /* Essa classe é adicionada/removida pelo script.js quando clica no hamburguer */
+    nav ul.aberto {
+        max-height: 400px;
+    }
+
+    nav li {
+        margin: 0;
+        width: 100%;
+    }
+
+    nav a {
+        padding: 16px 20px;
+        width: 100%;
+    }
+
+    .hero-text h1 {
+        font-size: 38px;
+    }
+
+    .hero-text p {
+        font-size: 17px;
+    }
+
+    .planos .card {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .planos .card > div {
+        max-width: 100%;
+        width: 100%;
+    }
+}
+
+/* Celular pequeno */
+@media (max-width: 480px) {
+    .hero-text h1 {
+        font-size: 30px;
+    }
+
+    .funcionalidades header h2,
+    .planos header h2 {
+        font-size: 24px;
+    }
+}
