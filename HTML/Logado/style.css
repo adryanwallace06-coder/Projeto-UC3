@@ -1269,3 +1269,114 @@ footer li {
         flex: 1 1 45%;
     }
 }
+
+/* ==========================================================
+   FIX MODAL DO PERFIL - responsivo (versão final)
+   ========================================================== */
+
+.overlay-caixa {
+    padding: 32px 28px;
+    width: calc(100% - 24px);
+    max-width: 480px;
+    max-height: 92vh;
+    max-height: 92dvh;
+    overflow-x: hidden;              /* trava o corte lateral dos rótulos */
+}
+
+.overlay-caixa * {
+    box-sizing: border-box;          /* garante que padding não estoure */
+    max-width: 100%;
+}
+
+.campo {
+    min-width: 0;                    /* deixa o input encolher */
+    width: 100%;
+}
+
+.campo input,
+.campo select {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    font-size: 16px;                 /* evita zoom no iPhone */
+}
+
+.perfil-foto img {
+    width: 84px;
+    height: 84px;
+}
+
+/* Celular */
+@media (max-width: 600px) {
+    .overlay {
+        align-items: flex-end;
+    }
+
+    .overlay-caixa {
+        padding: 22px 18px;
+        border-radius: 20px 20px 0 0;
+        width: 100%;
+        max-width: 100%;
+        max-height: 95vh;
+        max-height: 95dvh;
+    }
+
+    .overlay-caixa h2 {
+        font-size: 20px;
+        margin-bottom: 18px;
+    }
+
+    .campo {
+        margin-bottom: 14px;
+    }
+
+    .campo input,
+    .campo select {
+        padding: 10px 12px;
+    }
+
+    .perfil-botoes {
+        flex-direction: column-reverse;
+    }
+}
+
+/* Celular pequeno (< 380px) */
+@media (max-width: 380px) {
+    .overlay-caixa {
+        padding: 18px 14px;
+    }
+
+    .perfil-foto img {
+        width: 72px;
+        height: 72px;
+    }
+}
+
+/* ==========================================================
+   Outras seções que também melhoram no celular
+   ========================================================== */
+
+@media (max-width: 600px) {
+    .boas-vindas { gap: 14px; }
+    .Ver-perfil  { width: 100%; }
+}
+
+@media (max-width: 520px) {
+    .contato-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .btn-remover-contato { align-self: flex-end; }
+}
+
+@media (max-width: 700px) {
+    .footer-container {
+        flex-direction: column;
+        text-align: center;
+        gap: 30px;
+    }
+    .footer-logo img { max-width: 260px; margin: 0 auto; }
+    .footer-links ul { align-items: center; }
+}
+
+.filtro input[type="date"] { min-width: 120px; }
