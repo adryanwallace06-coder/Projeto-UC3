@@ -2,6 +2,7 @@
     --azul: #2d7ff9;
     --azul-hover: #1a6ae0;
     --verde: #7ED957;
+    --verde-escuro: #2e9e3f;
     --verde-claro: #E8F9E5;
     --azul-claro: #DCEEFF;
     --cor-titulo: #1E1E1E;
@@ -19,6 +20,9 @@
 
 html {
     scroll-behavior: smooth;
+    /* Impede que a página role para os lados, caso algum elemento
+       acabe ficando mais largo que a tela por engano */
+    overflow-x: hidden;
 }
 
 body {
@@ -168,6 +172,22 @@ main {
 .cards article {
     border-radius: 20px;
     padding: 24px;
+}
+
+/* Os 3 cards do topo agora são clicáveis (JS leva até a seção completa) */
+[data-scroll-to] {
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+[data-scroll-to]:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+}
+
+[data-scroll-to]:focus-visible {
+    outline: 3px solid var(--azul);
+    outline-offset: 3px;
 }
 
 .cards h3 {
@@ -365,6 +385,9 @@ main {
 .filtro {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 6px;
     gap: 8px;
     background-color: #fff;
     border-radius: 30px;
@@ -664,7 +687,7 @@ main {
 
 .campo-plano p {
     font-weight: bold;
-    color: var(--azul);
+    color: var(--verde-escuro);
 }
 
 .campo-plano small {
@@ -728,6 +751,25 @@ main {
 .btn-salvar:disabled {
     background-color: var(--cinza-borda);
     cursor: not-allowed;
+}
+
+.btn-sair {
+    display: block;
+    width: 100%;
+    margin-top: 16px;
+    padding: 12px;
+    background: none;
+    border: 1px solid var(--cinza-borda);
+    border-radius: 20px;
+    color: var(--vermelho);
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-sair:hover {
+    background-color: var(--vermelho-claro);
 }
 
 @media (max-width: 520px) {
@@ -1084,6 +1126,16 @@ footer {
     color: var(--azul);
 }
 
+footer ul {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+footer li {
+    list-style: none !important;
+}
+
 /* ==========================================================
    RESPONSIVIDADE - menu mobile
    ========================================================== */
@@ -1114,7 +1166,6 @@ footer {
         padding: 0;
     }
 
-    /* Classe adicionada/removida pelo script.js ao clicar no hamburguer */
     nav ul.aberto {
         max-height: 400px;
     }
@@ -1135,5 +1186,86 @@ footer {
 
     .humor-conteudo {
         flex-direction: column;
+    }
+}
+
+/* ==========================================================
+   RESPONSIVIDADE EXTRA - telas bem pequenas (celular)
+   ========================================================== */
+
+@media (max-width: 600px) {
+    main {
+        padding: 24px 16px;
+    }
+
+    .boas-vindas {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .boas-vindas-text h1 {
+        font-size: 26px;
+    }
+
+    .boas-vindas-text p {
+        font-size: 16px;
+    }
+
+    .Ver-perfil {
+        align-self: stretch;
+        text-align: center;
+    }
+
+    .monitoramento,
+    .secao-humor,
+    .secao-suporte {
+        padding: 24px 18px;
+    }
+
+    .monitoramento header h2,
+    .secao-contatos h2,
+    .secao-suporte h2,
+    .secao-humor h2 {
+        font-size: 22px;
+    }
+
+    .contatos-painel {
+        padding: 20px;
+    }
+
+    .contatos-abas .aba {
+        font-size: 14px;
+        padding: 14px 8px;
+    }
+
+    .legenda-item,
+    .badge {
+        min-width: 130px;
+    }
+
+    .filtro {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .overlay-caixa {
+        padding: 20px;
+    }
+
+    .perfil-botoes {
+        flex-direction: column;
+    }
+
+    .filtro input[type="date"] {
+        max-width: 130px;
+    }
+
+    .humor-legenda {
+        min-width: 0;
+        width: 100%;
+    }
+
+    .humor-legenda li {
+        flex: 1 1 45%;
     }
 }

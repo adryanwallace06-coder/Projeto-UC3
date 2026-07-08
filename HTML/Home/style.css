@@ -249,7 +249,7 @@ nav a[aria-current="page"] {
     display: inline-block;
     color: #0ad06a;
     font-weight: bold;
-    font-size: 18px;
+    font-size: 19px;
     letter-spacing: 1px;
     padding: 8px 18px;
     border-radius: 30px;
@@ -336,10 +336,12 @@ nav a[aria-current="page"] {
 .planos header p {
     text-align: center;
     padding: 10px;
+    letter-spacing: 1px;
     color: #007EFF;
     font-weight: bolder;
     font-size: 19px;
     padding: 20px;
+    margin-bottom: 16px;
 }
 
 .planos header h2 {

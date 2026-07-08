@@ -1,13 +1,3 @@
-/* ==========================================================
-   MEDICA+ - script.js (página Logado)
-   ==========================================================
-   1. Cards do topo (Picos de pressão) - valores aleatórios
-   2. Dados de pressão para o gráfico
-   3. Gráfico + filtro por período + badges
-   4. Sobreposição (modal) de Perfil - com requisições simuladas
-   5. Inicialização
-   ========================================================== */
-
 
 /* ==========================================================
    PARTE 1: CARDS DO TOPO (Picos de pressão aleatórios)
@@ -236,7 +226,6 @@ function formatarDataCurta(data) {
    PARTE 4: SOBREPOSIÇÃO (MODAL) DE PERFIL
    ========================================================== */
 
-/* --- "Banco de dados" falso, simulando o que viria do servidor --- */
 let dadosUsuario = {
     nome: 'Adryan Ernandes',
     email: 'adryan@gmail.com',
@@ -244,34 +233,23 @@ let dadosUsuario = {
     telefone: '(11) 91234-5678',
     tipo: 'paciente',
     plano: 'Basic + Anual',
-    foto: null // vai virar uma string base64 se o usuário enviar uma foto
+    foto: null
 };
 
-/* --- Elementos da sobreposição --- */
 const overlay = document.getElementById('perfilOverlay');
 const overlayFundo = document.getElementById('perfilFundo');
 const formPerfil = document.getElementById('formPerfil');
 const btnSalvarPerfil = document.getElementById('btnSalvarPerfil');
 const mensagemStatus = document.getElementById('mensagemStatus');
 
-/**
- * SIMULA uma requisição GET, tipo "fetch('/api/perfil')".
- * Devolve uma Promise que resolve depois de um tempinho, como uma
- * chamada de rede de verdade faria. Quando vocês tiverem um back-end,
- * é só trocar o "setTimeout" por um fetch() de verdade aqui dentro,
- * sem precisar mudar o resto do código que usa essa função.
- */
 function buscarPerfil() {
     return new Promise((resolve) => {
         setTimeout(() => {
             resolve(dadosUsuario);
-        }, 500); // meio segundo, simulando a espera de uma rede
+        }, 500);
     });
 }
 
-/**
- * SIMULA uma requisição PUT/POST pra salvar os dados no servidor.
- */
 function salvarPerfilNoServidor(dadosNovos) {
     return new Promise((resolve) => {
         setTimeout(() => {
@@ -281,20 +259,15 @@ function salvarPerfilNoServidor(dadosNovos) {
     });
 }
 
-/* --- Abrir a sobreposição --- */
 async function abrirPerfil() {
     overlay.classList.add('aberto');
     overlay.setAttribute('aria-hidden', 'false');
     mensagemStatus.textContent = '';
     mensagemStatus.className = 'mensagem-status';
 
-    // "await" pausa a função aqui até a Promise de buscarPerfil() terminar,
-    // sem travar o resto da página - o usuário já vê o modal abrir na hora,
-    // só o conteúdo demora um instantinho pra preencher.
     const perfil = await buscarPerfil();
     preencherFormulario(perfil);
 
-    // move o foco pro primeiro campo, ajudando quem navega por teclado
     document.getElementById('campoNome').focus();
 }
 
@@ -308,18 +281,28 @@ function preencherFormulario(perfil) {
     document.getElementById('fotoPreview').src = perfil.foto || '../../img logo/img logo.png';
 }
 
-/* --- Fechar a sobreposição --- */
 function fecharPerfil() {
     overlay.classList.remove('aberto');
     overlay.setAttribute('aria-hidden', 'true');
     limparErros();
-    document.getElementById('btnVerPerfil').focus(); // devolve o foco pra quem abriu o modal
+    document.getElementById('btnVerPerfil').focus();
 }
 
-/* --- Máscaras de CPF e telefone, aplicadas enquanto o usuário digita --- */
+/* --- Sair da conta --- */
+function sairDaConta() {
+    // Apaga o registro de "quem está logado" (foi guardado na página de Login).
+    // Os dados de cadastro em si (medicaMaisUsuarios) continuam salvos,
+    // só esquecemos QUEM estava usando o site agora.
+    localStorage.removeItem('medicaMaisUsuarioLogado');
+
+    // Volta pra Home. Como estamos em HTML/Logado/logado.html e a Home
+    // fica em HTML/Home/index.html, subimos uma pasta (../) e entramos em Home/
+    window.location.href = '../Home/index.html';
+}
+
 function aplicarMascaraCpf(evento) {
-    let numeros = evento.target.value.replace(/\D/g, ''); // remove tudo que não é dígito
-    numeros = numeros.slice(0, 11); // limita a 11 dígitos
+    let numeros = evento.target.value.replace(/\D/g, '');
+    numeros = numeros.slice(0, 11);
 
     numeros = numeros.replace(/(\d{3})(\d)/, '$1.$2');
     numeros = numeros.replace(/(\d{3})(\d)/, '$1.$2');
@@ -338,17 +321,13 @@ function aplicarMascaraTelefone(evento) {
     evento.target.value = numeros;
 }
 
-/* --- Pré-visualização da foto enviada --- */
 function preverFoto(evento) {
     const arquivo = evento.target.files[0];
     if (!arquivo) return;
 
-    // FileReader lê o arquivo escolhido no computador do usuário
     const leitor = new FileReader();
 
     leitor.onload = () => {
-        // "leitor.result" é a imagem convertida em uma string base64,
-        // que pode ser usada direto no atributo src de uma <img>
         document.getElementById('fotoPreview').src = leitor.result;
         dadosUsuario.foto = leitor.result;
     };
@@ -356,7 +335,6 @@ function preverFoto(evento) {
     leitor.readAsDataURL(arquivo);
 }
 
-/* --- Validação do formulário --- */
 function validarFormulario() {
     limparErros();
     let valido = true;
@@ -400,9 +378,8 @@ function limparErros() {
     document.querySelectorAll('.campo-invalido').forEach(campo => campo.classList.remove('campo-invalido'));
 }
 
-/* --- Envio do formulário --- */
 async function aoEnviarFormulario(evento) {
-    evento.preventDefault(); // impede o comportamento padrão (recarregar a página)
+    evento.preventDefault();
 
     if (!validarFormulario()) {
         mensagemStatus.textContent = 'Verifique os campos destacados.';
@@ -418,7 +395,6 @@ async function aoEnviarFormulario(evento) {
         tipo: document.getElementById('campoTipo').value
     };
 
-    // Desabilita o botão e avisa que está salvando, pra o usuário não clicar 2x
     btnSalvarPerfil.disabled = true;
     btnSalvarPerfil.textContent = 'Salvando...';
     mensagemStatus.textContent = '';
@@ -430,11 +406,9 @@ async function aoEnviarFormulario(evento) {
         mensagemStatus.textContent = 'Perfil atualizado com sucesso!';
         mensagemStatus.className = 'mensagem-status sucesso';
 
-        // Atualiza a saudação "Olá, Maria!" na página com o novo nome, ao vivo
         const primeiroNome = perfilAtualizado.nome.split(' ')[0];
         document.getElementById('saudacaoNome').textContent = `Olá, ${primeiroNome}! 👋`;
 
-        // Fecha o modal automaticamente depois de mostrar a mensagem de sucesso
         setTimeout(fecharPerfil, 1200);
 
     } catch (erro) {
@@ -446,7 +420,6 @@ async function aoEnviarFormulario(evento) {
     }
 }
 
-/* --- Liga todos os eventos da sobreposição --- */
 function iniciarPerfil() {
     document.getElementById('btnVerPerfil').addEventListener('click', abrirPerfil);
     document.getElementById('linkPerfilNav').addEventListener('click', (e) => {
@@ -456,9 +429,9 @@ function iniciarPerfil() {
 
     document.getElementById('btnFecharPerfil').addEventListener('click', fecharPerfil);
     document.getElementById('btnCancelarPerfil').addEventListener('click', fecharPerfil);
+    document.getElementById('btnSair').addEventListener('click', sairDaConta);
     overlayFundo.addEventListener('click', fecharPerfil);
 
-    // Fecha com a tecla Esc, só se o modal estiver aberto
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && overlay.classList.contains('aberto')) {
             fecharPerfil();
@@ -474,28 +447,139 @@ function iniciarPerfil() {
 
 
 /* ==========================================================
-   PARTE 6: CONTATOS (abas + lista + adicionar/remover)
+   PARTE 5: MENU HAMBURGUER (mobile)
    ========================================================== */
 
-/* "Banco de dados" falso dos contatos - cada um tem um id único */
+function iniciarMenuMobile() {
+    const botaoMenu = document.getElementById('menuToggle');
+    const menu = document.getElementById('menuNav');
+
+    botaoMenu.addEventListener('click', () => {
+        const estaAberto = menu.classList.toggle('aberto');
+
+        botaoMenu.setAttribute('aria-expanded', estaAberto);
+        botaoMenu.setAttribute(
+            'aria-label',
+            estaAberto ? 'Fechar menu de navegação' : 'Abrir menu de navegação'
+        );
+    });
+
+    // Fecha o menu automaticamente ao clicar em algum link do menu
+    menu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            menu.classList.remove('aberto');
+            botaoMenu.setAttribute('aria-expanded', 'false');
+            botaoMenu.setAttribute('aria-label', 'Abrir menu de navegação');
+        });
+    });
+}
+
+
+/* ==========================================================
+   PARTE 6: MENU ACOMPANHA O SCROLL (scroll-spy)
+   ========================================================== */
+
+/* Destaca no menu o link da seção que está sendo vista no momento. */
+function iniciarScrollSpy() {
+    // Só essas 3 seções têm um item correspondente no menu
+    const idsComLink = ['monitoramento', 'contatos', 'suporte'];
+    const secoes = idsComLink.map(id => document.getElementById(id)).filter(Boolean);
+    const linksNav = document.querySelectorAll('#menuNav a');
+
+    function marcarAtivo(id) {
+        linksNav.forEach(link => {
+            const alvo = id ? `#${id}` : 'logado.html';
+            link.classList.toggle('ativo', link.getAttribute('href') === alvo);
+        });
+    }
+
+    /* IntersectionObserver "vigia" os elementos passados em observe() e avisa,
+       através do callback, sempre que um deles entra ou sai da área visível.
+       O rootMargin encolhe essa área de detecção: em vez de considerar a seção
+       "vista" assim que qualquer pixel dela aparece, só conta quando ela cruza
+       perto do MEIO da tela - assim o menu troca no momento certo, nem cedo
+       demais nem tarde demais. */
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                marcarAtivo(entry.target.id);
+            }
+        });
+    }, {
+        rootMargin: '-45% 0px -50% 0px'
+    });
+
+    secoes.forEach(secao => observer.observe(secao));
+
+    // Enquanto o usuário ainda está lá em cima (antes da primeira seção com
+    // link no menu), garante que "Início" continue destacado
+    window.addEventListener('scroll', () => {
+        const primeiraSecao = secoes[0];
+        if (primeiraSecao && window.scrollY < primeiraSecao.offsetTop - window.innerHeight * 0.5) {
+            marcarAtivo(null);
+        }
+    });
+}
+
+
+/* ==========================================================
+   PARTE 7: CARDS DO TOPO LEVAM ATÉ A SEÇÃO COMPLETA
+   ========================================================== */
+
+/* Qualquer elemento com o atributo "data-scroll-to" (ex: data-scroll-to="#contatos")
+   vira clicável e rola suavemente até a seção com aquele id. */
+function iniciarCardsRapidos() {
+    document.querySelectorAll('[data-scroll-to]').forEach(card => {
+
+        // torna o card "focável" e reconhecível por leitor de tela como um botão
+        card.setAttribute('tabindex', '0');
+        card.setAttribute('role', 'button');
+
+        const irParaSecao = () => {
+            const alvo = document.querySelector(card.dataset.scrollTo);
+            if (alvo) {
+                alvo.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        };
+
+        card.addEventListener('click', (evento) => {
+            // se o clique foi num botão/link DENTRO do card (ex: "Ana (Filha)"),
+            // deixa esse botão agir normalmente e não rola a tela
+            if (evento.target.closest('button, a')) return;
+            irParaSecao();
+        });
+
+        // permite ativar com o teclado (Enter ou Espaço), já que agora o card
+        // se comporta como um botão
+        card.addEventListener('keydown', (evento) => {
+            if (evento.key === 'Enter' || evento.key === ' ') {
+                evento.preventDefault();
+                irParaSecao();
+            }
+        });
+    });
+}
+
+
+/* ==========================================================
+   PARTE 8: CONTATOS (abas + lista + adicionar/remover)
+   ========================================================== */
+
 let listaContatos = [
     { id: 1, nome: 'Ana (Filha)', telefone: '(11) 91234-5678', tipo: 'familiar' },
     { id: 2, nome: 'Carlos', telefone: '(11) 99876-5432', tipo: 'cuidador' }
 ];
 
-let proximoIdContato = 3; // usado pra dar um id novo a cada contato adicionado
+let proximoIdContato = 3;
 
-/* --- Alternar entre as abas "Meus contatos" / "Adicionar contato" --- */
 function iniciarAbasContatos() {
     const abas = document.querySelectorAll('.contatos-abas .aba');
 
     abas.forEach(aba => {
         aba.addEventListener('click', () => {
-            // desmarca todas as abas e esconde todos os painéis
             abas.forEach(a => a.setAttribute('aria-selected', 'false'));
             document.querySelectorAll('.contatos-painel').forEach(painel => painel.hidden = true);
 
-            // marca só a aba clicada e mostra o painel correspondente a ela
             aba.setAttribute('aria-selected', 'true');
             const idPainel = aba.getAttribute('aria-controls');
             document.getElementById(idPainel).hidden = false;
@@ -503,7 +587,6 @@ function iniciarAbasContatos() {
     });
 }
 
-/* --- Simulações de requisição, no mesmo padrão do perfil --- */
 function buscarContatos() {
     return new Promise(resolve => {
         setTimeout(() => resolve(listaContatos), 400);
@@ -529,7 +612,6 @@ function removerContatoNoServidor(id) {
     });
 }
 
-/* --- Renderiza a lista de contatos na tela --- */
 function renderizarContatos(contatos) {
     const lista = document.getElementById('listaContatosCompleta');
     lista.innerHTML = '';
@@ -561,15 +643,10 @@ async function carregarContatos() {
     renderizarContatos(contatos);
 }
 
-/* --- Clique no botão "Remover" (delegação de evento) ---
-   Como os botões são criados dinamicamente pelo renderizarContatos(),
-   não podemos usar addEventListener neles diretamente (eles ainda nem
-   existem quando a página carrega). Em vez disso, "escutamos" o clique
-   na lista inteira, e verificamos se quem foi clicado foi um botão .btn-remover-contato. */
 function iniciarRemocaoContatos() {
     document.getElementById('listaContatosCompleta').addEventListener('click', async (evento) => {
         const botao = evento.target.closest('.btn-remover-contato');
-        if (!botao) return; // clicou em outra parte da lista, ignora
+        if (!botao) return;
 
         const id = Number(botao.dataset.id);
         botao.disabled = true;
@@ -580,7 +657,6 @@ function iniciarRemocaoContatos() {
     });
 }
 
-/* --- Formulário de adicionar contato --- */
 function validarFormularioContato() {
     let valido = true;
 
@@ -634,14 +710,13 @@ function iniciarFormularioContato() {
         btnSalvar.disabled = false;
         btnSalvar.textContent = 'Adicionar contato';
 
-        // depois de 2s, some com a mensagem de sucesso
         setTimeout(() => { mensagem.textContent = ''; }, 2000);
     });
 }
 
 
 /* ==========================================================
-   PARTE 7: SUPORTE PRIORITÁRIO (reagendar visita)
+   PARTE 9: SUPORTE PRIORITÁRIO (reagendar visita)
    ========================================================== */
 
 let proximaVisita = new Date('2026-06-02T10:00:00');
@@ -694,7 +769,7 @@ function iniciarReagendamento() {
 
 
 /* ==========================================================
-   PARTE 8: REGISTRO DE HUMOR 
+   PARTE 10: REGISTRO DE HUMOR (timeline + filtro)
    ========================================================== */
 
 const emojisPorHumor = {
@@ -775,10 +850,19 @@ function aplicarFiltroHumor() {
 
 
 /* ==========================================================
-   PARTE 9: INICIALIZAÇÃO DE TUDO AO CARREGAR A PÁGINA
+   PARTE 11: INICIALIZAÇÃO DE TUDO AO CARREGAR A PÁGINA
    ========================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Menu mobile
+    iniciarMenuMobile();
+
+    // Menu acompanha o scroll
+    iniciarScrollSpy();
+
+    // Cards do topo (clicáveis)
+    iniciarCardsRapidos();
+
     // Picos de pressão + gráfico
     atualizarPicosDePressao();
     aplicarFiltro();
