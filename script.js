@@ -1,3 +1,314 @@
+/* =========================================================
+                        HOME (index.html)
+   Só roda nesta página: verifica se a seção de
+   funcionalidades (exclusiva da Home) existe antes de tudo.
+   ========================================================= */
+(function () {
+    if (!document.getElementById('funcionalidades')) return;
+
+    const menuToggle = document.querySelector('#menuToggle');
+    const menuNav = document.querySelector('#menuNav');
+
+    function abrirMenu() {
+        menuNav.classList.add('aberto');
+        menuToggle.setAttribute('aria-expanded', 'true');
+        menuToggle.setAttribute('aria-label', 'Fechar menu de navegação');
+    }
+
+    function fecharMenu() {
+        menuNav.classList.remove('aberto');
+        menuToggle.setAttribute('aria-expanded', 'false');
+        menuToggle.setAttribute('aria-label', 'Abrir menu de navegação');
+    }
+
+    if (menuToggle && menuNav) {
+        menuToggle.addEventListener('click', function () {
+            if (menuNav.classList.contains('aberto')) {
+                fecharMenu();
+            } else {
+                abrirMenu();
+            }
+        });
+
+        menuNav.querySelectorAll('a').forEach(function (link) {
+            link.addEventListener('click', fecharMenu);
+        });
+
+        document.addEventListener('click', function (evento) {
+            const clicouNoMenu = menuNav.contains(evento.target);
+            const clicouNoBotao = menuToggle.contains(evento.target);
+            if (!clicouNoMenu && !clicouNoBotao) {
+                fecharMenu();
+            }
+        });
+
+        document.addEventListener('keydown', function (evento) {
+            if (evento.key === 'Escape') {
+                fecharMenu();
+            }
+        });
+    }
+
+    /* =========================================================
+                             SCROLL-SPY
+       ========================================================= */
+
+    const secoes = [
+        { el: document.querySelector('.hero'), link: menuNav ? menuNav.querySelector('a[href="index.html"]') : null },
+        { el: document.querySelector('#funcionalidades'), link: menuNav ? menuNav.querySelector('a[href="#funcionalidades"]') : null },
+        { el: document.querySelector('#planos'), link: menuNav ? menuNav.querySelector('a[href="#planos"]') : null },
+        { el: document.querySelector('#contato'), link: menuNav ? menuNav.querySelector('a[href="#contato"]') : null }
+    ].filter(function (s) { return s.el && s.link; });
+
+    function destacarLink(linkAtivo) {
+        secoes.forEach(function (s) {
+            if (s.link === linkAtivo) {
+                s.link.setAttribute('aria-current', 'page');
+            } else {
+                s.link.removeAttribute('aria-current');
+            }
+        });
+    }
+
+    function atualizarScrollSpy() {
+        var nav = document.querySelector('nav');
+        if (!nav || secoes.length === 0) return;
+
+        var alturaNav = nav.offsetHeight;
+        var linhaDeteccao = alturaNav + window.innerHeight * 0.25;
+        var ativa = null;
+
+        secoes.forEach(function (s) {
+            var rect = s.el.getBoundingClientRect();
+            if (rect.top <= linhaDeteccao && rect.bottom > linhaDeteccao) {
+                ativa = s;
+            }
+        });
+
+        if (!ativa) {
+            for (var i = secoes.length - 1; i >= 0; i--) {
+                if (secoes[i].el.getBoundingClientRect().top <= linhaDeteccao) {
+                    ativa = secoes[i];
+                    break;
+                }
+            }
+        }
+
+        if (ativa) {
+            destacarLink(ativa.link);
+        }
+    }
+
+    window.addEventListener('scroll', atualizarScrollSpy, { passive: true });
+    atualizarScrollSpy();
+
+    /* =========================================================
+                                PLANOS
+       ========================================================= */
+
+    const planos = document.querySelectorAll('.planos .card > div');
+
+    planos.forEach(function (cartao) {
+        const botao = cartao.querySelector('button');
+        if (!botao) return;
+
+        botao.addEventListener('click', function () {
+            const nomePlano = cartao.querySelector('h3').textContent.replace(/\s+/g, ' ').trim();
+            // Pega o span que está DENTRO do <p> (o preço), e não o "+" do título
+            const precoEl = cartao.querySelector('p span');
+            const preco = precoEl ? precoEl.textContent.trim() : '0,00';
+
+            const url = 'checkout.html'
+                + '?plano=' + encodeURIComponent(nomePlano)
+                + '&preco=' + encodeURIComponent(preco);
+            window.location.href = url;
+        });
+    });
+})();
+
+/* =========================================================
+                            Checkout (checkout.html)
+   Só roda nesta página: verifica se o formulário de cartão,
+   exclusivo do checkout, existe antes de tudo.
+   ========================================================= */
+(function () {
+    if (!document.querySelector('.checkout')) return;
+
+    var params = new URLSearchParams(window.location.search);
+var nomePlano = params.get('plano') || 'Basic';
+var precoStr = params.get('preco') || '0,00';
+
+document.getElementById('resumo-plano').textContent = nomePlano;
+document.getElementById('resumo-preco').textContent = 'R$ ' + precoStr;
+
+var valorBotao = document.getElementById('valor-botao');
+if (valorBotao) valorBotao.textContent = 'R$ ' + precoStr;
+
+/* ---------- Se for plano grátis, simplifica ---------- */
+var ehGratis = precoStr.replace(/\D/g, '').replace(/^0+$/, '') === '';
+
+if (ehGratis) {
+    document.querySelector('.metodos').style.display = 'none';
+    document.getElementById('form-cartao').style.display = 'none';
+    document.getElementById('form-pix').style.display = 'none';
+
+    var gratisBotao = document.createElement('button');
+    gratisBotao.type = 'button';
+    gratisBotao.className = 'btn-pagar';
+    gratisBotao.textContent = 'Ativar plano grátis';
+    document.querySelector('.checkout').appendChild(gratisBotao);
+    gratisBotao.addEventListener('click', function () {
+        mostrarSucesso('Plano Basic grátis ativado!');
+    });
+}
+
+/* ---------- Alternar Cartão / Pix ---------- */
+var btnCartao = document.getElementById('btn-cartao');
+var btnPix = document.getElementById('btn-pix');
+var formCartao = document.getElementById('form-cartao');
+var formPix = document.getElementById('form-pix');
+
+btnCartao.addEventListener('click', function () {
+    btnCartao.classList.add('ativo');
+    btnCartao.setAttribute('aria-selected', 'true');
+    btnPix.classList.remove('ativo');
+    btnPix.setAttribute('aria-selected', 'false');
+    formCartao.classList.remove('escondido');
+    formPix.classList.add('escondido');
+});
+
+btnPix.addEventListener('click', function () {
+    btnPix.classList.add('ativo');
+    btnPix.setAttribute('aria-selected', 'true');
+    btnCartao.classList.remove('ativo');
+    btnCartao.setAttribute('aria-selected', 'false');
+    formPix.classList.remove('escondido');
+    formCartao.classList.add('escondido');
+});
+
+/* ---------- Mensagens ---------- */
+function mostrarMsg(el, texto, tipo) {
+    el.textContent = texto;
+    el.className = 'mensagem mostrar ' + tipo;
+}
+
+function esconderMsg(el) {
+    el.textContent = '';
+    el.className = 'mensagem';
+}
+
+/* ---------- Formatação de campos ---------- */
+var campoNumero = document.getElementById('numero-cartao');
+var campoValidade = document.getElementById('validade');
+var campoCvv = document.getElementById('cvv');
+
+campoNumero.addEventListener('input', function () {
+    var limpo = campoNumero.value.replace(/\D/g, '').slice(0, 16);
+    campoNumero.value = limpo.replace(/(\d{4})(?=\d)/g, '$1 ');
+});
+
+campoValidade.addEventListener('input', function () {
+    var limpo = campoValidade.value.replace(/\D/g, '').slice(0, 4);
+    if (limpo.length >= 3) {
+        campoValidade.value = limpo.slice(0, 2) + '/' + limpo.slice(2);
+    } else {
+        campoValidade.value = limpo;
+    }
+});
+
+campoCvv.addEventListener('input', function () {
+    campoCvv.value = campoCvv.value.replace(/\D/g, '').slice(0, 4);
+});
+
+/* ---------- Pagamento por cartão ---------- */
+var msgCartao = document.getElementById('msg-cartao');
+
+formCartao.addEventListener('submit', function (evento) {
+    evento.preventDefault();
+    esconderMsg(msgCartao);
+
+    var nome = document.getElementById('nome-cartao').value.trim();
+    var numero = campoNumero.value.replace(/\s/g, '');
+    var validade = campoValidade.value.trim();
+    var cvv = campoCvv.value.trim();
+
+    if (nome === '') {
+        mostrarMsg(msgCartao, 'Digite o nome como está no cartão.', 'erro');
+        return;
+    }
+    if (numero.length < 13 || numero.length > 16) {
+        mostrarMsg(msgCartao, 'O número do cartão deve ter entre 13 e 16 dígitos.', 'erro');
+        return;
+    }
+    if (!/^\d{2}\/\d{2}$/.test(validade)) {
+        mostrarMsg(msgCartao, 'Validade deve estar no formato MM/AA.', 'erro');
+        return;
+    }
+    var mes = parseInt(validade.split('/')[0], 10);
+    if (mes < 1 || mes > 12) {
+        mostrarMsg(msgCartao, 'O mês da validade deve estar entre 01 e 12.', 'erro');
+        return;
+    }
+    if (cvv.length < 3) {
+        mostrarMsg(msgCartao, 'O CVV deve ter pelo menos 3 dígitos.', 'erro');
+        return;
+    }
+
+    // Simula processamento
+    var btnPagar = document.getElementById('btn-pagar-cartao');
+    btnPagar.disabled = true;
+    btnPagar.textContent = 'Processando...';
+    mostrarMsg(msgCartao, 'Processando pagamento, aguarde...', 'sucesso');
+
+    setTimeout(function () {
+        btnPagar.disabled = false;
+        btnPagar.textContent = 'Pagar R$ ' + precoStr;
+        mostrarSucesso('Pagamento de R$ ' + precoStr + ' aprovado! Seu plano ' + nomePlano + ' já está ativo.');
+    }, 2000);
+});
+
+/* ---------- Pix ---------- */
+var msgPix = document.getElementById('msg-pix');
+var btnCopiar = document.getElementById('btn-copiar-pix');
+var codigoPix = document.getElementById('codigo-pix');
+var btnConfirmar = document.getElementById('btn-confirmar-pix');
+
+btnCopiar.addEventListener('click', function () {
+    codigoPix.select();
+    navigator.clipboard.writeText(codigoPix.value).then(function () {
+        btnCopiar.textContent = 'Copiado!';
+        setTimeout(function () { btnCopiar.textContent = 'Copiar'; }, 2000);
+    }).catch(function () {
+        document.execCommand('copy');
+        btnCopiar.textContent = 'Copiado!';
+        setTimeout(function () { btnCopiar.textContent = 'Copiar'; }, 2000);
+    });
+});
+
+btnConfirmar.addEventListener('click', function () {
+    btnConfirmar.disabled = true;
+    btnConfirmar.textContent = 'Verificando pagamento...';
+    mostrarMsg(msgPix, 'Confirmando com o banco, aguarde...', 'sucesso');
+
+    setTimeout(function () {
+        btnConfirmar.disabled = false;
+        btnConfirmar.textContent = 'Já paguei';
+        mostrarSucesso('Pix de R$ ' + precoStr + ' confirmado! Seu plano ' + nomePlano + ' já está ativo.');
+    }, 2500);
+});
+
+    /* ---------- Overlay de sucesso ---------- */
+    function mostrarSucesso(texto) {
+        var overlay = document.getElementById('overlay-sucesso');
+        document.getElementById('sucesso-texto').textContent = texto;
+        overlay.classList.add('ativo');
+    }
+})();
+
+/* =========================================================
+                            LOGADO (logado.html)
+   ========================================================= */
+
 
 /* ==========================================================
    PARTE 1: CARDS DO TOPO (Picos de pressão aleatórios)
@@ -278,7 +589,7 @@ function preencherFormulario(perfil) {
     document.getElementById('campoTelefone').value = perfil.telefone;
     document.getElementById('campoTipo').value = perfil.tipo;
     document.getElementById('campoPlano').textContent = perfil.plano;
-    document.getElementById('fotoPreview').src = perfil.foto || '../../img logo/img logo.png';
+    document.getElementById('fotoPreview').src = perfil.foto || 'img logo/img logo.png';
 }
 
 function fecharPerfil() {
@@ -295,9 +606,8 @@ function sairDaConta() {
     // só esquecemos QUEM estava usando o site agora.
     localStorage.removeItem('medicaMaisUsuarioLogado');
 
-    // Volta pra Home. Como estamos em HTML/Logado/logado.html e a Home
-    // fica em HTML/Home/index.html, subimos uma pasta (../) e entramos em Home/
-    window.location.href = '../Home/index.html';
+    // Volta pra Home (todos os arquivos estão na mesma pasta agora)
+    window.location.href = 'index.html';
 }
 
 function aplicarMascaraCpf(evento) {
@@ -854,6 +1164,9 @@ function aplicarFiltroHumor() {
    ========================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Só roda no painel logado (logado.html)
+    if (!document.getElementById('saudacaoNome')) return;
+
     // Menu mobile
     iniciarMenuMobile();
 
@@ -887,3 +1200,292 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('humorInicio').addEventListener('change', aplicarFiltroHumor);
     document.getElementById('humorFim').addEventListener('change', aplicarFiltroHumor);
 });
+
+/* =========================================================
+                        LOGIN (login.html)
+   Só roda nesta página: verifica se o formulário de login
+   existe antes de tudo.
+   ========================================================= */
+(function () {
+    if (!document.querySelector('.login-form')) return;
+
+// Chaves usadas no localStorage
+const CHAVE_USUARIOS = 'medicaMaisUsuarios';
+const CHAVE_LEMBRAR = 'medicaMaisLembrar';
+const CHAVE_LOGADO = 'medicaMaisUsuarioLogado';
+ 
+/* ---------- Funcoes auxiliares de mensagem ---------- */
+function mostrarMensagem(elemento, mensagem, tipo) {
+    elemento.textContent = mensagem;
+    elemento.classList.remove('sucesso');
+    if (tipo === 'sucesso') {
+        elemento.classList.add('sucesso');
+    }
+    elemento.classList.add('mostrar');
+}
+ 
+function esconderMensagem(elemento) {
+    elemento.textContent = '';
+    elemento.classList.remove('mostrar', 'sucesso');
+}
+ 
+function ehEmailValido(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+ 
+/* ---------- Funcoes de armazenamento (localStorage) ---------- */
+function obterUsuarios() {
+    try {
+        return JSON.parse(localStorage.getItem(CHAVE_USUARIOS)) || [];
+    } catch (e) {
+        return [];
+    }
+}
+ 
+function salvarUsuarios(lista) {
+    localStorage.setItem(CHAVE_USUARIOS, JSON.stringify(lista));
+}
+ 
+function buscarUsuarioPorEmail(email) {
+    const emailNormalizado = email.trim().toLowerCase();
+    return obterUsuarios().find(function (u) {
+        return u.email === emailNormalizado;
+    });
+}
+ 
+/* ---------- Elementos: Login ---------- */
+const botaoOlho = document.querySelector('.olho');
+const campoSenha = document.querySelector('.senha-container input');
+const formLogin = document.querySelector('.login-form');
+const campoEmail = document.querySelector('input[type="email"]');
+const erroLogin = document.querySelector('#erro-login');
+const erroEmail = document.querySelector('#erro-email');
+const lembrarSenha = document.querySelector('#lembrar-senha');
+ 
+/* ---------- Elementos: Esqueci a senha ---------- */
+const linkEsqueceu = document.querySelector('.esqueceu');
+const overlayEsqueci = document.querySelector('#overlay-esqueci');
+const btnCancelar = document.querySelector('.btn-cancelar');
+const formEsqueci = document.querySelector('.form-esqueci');
+const campoCpfEmail = document.querySelector('#cpf-email');
+const erroEsqueci = document.querySelector('#erro-esqueci');
+ 
+/* ---------- Elementos: Cadastro ---------- */
+const linkCadastro = document.querySelector('.cadastro strong');
+const overlayCadastro = document.querySelector('#overlay-cadastro');
+const btnCancelarCadastro = document.querySelector('#cancelar-cadastro');
+const formCadastro = document.querySelector('.form-cadastro');
+const erroCadastro = document.querySelector('#erro-cadastro');
+const erroCpf = document.querySelector('#erro-cpf');
+const campoCpf = document.querySelector('#cpf');
+const campoNome = document.querySelector('#nome');
+const campoEmailCadastro = document.querySelector('#email-cadastro');
+const erroEmailCadastro = document.querySelector('#erro-email-cadastro');
+const campoSenhaCadastro = document.querySelector('#senha-cadastro');
+const campoConfirmaSenha = document.querySelector('#confirma-senha');
+ 
+/* ---------- Ao abrir a pagina: preenche o email lembrado ---------- */
+window.addEventListener('DOMContentLoaded', function () {
+    const emailLembrado = localStorage.getItem(CHAVE_LEMBRAR);
+    if (emailLembrado) {
+        campoEmail.value = emailLembrado;
+        if (lembrarSenha) {
+            lembrarSenha.checked = true;
+        }
+    }
+});
+ 
+/* ---------- Mostrar / esconder senha ---------- */
+botaoOlho.addEventListener('click', function () {
+    if (campoSenha.type === 'password') {
+        campoSenha.type = 'text';
+        botaoOlho.textContent = '--';
+    } else {
+        campoSenha.type = 'password';
+        botaoOlho.textContent = '👁';
+    }
+});
+ 
+/* ---------- LOGIN ---------- */
+formLogin.addEventListener('submit', function (evento) {
+    evento.preventDefault();
+    esconderMensagem(erroLogin);
+    esconderMensagem(erroEmail);
+ 
+    const email = campoEmail.value.trim();
+    const senha = campoSenha.value;
+ 
+    if (email === '' || senha === '') {
+        mostrarMensagem(erroLogin, 'Preencha o email e a senha para continuar.', 'erro');
+        return;
+    }
+ 
+    if (!ehEmailValido(email)) {
+        mostrarMensagem(erroEmail, 'Digite um email válido, como exemplo@gmail.com.', 'erro');
+        return;
+    }
+ 
+    const usuario = buscarUsuarioPorEmail(email);
+ 
+    if (!usuario) {
+        mostrarMensagem(erroLogin, 'Email não encontrado. Clique em "cadastre-se" para criar sua conta.', 'erro');
+        return;
+    }
+ 
+    if (usuario.senha !== senha) {
+        mostrarMensagem(erroLogin, 'Senha incorreta. Verifique e tente novamente.', 'erro');
+        return;
+    }
+ 
+    // Guarda a preferencia de "lembrar senha"
+    if (lembrarSenha && lembrarSenha.checked) {
+        localStorage.setItem(CHAVE_LEMBRAR, email.toLowerCase());
+    } else {
+        localStorage.removeItem(CHAVE_LEMBRAR);
+    }
+ 
+    // Guarda quem esta logado (a pagina logada pode ler isso)
+    localStorage.setItem(CHAVE_LOGADO, JSON.stringify({
+        nome: usuario.nome,
+        email: usuario.email,
+        papel: usuario.papel
+    }));
+ 
+    const primeiroNome = usuario.nome ? usuario.nome.split(' ')[0] : '';
+    mostrarMensagem(erroLogin, 'Login realizado com sucesso! Bem-vindo(a), ' + primeiroNome + '. Redirecionando...', 'sucesso');
+ 
+    setTimeout(function () {
+        window.location.href = 'logado.html';
+    }, 1500);
+});
+ 
+/* ---------- ESQUECI A SENHA ---------- */
+linkEsqueceu.addEventListener('click', function (evento) {
+    evento.preventDefault();
+    overlayEsqueci.classList.add('ativo');
+});
+ 
+btnCancelar.addEventListener('click', function () {
+    overlayEsqueci.classList.remove('ativo');
+    esconderMensagem(erroEsqueci);
+});
+ 
+formEsqueci.addEventListener('submit', function (evento) {
+    evento.preventDefault();
+    esconderMensagem(erroEsqueci);
+ 
+    const valor = campoCpfEmail.value.trim();
+    const pareceEmail = valor.includes('@');
+    const semFormatacao = valor.replace(/[.\-\s]/g, '');
+    const ehCpfValido = /^\d{11}$/.test(semFormatacao);
+ 
+    if (valor === '') {
+        mostrarMensagem(erroEsqueci, 'Digite seu CPF ou email para continuar.', 'erro');
+        return;
+    }
+ 
+    if (!pareceEmail && !ehCpfValido) {
+        mostrarMensagem(erroEsqueci, 'Digite um CPF com 11 números ou um email válido.', 'erro');
+        return;
+    }
+ 
+    mostrarMensagem(erroEsqueci, 'Pronto! Enviamos um link de recuperação. Verifique seu email (e a caixa de spam).', 'sucesso');
+ 
+    setTimeout(function () {
+        overlayEsqueci.classList.remove('ativo');
+        esconderMensagem(erroEsqueci);
+        formEsqueci.reset();
+    }, 2500);
+});
+ 
+/* ---------- CADASTRO ---------- */
+linkCadastro.addEventListener('click', function () {
+    overlayCadastro.classList.add('ativo');
+});
+ 
+btnCancelarCadastro.addEventListener('click', function () {
+    overlayCadastro.classList.remove('ativo');
+    esconderMensagem(erroCadastro);
+    esconderMensagem(erroCpf);
+    esconderMensagem(erroEmailCadastro);
+});
+ 
+formCadastro.addEventListener('submit', function (evento) {
+    evento.preventDefault();
+    esconderMensagem(erroCadastro);
+    esconderMensagem(erroCpf);
+    esconderMensagem(erroEmailCadastro);
+ 
+    const nome = campoNome.value.trim();
+    const email = campoEmailCadastro.value.trim();
+    const senha = campoSenhaCadastro.value;
+    const confirmaSenha = campoConfirmaSenha.value;
+    const papelSelecionado = document.querySelector('input[name="papel"]:checked');
+ 
+    if (nome === '') {
+        mostrarMensagem(erroCadastro, 'Digite seu nome completo.', 'erro');
+        return;
+    }
+ 
+    if (campoCpf.value.length !== 11) {
+        mostrarMensagem(erroCpf, 'O CPF deve ter 11 números.', 'erro');
+        return;
+    }
+ 
+    if (!ehEmailValido(email)) {
+        mostrarMensagem(erroEmailCadastro, 'Digite um email válido, como exemplo@gmail.com.', 'erro');
+        return;
+    }
+ 
+    if (!papelSelecionado) {
+        mostrarMensagem(erroCadastro, 'Selecione se você é Cuidador, Paciente ou Parente.', 'erro');
+        return;
+    }
+ 
+    if (senha.length < 6) {
+        mostrarMensagem(erroCadastro, 'A senha deve ter no mínimo 6 caracteres.', 'erro');
+        return;
+    }
+ 
+    if (senha !== confirmaSenha) {
+        mostrarMensagem(erroCadastro, 'As senhas não coincidem. Digite a mesma senha nos dois campos.', 'erro');
+        return;
+    }
+ 
+    // Nao deixa cadastrar dois usuarios com o mesmo email
+    if (buscarUsuarioPorEmail(email)) {
+        mostrarMensagem(erroEmailCadastro, 'Este email já está cadastrado. Faça login ou use outro email.', 'erro');
+        return;
+    }
+ 
+    // Salva o novo usuario
+    const usuarios = obterUsuarios();
+    usuarios.push({
+        nome: nome,
+        cpf: campoCpf.value,
+        email: email.toLowerCase(),
+        senha: senha,
+        papel: papelSelecionado.value
+    });
+    salvarUsuarios(usuarios);
+ 
+    mostrarMensagem(erroCadastro, 'Cadastro realizado com sucesso! Agora é só fazer login com seu email e senha.', 'sucesso');
+ 
+    // Ja deixa o email preenchido na tela de login
+    campoEmail.value = email.toLowerCase();
+ 
+    setTimeout(function () {
+        overlayCadastro.classList.remove('ativo');
+        esconderMensagem(erroCadastro);
+        formCadastro.reset();
+    }, 2500);
+});
+ 
+/* ---------- CPF: aceita apenas numeros (max 11) ---------- */
+campoCpf.addEventListener('input', function () {
+    let valor = campoCpf.value.replace(/\D/g, '');
+    valor = valor.slice(0, 11);
+    campoCpf.value = valor;
+});
+
+})();
