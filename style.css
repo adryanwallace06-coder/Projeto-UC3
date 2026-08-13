@@ -552,7 +552,7 @@ footer {
    ========================================================== */
 
 /* Tablet: hero e planos empilham, mas o menu ainda cabe */
-@media (max-width: 992px) {
+@media (max-width: 920px) {
     .hero {
         flex-direction: column;
         text-align: center;
@@ -632,10 +632,12 @@ footer {
         max-width: 100%;
         width: 100%;
     }
+
+   
 }
 
 /* Celular pequeno */
-@media (max-width: 480px) {
+@media (max-width: 320px) {
     .hero-text h1 {
         font-size: 30px;
     }
@@ -644,6 +646,12 @@ footer {
     .planos header h2 {
         font-size: 24px;
     }
+
+     .footer-container{
+        flex-direction: column;
+    }
+
+   
 }
 
 
