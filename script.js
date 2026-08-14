@@ -895,6 +895,7 @@ function iniciarPerfil() {
     document.getElementById('btnFecharPerfil').addEventListener('click', fecharPerfil);
     document.getElementById('btnCancelarPerfil').addEventListener('click', fecharPerfil);
     document.getElementById('btnSair').addEventListener('click', sairDaConta);
+    document.getElementById('sairDaConta').addEventListener('click', sairDaConta)
     overlayFundo.addEventListener('click', fecharPerfil);
 
     document.addEventListener('keydown', (e) => {

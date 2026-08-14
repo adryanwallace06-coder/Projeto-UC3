@@ -1016,7 +1016,6 @@ body.pagina-logado main{
 
 body.pagina-logado .boas-vindas{
     display: flex;
-    justify-content: space-between;
     align-items: flex-start;
     flex-wrap: wrap;
     gap: 20px;
@@ -1035,13 +1034,20 @@ body.pagina-logado .boas-vindas-text p{
     max-width: 500px;
 }
 
+body.pagina-logado .btns-conta {
+  display: flex;
+  gap: 12px;
+  margin-left: auto;
+}
+
+
 body.pagina-logado .Ver-perfil{
     background-color: #fff;
     border: 1px solid var(--cinza-borda);
     color: var(--cor-titulo);
     font-weight: bold;
     padding: 12px 22px;
-    border-radius: 30px;
+    border-radius: 25px;
     cursor: pointer;
     font-size: 17px;
     transition: 0.3s;
@@ -1052,6 +1058,24 @@ body.pagina-logado .Ver-perfil:hover{
     background-color: var(--azul);
     color: #fff;
     border-color: var(--azul);
+}
+
+body.pagina-logado .Sair-conta{
+    background-color: #fff;
+    border: 1px solid var(--cinza-borda);
+    color: var(--cor-titulo);
+    font-weight: bold;
+    padding: 12px 12px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 17px;
+    transition: 0.3s;
+    white-space: nowrap;
+}
+
+body.pagina-logado .Sair-conta:hover{
+    background-color: rgba(255, 22, 22, 0.719);
+    color: white;
 }
 
 body.pagina-logado .cards{
@@ -1066,7 +1090,6 @@ body.pagina-logado .cards article{
     padding: 24px;
 }
 
-/* Os 3 cards do topo agora são clicáveis (JS leva até a seção completa) */
 body.pagina-logado [data-scroll-to]{
     cursor: pointer;
     transition: transform 0.2s, box-shadow 0.2s;
