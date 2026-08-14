@@ -380,9 +380,9 @@ ul {
     font-weight: bolder;
 }
 
-.planos .card .card-basic,
-.planos .card .card-basic-mensal,
-.planos .card .card-basic-anual {
+.planos .card .card-essencial,
+.planos .card .card-cuidado,
+.planos .card .card-cuidado-total {
     display: flex;
     flex-direction: column;
     text-align: center;
@@ -392,20 +392,29 @@ ul {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     flex: 1 1 280px;
     max-width: 340px;
+    text-shadow:
+        -1px -1px 50 black,
+         1px -1px 0 black,
+        -1px  1px 0 black,
+         1px  1px 0 black;
 }
 
-.planos .card .card-basic {
+.planos .card .card-essencial {
     background-color: #ffffff;
 }
 
-.planos .card .card-basic-mensal {
+.planos .card .card-cuidado {
     background-color: #0069F2;
     color: white;
 }
 
-.planos .card .card-basic-anual {
+.planos .card .card-cuidado-total {
     background-color: #27AE60;
-    color: white;
+    color: rgb(255, 255, 255);
+      transform: scale(1.05);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    z-index: 2;
+    
 }
 
 .planos .card h3 {
@@ -429,16 +438,17 @@ ul {
     font-size: 18px;
 }
 
-.planos .card .card-basic-mensal li,
-.planos .card .card-basic-anual li {
+.planos .card .card-essencial,
+.planos .card .card-cuidado,
+.planos .card .card-cuidado-total {
     text-shadow:
-        -1px -1px 0 black,
+        -1px -1px 50 black,
          1px -1px 0 black,
         -1px  1px 0 black,
          1px  1px 0 black;
 }
 
-.planos .card .card-basic-anual p.popular {
+.planos .card .card-cuidado-total p.popular {
     background-color: #ffffff;
     color: #27AE60;
     font-size: 15px;
@@ -463,12 +473,12 @@ ul {
     transition: transform .3s, border-color .3s;
 }
 
-.planos .card .card-basic-mensal button {
+.planos .card .card-cuidado button {
     border-color: #2d7ff9;
     color: #2d7ff9;
 }
 
-.planos .card .card-basic-anual button {
+.planos .card .card-cuidado-total button {
     border-color: #27AE60;
     color: #27AE60;
 }
