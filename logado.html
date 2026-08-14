@@ -36,7 +36,7 @@
         <section class="boas-vindas">
 
             <div class="boas-vindas-text">
-                <h1 id="saudacaoNome">Olá, Adryan! 👋</h1>
+                <h1 id="saudacaoNome">Olá, Adryan! </h1>
 
                 <p>
                     Que bom te ver! Cuide todos os dias da sua saúde
@@ -44,7 +44,8 @@
                 </p>
             </div>
 
-            <button type="button" class="Ver-perfil" id="btnVerPerfil">Ver meu perfil ➡️</button>
+            <button type="button" class="Ver-perfil" id="btnVerPerfil">Ver meu perfil </button>
+            <button type="button" class="Sair-conta" id="sairDaConta">Sair da conta </button>
 
         </section>
 
@@ -55,12 +56,12 @@
 
                 <ul class="card-home">
                     <li class="pico-alto">
-                        <span>📅 12/05/2026 11:30</span>
+                        <span> 12/05/2026 11:30</span>
                         <p class="tag-alto">Pico de pressão alta</p>
                         <p class="valor">160/100 mmHg</p>
                     </li>
                     <li class="pico-baixo">
-                        <span>📅 14/05/2026 11:34</span>
+                        <span> 14/05/2026 11:34</span>
                         <p class="tag-baixo">Pico de pressão baixa</p>
                         <p class="valor">70/40 mmHg</p>
                     </li>
@@ -97,13 +98,13 @@
 
             <form class="filtros" id="filtrosForm">
                 <div class="filtro">
-                    <label for="periodoInicio">📅 Período</label>
+                    <label for="periodoInicio"> Período</label>
                     <input type="date" id="periodoInicio" name="inicio" value="2026-05-10">
                     <span>–</span>
                     <input type="date" id="periodoFim" name="fim" value="2026-05-16">
                 </div>
 
-                <p class="filtro-info">🕐 Última atualização: <strong>16/05/2026 12:00</strong></p>
+                <p class="filtro-info"> Última atualização: <strong>16/05/2026 12:00</strong></p>
             </form>
 
             <div class="chart-card">
@@ -177,23 +178,27 @@
             <div class="humor-conteudo">
 
                 <ul class="humor-legenda">
-                    <li><span class="humor-numero">1</span> Feliz 😄</li>
-                    <li><span class="humor-numero">2</span> Triste 😢</li>
-                    <li><span class="humor-numero">3</span> Estresse 😠</li>
-                    <li><span class="humor-numero">4</span> Neutro 😐</li>
+                    <li><span class="humor-numero">1</span>Feliz<svg class="feliz" xmlns="http://www.w3.org/2000/svg" width="60" height="10" viewBox="0 0 24 24" fill="none" stroke="#3de166" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-face-slightly-smiling-icon lucide-face-slightly-smiling"><path d="M15 10V9"/><path d="M16.472 15a6 6 0 01-8.943 0"/><path d="M9 10V9"/><circle cx="12" cy="12" r="10"/></svg></li>
+
+                    <li><span class="humor-numero">2</span>Triste<svg class="triste" xmlns="http://www.w3.org/2000/svg" width="232" height="232" viewBox="0 0 24 24" fill="none" stroke="#3d92e1" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-face-slightly-frowning-icon lucide-face-slightly-frowning"><path d="M15 10V9"/><path d="M9 10V9"/><path d="M9 16a5 5 0 016 0"/><circle cx="12" cy="12" r="10"/></svg></li>
+
+                    <li><span class="humor-numero">3</span>Estresse<svg class="estresse" xmlns="http://www.w3.org/2000/svg" width="232" height="232" viewBox="0 0 24 24" fill="none" stroke="#e44949" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-face-angry-icon lucide-face-angry"><path d="M15 11V9.416"/><path d="M17 9a5 5 0 00-3 1"/><path d="M7 9a5 5 0 013 1"/><path d="M9 11V9.416"/><path d="M9 16a5 5 0 016.001 0"/><circle cx="12" cy="12" r="10"/></svg></li>
+
+                    <li><span class="humor-numero">4</span>Neutro<svg class="neutro" xmlns="http://www.w3.org/2000/svg" width="232" height="232" viewBox="0 0 24 24" fill="none" stroke="#d1e000" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-face-neutral-icon lucide-face-neutral"><path d="M15 10V9"/><path d="M8 16h8"/><path d="M9 10V9"/><circle cx="12" cy="12" r="10"/></svg></li>
+
                 </ul>
 
                 <div class="humor-principal">
 
                     <form class="filtros" id="filtrosHumorForm">
                         <div class="filtro">
-                            <label for="humorInicio">📅 Período</label>
+                            <label for="humorInicio"> Período</label>
                             <input type="date" id="humorInicio" name="inicio" value="2026-05-10">
                             <span>–</span>
                             <input type="date" id="humorFim" name="fim" value="2026-05-18">
                         </div>
 
-                        <p class="filtro-info">🕐 Última atualização: <strong id="ultimaAtualizacaoHumor">18/05/2026 12:00</strong></p>
+                        <p class="filtro-info"> Última atualização: <strong id="ultimaAtualizacaoHumor">18/05/2026 12:00</strong></p>
                     </form>
 
                     <div class="humor-timeline" id="humorTimeline">

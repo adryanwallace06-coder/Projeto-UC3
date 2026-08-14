@@ -53,12 +53,25 @@
                              SCROLL-SPY
        ========================================================= */
 
-    const secoes = [
-        { el: document.querySelector('.hero'), link: menuNav ? menuNav.querySelector('a[href="index.html"]') : null },
-        { el: document.querySelector('#funcionalidades'), link: menuNav ? menuNav.querySelector('a[href="#funcionalidades"]') : null },
-        { el: document.querySelector('#planos'), link: menuNav ? menuNav.querySelector('a[href="#planos"]') : null },
-        { el: document.querySelector('#contato'), link: menuNav ? menuNav.querySelector('a[href="#contato"]') : null }
-    ].filter(function (s) { return s.el && s.link; });
+    const secoes = [{
+            el: document.querySelector('.hero'),
+            link: menuNav ? menuNav.querySelector('a[href="index.html"]') : null
+        },
+        {
+            el: document.querySelector('#funcionalidades'),
+            link: menuNav ? menuNav.querySelector('a[href="#funcionalidades"]') : null
+        },
+        {
+            el: document.querySelector('#planos'),
+            link: menuNav ? menuNav.querySelector('a[href="#planos"]') : null
+        },
+        {
+            el: document.querySelector('#contato'),
+            link: menuNav ? menuNav.querySelector('a[href="#contato"]') : null
+        }
+    ].filter(function (s) {
+        return s.el && s.link;
+    });
 
     function destacarLink(linkAtivo) {
         secoes.forEach(function (s) {
@@ -99,7 +112,9 @@
         }
     }
 
-    window.addEventListener('scroll', atualizarScrollSpy, { passive: true });
+    window.addEventListener('scroll', atualizarScrollSpy, {
+        passive: true
+    });
     atualizarScrollSpy();
 
     /* =========================================================
@@ -118,9 +133,9 @@
             const precoEl = cartao.querySelector('p span');
             const preco = precoEl ? precoEl.textContent.trim() : '0,00';
 
-            const url = 'checkout.html'
-                + '?plano=' + encodeURIComponent(nomePlano)
-                + '&preco=' + encodeURIComponent(preco);
+            const url = 'checkout.html' +
+                '?plano=' + encodeURIComponent(nomePlano) +
+                '&preco=' + encodeURIComponent(preco);
             window.location.href = url;
         });
     });
@@ -135,167 +150,171 @@
     if (!document.querySelector('.checkout')) return;
 
     var params = new URLSearchParams(window.location.search);
-var nomePlano = params.get('plano') || 'Basic';
-var precoStr = params.get('preco') || '0,00';
+    var nomePlano = params.get('plano') || 'Basic';
+    var precoStr = params.get('preco') || '0,00';
 
-document.getElementById('resumo-plano').textContent = nomePlano;
-document.getElementById('resumo-preco').textContent = 'R$ ' + precoStr;
+    document.getElementById('resumo-plano').textContent = nomePlano;
+    document.getElementById('resumo-preco').textContent = 'R$ ' + precoStr;
 
-var valorBotao = document.getElementById('valor-botao');
-if (valorBotao) valorBotao.textContent = 'R$ ' + precoStr;
+    var valorBotao = document.getElementById('valor-botao');
+    if (valorBotao) valorBotao.textContent = 'R$ ' + precoStr;
 
-/* ---------- Se for plano grátis, simplifica ---------- */
-var ehGratis = precoStr.replace(/\D/g, '').replace(/^0+$/, '') === '';
+    /* ---------- Se for plano grátis, simplifica ---------- */
+    var ehGratis = precoStr.replace(/\D/g, '').replace(/^0+$/, '') === '';
 
-if (ehGratis) {
-    document.querySelector('.metodos').style.display = 'none';
-    document.getElementById('form-cartao').style.display = 'none';
-    document.getElementById('form-pix').style.display = 'none';
+    if (ehGratis) {
+        document.querySelector('.metodos').style.display = 'none';
+        document.getElementById('form-cartao').style.display = 'none';
+        document.getElementById('form-pix').style.display = 'none';
 
-    var gratisBotao = document.createElement('button');
-    gratisBotao.type = 'button';
-    gratisBotao.className = 'btn-pagar';
-    gratisBotao.textContent = 'Ativar plano grátis';
-    document.querySelector('.checkout').appendChild(gratisBotao);
-    gratisBotao.addEventListener('click', function () {
-        mostrarSucesso('Plano Basic grátis ativado!');
+        var gratisBotao = document.createElement('button');
+        gratisBotao.type = 'button';
+        gratisBotao.className = 'btn-pagar';
+        gratisBotao.textContent = 'Ativar plano grátis';
+        document.querySelector('.checkout').appendChild(gratisBotao);
+        gratisBotao.addEventListener('click', function () {
+            mostrarSucesso('Plano Basic grátis ativado!');
+        });
+    }
+
+    /* ---------- Alternar Cartão / Pix ---------- */
+    var btnCartao = document.getElementById('btn-cartao');
+    var btnPix = document.getElementById('btn-pix');
+    var formCartao = document.getElementById('form-cartao');
+    var formPix = document.getElementById('form-pix');
+
+    btnCartao.addEventListener('click', function () {
+        btnCartao.classList.add('ativo');
+        btnCartao.setAttribute('aria-selected', 'true');
+        btnPix.classList.remove('ativo');
+        btnPix.setAttribute('aria-selected', 'false');
+        formCartao.classList.remove('escondido');
+        formPix.classList.add('escondido');
     });
-}
 
-/* ---------- Alternar Cartão / Pix ---------- */
-var btnCartao = document.getElementById('btn-cartao');
-var btnPix = document.getElementById('btn-pix');
-var formCartao = document.getElementById('form-cartao');
-var formPix = document.getElementById('form-pix');
-
-btnCartao.addEventListener('click', function () {
-    btnCartao.classList.add('ativo');
-    btnCartao.setAttribute('aria-selected', 'true');
-    btnPix.classList.remove('ativo');
-    btnPix.setAttribute('aria-selected', 'false');
-    formCartao.classList.remove('escondido');
-    formPix.classList.add('escondido');
-});
-
-btnPix.addEventListener('click', function () {
-    btnPix.classList.add('ativo');
-    btnPix.setAttribute('aria-selected', 'true');
-    btnCartao.classList.remove('ativo');
-    btnCartao.setAttribute('aria-selected', 'false');
-    formPix.classList.remove('escondido');
-    formCartao.classList.add('escondido');
-});
-
-/* ---------- Mensagens ---------- */
-function mostrarMsg(el, texto, tipo) {
-    el.textContent = texto;
-    el.className = 'mensagem mostrar ' + tipo;
-}
-
-function esconderMsg(el) {
-    el.textContent = '';
-    el.className = 'mensagem';
-}
-
-/* ---------- Formatação de campos ---------- */
-var campoNumero = document.getElementById('numero-cartao');
-var campoValidade = document.getElementById('validade');
-var campoCvv = document.getElementById('cvv');
-
-campoNumero.addEventListener('input', function () {
-    var limpo = campoNumero.value.replace(/\D/g, '').slice(0, 16);
-    campoNumero.value = limpo.replace(/(\d{4})(?=\d)/g, '$1 ');
-});
-
-campoValidade.addEventListener('input', function () {
-    var limpo = campoValidade.value.replace(/\D/g, '').slice(0, 4);
-    if (limpo.length >= 3) {
-        campoValidade.value = limpo.slice(0, 2) + '/' + limpo.slice(2);
-    } else {
-        campoValidade.value = limpo;
-    }
-});
-
-campoCvv.addEventListener('input', function () {
-    campoCvv.value = campoCvv.value.replace(/\D/g, '').slice(0, 4);
-});
-
-/* ---------- Pagamento por cartão ---------- */
-var msgCartao = document.getElementById('msg-cartao');
-
-formCartao.addEventListener('submit', function (evento) {
-    evento.preventDefault();
-    esconderMsg(msgCartao);
-
-    var nome = document.getElementById('nome-cartao').value.trim();
-    var numero = campoNumero.value.replace(/\s/g, '');
-    var validade = campoValidade.value.trim();
-    var cvv = campoCvv.value.trim();
-
-    if (nome === '') {
-        mostrarMsg(msgCartao, 'Digite o nome como está no cartão.', 'erro');
-        return;
-    }
-    if (numero.length < 13 || numero.length > 16) {
-        mostrarMsg(msgCartao, 'O número do cartão deve ter entre 13 e 16 dígitos.', 'erro');
-        return;
-    }
-    if (!/^\d{2}\/\d{2}$/.test(validade)) {
-        mostrarMsg(msgCartao, 'Validade deve estar no formato MM/AA.', 'erro');
-        return;
-    }
-    var mes = parseInt(validade.split('/')[0], 10);
-    if (mes < 1 || mes > 12) {
-        mostrarMsg(msgCartao, 'O mês da validade deve estar entre 01 e 12.', 'erro');
-        return;
-    }
-    if (cvv.length < 3) {
-        mostrarMsg(msgCartao, 'O CVV deve ter pelo menos 3 dígitos.', 'erro');
-        return;
-    }
-
-    // Simula processamento
-    var btnPagar = document.getElementById('btn-pagar-cartao');
-    btnPagar.disabled = true;
-    btnPagar.textContent = 'Processando...';
-    mostrarMsg(msgCartao, 'Processando pagamento, aguarde...', 'sucesso');
-
-    setTimeout(function () {
-        btnPagar.disabled = false;
-        btnPagar.textContent = 'Pagar R$ ' + precoStr;
-        mostrarSucesso('Pagamento de R$ ' + precoStr + ' aprovado! Seu plano ' + nomePlano + ' já está ativo.');
-    }, 2000);
-});
-
-/* ---------- Pix ---------- */
-var msgPix = document.getElementById('msg-pix');
-var btnCopiar = document.getElementById('btn-copiar-pix');
-var codigoPix = document.getElementById('codigo-pix');
-var btnConfirmar = document.getElementById('btn-confirmar-pix');
-
-btnCopiar.addEventListener('click', function () {
-    codigoPix.select();
-    navigator.clipboard.writeText(codigoPix.value).then(function () {
-        btnCopiar.textContent = 'Copiado!';
-        setTimeout(function () { btnCopiar.textContent = 'Copiar'; }, 2000);
-    }).catch(function () {
-        document.execCommand('copy');
-        btnCopiar.textContent = 'Copiado!';
-        setTimeout(function () { btnCopiar.textContent = 'Copiar'; }, 2000);
+    btnPix.addEventListener('click', function () {
+        btnPix.classList.add('ativo');
+        btnPix.setAttribute('aria-selected', 'true');
+        btnCartao.classList.remove('ativo');
+        btnCartao.setAttribute('aria-selected', 'false');
+        formPix.classList.remove('escondido');
+        formCartao.classList.add('escondido');
     });
-});
 
-btnConfirmar.addEventListener('click', function () {
-    btnConfirmar.disabled = true;
-    btnConfirmar.textContent = 'Verificando pagamento...';
-    mostrarMsg(msgPix, 'Confirmando com o banco, aguarde...', 'sucesso');
+    /* ---------- Mensagens ---------- */
+    function mostrarMsg(el, texto, tipo) {
+        el.textContent = texto;
+        el.className = 'mensagem mostrar ' + tipo;
+    }
 
-    setTimeout(function () {
-        btnConfirmar.disabled = false;
-        btnConfirmar.textContent = 'Já paguei';
-        mostrarSucesso('Pix de R$ ' + precoStr + ' confirmado! Seu plano ' + nomePlano + ' já está ativo.');
-    }, 2500);
-});
+    function esconderMsg(el) {
+        el.textContent = '';
+        el.className = 'mensagem';
+    }
+
+    /* ---------- Formatação de campos ---------- */
+    var campoNumero = document.getElementById('numero-cartao');
+    var campoValidade = document.getElementById('validade');
+    var campoCvv = document.getElementById('cvv');
+
+    campoNumero.addEventListener('input', function () {
+        var limpo = campoNumero.value.replace(/\D/g, '').slice(0, 16);
+        campoNumero.value = limpo.replace(/(\d{4})(?=\d)/g, '$1 ');
+    });
+
+    campoValidade.addEventListener('input', function () {
+        var limpo = campoValidade.value.replace(/\D/g, '').slice(0, 4);
+        if (limpo.length >= 3) {
+            campoValidade.value = limpo.slice(0, 2) + '/' + limpo.slice(2);
+        } else {
+            campoValidade.value = limpo;
+        }
+    });
+
+    campoCvv.addEventListener('input', function () {
+        campoCvv.value = campoCvv.value.replace(/\D/g, '').slice(0, 4);
+    });
+
+    /* ---------- Pagamento por cartão ---------- */
+    var msgCartao = document.getElementById('msg-cartao');
+
+    formCartao.addEventListener('submit', function (evento) {
+        evento.preventDefault();
+        esconderMsg(msgCartao);
+
+        var nome = document.getElementById('nome-cartao').value.trim();
+        var numero = campoNumero.value.replace(/\s/g, '');
+        var validade = campoValidade.value.trim();
+        var cvv = campoCvv.value.trim();
+
+        if (nome === '') {
+            mostrarMsg(msgCartao, 'Digite o nome como está no cartão.', 'erro');
+            return;
+        }
+        if (numero.length < 13 || numero.length > 16) {
+            mostrarMsg(msgCartao, 'O número do cartão deve ter entre 13 e 16 dígitos.', 'erro');
+            return;
+        }
+        if (!/^\d{2}\/\d{2}$/.test(validade)) {
+            mostrarMsg(msgCartao, 'Validade deve estar no formato MM/AA.', 'erro');
+            return;
+        }
+        var mes = parseInt(validade.split('/')[0], 10);
+        if (mes < 1 || mes > 12) {
+            mostrarMsg(msgCartao, 'O mês da validade deve estar entre 01 e 12.', 'erro');
+            return;
+        }
+        if (cvv.length < 3) {
+            mostrarMsg(msgCartao, 'O CVV deve ter pelo menos 3 dígitos.', 'erro');
+            return;
+        }
+
+        // Simula processamento
+        var btnPagar = document.getElementById('btn-pagar-cartao');
+        btnPagar.disabled = true;
+        btnPagar.textContent = 'Processando...';
+        mostrarMsg(msgCartao, 'Processando pagamento, aguarde...', 'sucesso');
+
+        setTimeout(function () {
+            btnPagar.disabled = false;
+            btnPagar.textContent = 'Pagar R$ ' + precoStr;
+            mostrarSucesso('Pagamento de R$ ' + precoStr + ' aprovado! Seu plano ' + nomePlano + ' já está ativo.');
+        }, 2000);
+    });
+
+    /* ---------- Pix ---------- */
+    var msgPix = document.getElementById('msg-pix');
+    var btnCopiar = document.getElementById('btn-copiar-pix');
+    var codigoPix = document.getElementById('codigo-pix');
+    var btnConfirmar = document.getElementById('btn-confirmar-pix');
+
+    btnCopiar.addEventListener('click', function () {
+        codigoPix.select();
+        navigator.clipboard.writeText(codigoPix.value).then(function () {
+            btnCopiar.textContent = 'Copiado!';
+            setTimeout(function () {
+                btnCopiar.textContent = 'Copiar';
+            }, 2000);
+        }).catch(function () {
+            document.execCommand('copy');
+            btnCopiar.textContent = 'Copiado!';
+            setTimeout(function () {
+                btnCopiar.textContent = 'Copiar';
+            }, 2000);
+        });
+    });
+
+    btnConfirmar.addEventListener('click', function () {
+        btnConfirmar.disabled = true;
+        btnConfirmar.textContent = 'Verificando pagamento...';
+        mostrarMsg(msgPix, 'Confirmando com o banco, aguarde...', 'sucesso');
+
+        setTimeout(function () {
+            btnConfirmar.disabled = false;
+            btnConfirmar.textContent = 'Já paguei';
+            mostrarSucesso('Pix de R$ ' + precoStr + ' confirmado! Seu plano ' + nomePlano + ' já está ativo.');
+        }, 2500);
+    });
 
     /* ---------- Overlay de sucesso ---------- */
     function mostrarSucesso(texto) {
@@ -306,7 +325,7 @@ btnConfirmar.addEventListener('click', function () {
 })();
 
 /* =========================================================
-                            LOGADO (logado.html)
+                            LOGADO 
    ========================================================= */
 
 
@@ -331,7 +350,10 @@ function atualizarPicosDePressao() {
 function gerarPressaoAleatoria(sisMin, sisMax, diaMin, diaMax) {
     const sistolica = Math.floor(Math.random() * (sisMax - sisMin + 1)) + sisMin;
     const diastolica = Math.floor(Math.random() * (diaMax - diaMin + 1)) + diaMin;
-    return { sistolica, diastolica };
+    return {
+        sistolica,
+        diastolica
+    };
 }
 
 function gerarDataAleatoria(horasMax) {
@@ -347,7 +369,7 @@ function preencherCard(elementoLi, pressao, data) {
     const spanData = elementoLi.querySelector('span');
     const valorTexto = elementoLi.querySelector('.valor');
 
-    spanData.textContent = `📅 ${formatarDataCompleta(data)}`;
+    spanData.textContent = ` ${formatarDataCompleta(data)}`;
     valorTexto.textContent = `${pressao.sistolica}/${pressao.diastolica} mmHg`;
 
     valorTexto.classList.remove('atualizado');
@@ -360,32 +382,151 @@ function preencherCard(elementoLi, pressao, data) {
    PARTE 2: DADOS DE PRESSÃO PARA O GRÁFICO
    ========================================================== */
 
-const dadosPressao = [
-    { data: '2026-05-01T00:00', valor: 115 }, { data: '2026-05-01T12:00', valor: 118 },
-    { data: '2026-05-02T00:00', valor: 112 }, { data: '2026-05-02T12:00', valor: 116 },
-    { data: '2026-05-03T00:00', valor: 110 }, { data: '2026-05-03T12:00', valor: 114 },
-    { data: '2026-05-04T00:00', valor: 117 }, { data: '2026-05-04T12:00', valor: 119 },
+const dadosPressao = [{
+        data: '2026-05-01T00:00',
+        valor: 115
+    }, {
+        data: '2026-05-01T12:00',
+        valor: 118
+    },
+    {
+        data: '2026-05-02T00:00',
+        valor: 112
+    }, {
+        data: '2026-05-02T12:00',
+        valor: 116
+    },
+    {
+        data: '2026-05-03T00:00',
+        valor: 110
+    }, {
+        data: '2026-05-03T12:00',
+        valor: 114
+    },
+    {
+        data: '2026-05-04T00:00',
+        valor: 117
+    }, {
+        data: '2026-05-04T12:00',
+        valor: 119
+    },
 
-    { data: '2026-05-05T00:00', valor: 125 }, { data: '2026-05-05T12:00', valor: 135 },
-    { data: '2026-05-06T00:00', valor: 148 }, { data: '2026-05-06T12:00', valor: 158 },
-    { data: '2026-05-07T00:00', valor: 165 }, { data: '2026-05-07T12:00', valor: 150 },
+    {
+        data: '2026-05-05T00:00',
+        valor: 125
+    }, {
+        data: '2026-05-05T12:00',
+        valor: 135
+    },
+    {
+        data: '2026-05-06T00:00',
+        valor: 148
+    }, {
+        data: '2026-05-06T12:00',
+        valor: 158
+    },
+    {
+        data: '2026-05-07T00:00',
+        valor: 165
+    }, {
+        data: '2026-05-07T12:00',
+        valor: 150
+    },
 
-    { data: '2026-05-08T00:00', valor: 130 }, { data: '2026-05-08T12:00', valor: 110 },
-    { data: '2026-05-09T00:00', valor: 90 },  { data: '2026-05-09T12:00', valor: 75 },
-    { data: '2026-05-10T00:00', valor: 65 },  { data: '2026-05-10T12:00', valor: 85 },
+    {
+        data: '2026-05-08T00:00',
+        valor: 130
+    }, {
+        data: '2026-05-08T12:00',
+        valor: 110
+    },
+    {
+        data: '2026-05-09T00:00',
+        valor: 90
+    }, {
+        data: '2026-05-09T12:00',
+        valor: 75
+    },
+    {
+        data: '2026-05-10T00:00',
+        valor: 65
+    }, {
+        data: '2026-05-10T12:00',
+        valor: 85
+    },
 
-    { data: '2026-05-11T00:00', valor: 110 }, { data: '2026-05-11T12:00', valor: 116 },
-    { data: '2026-05-12T00:00', valor: 118 }, { data: '2026-05-12T12:00', valor: 115 },
-    { data: '2026-05-13T00:00', valor: 112 }, { data: '2026-05-13T12:00', valor: 117 },
-    { data: '2026-05-14T00:00', valor: 119 }, { data: '2026-05-14T12:00', valor: 116 },
+    {
+        data: '2026-05-11T00:00',
+        valor: 110
+    }, {
+        data: '2026-05-11T12:00',
+        valor: 116
+    },
+    {
+        data: '2026-05-12T00:00',
+        valor: 118
+    }, {
+        data: '2026-05-12T12:00',
+        valor: 115
+    },
+    {
+        data: '2026-05-13T00:00',
+        valor: 112
+    }, {
+        data: '2026-05-13T12:00',
+        valor: 117
+    },
+    {
+        data: '2026-05-14T00:00',
+        valor: 119
+    }, {
+        data: '2026-05-14T12:00',
+        valor: 116
+    },
 
-    { data: '2026-05-15T00:00', valor: 128 }, { data: '2026-05-15T12:00', valor: 140 },
-    { data: '2026-05-16T00:00', valor: 155 }, { data: '2026-05-16T12:00', valor: 168 },
-    { data: '2026-05-17T00:00', valor: 172 }, { data: '2026-05-17T12:00', valor: 150 },
+    {
+        data: '2026-05-15T00:00',
+        valor: 128
+    }, {
+        data: '2026-05-15T12:00',
+        valor: 140
+    },
+    {
+        data: '2026-05-16T00:00',
+        valor: 155
+    }, {
+        data: '2026-05-16T12:00',
+        valor: 168
+    },
+    {
+        data: '2026-05-17T00:00',
+        valor: 172
+    }, {
+        data: '2026-05-17T12:00',
+        valor: 150
+    },
 
-    { data: '2026-05-18T00:00', valor: 130 }, { data: '2026-05-18T12:00', valor: 118 },
-    { data: '2026-05-19T00:00', valor: 115 }, { data: '2026-05-19T12:00', valor: 117 },
-    { data: '2026-05-20T00:00', valor: 114 }, { data: '2026-05-20T12:00', valor: 116 }
+    {
+        data: '2026-05-18T00:00',
+        valor: 130
+    }, {
+        data: '2026-05-18T12:00',
+        valor: 118
+    },
+    {
+        data: '2026-05-19T00:00',
+        valor: 115
+    }, {
+        data: '2026-05-19T12:00',
+        valor: 117
+    },
+    {
+        data: '2026-05-20T00:00',
+        valor: 114
+    }, {
+        data: '2026-05-20T12:00',
+        valor: 116
+    }
 ];
 
 
@@ -438,8 +579,19 @@ function renderizarGrafico(dados) {
         },
         options: {
             responsive: true,
-            plugins: { legend: { display: false } },
-            scales: { y: { title: { display: true, text: 'mmHg' } } }
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                y: {
+                    title: {
+                        display: true,
+                        text: 'mmHg'
+                    }
+                }
+            }
         }
     });
 }
@@ -464,9 +616,9 @@ function atualizarBadges(dados) {
     if (temPicoAlto) listaBadges.appendChild(criarBadge(picoAlto, 'alto'));
     if (temPicoBaixo) listaBadges.appendChild(criarBadge(picoBaixo, 'baixo'));
 
-    statusFiltro.textContent = (!temPicoAlto && !temPicoBaixo)
-        ? 'Nesse período a pressão de Maria se manteve dentro da faixa normal 👍'
-        : '';
+    statusFiltro.textContent = (!temPicoAlto && !temPicoBaixo) ?
+        'Nesse período a pressão de Maria se manteve dentro da faixa normal 👍' :
+        '';
 }
 
 function criarBadge(item, tipo) {
@@ -538,11 +690,11 @@ function formatarDataCurta(data) {
    ========================================================== */
 
 let dadosUsuario = {
-    nome: 'Adryan Ernandes',
-    email: 'adryan@gmail.com',
-    cpf: '123.456.789-00',
-    telefone: '(11) 91234-5678',
-    tipo: 'paciente',
+    nome: '',
+    email: '',
+    cpf: '',
+    telefone: '',
+    tipo: '',
     plano: 'Basic + Anual',
     foto: null
 };
@@ -564,7 +716,10 @@ function buscarPerfil() {
 function salvarPerfilNoServidor(dadosNovos) {
     return new Promise((resolve) => {
         setTimeout(() => {
-            dadosUsuario = { ...dadosUsuario, ...dadosNovos };
+            dadosUsuario = {
+                ...dadosUsuario,
+                ...dadosNovos
+            };
             resolve(dadosUsuario);
         }, 900);
     });
@@ -848,7 +1003,10 @@ function iniciarCardsRapidos() {
         const irParaSecao = () => {
             const alvo = document.querySelector(card.dataset.scrollTo);
             if (alvo) {
-                alvo.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                alvo.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
             }
         };
 
@@ -875,9 +1033,18 @@ function iniciarCardsRapidos() {
    PARTE 8: CONTATOS (abas + lista + adicionar/remover)
    ========================================================== */
 
-let listaContatos = [
-    { id: 1, nome: 'Ana (Filha)', telefone: '(11) 91234-5678', tipo: 'familiar' },
-    { id: 2, nome: 'Carlos', telefone: '(11) 99876-5432', tipo: 'cuidador' }
+let listaContatos = [{
+        id: 1,
+        nome: 'Ana (Filha)',
+        telefone: '(11) 91234-5678',
+        tipo: 'familiar'
+    },
+    {
+        id: 2,
+        nome: 'Carlos',
+        telefone: '(11) 99876-5432',
+        tipo: 'cuidador'
+    }
 ];
 
 let proximoIdContato = 3;
@@ -906,7 +1073,10 @@ function buscarContatos() {
 function salvarContatoNoServidor(contato) {
     return new Promise(resolve => {
         setTimeout(() => {
-            const novoContato = { id: proximoIdContato++, ...contato };
+            const novoContato = {
+                id: proximoIdContato++,
+                ...contato
+            };
             listaContatos.push(novoContato);
             resolve(novoContato);
         }, 700);
@@ -1020,7 +1190,9 @@ function iniciarFormularioContato() {
         btnSalvar.disabled = false;
         btnSalvar.textContent = 'Adicionar contato';
 
-        setTimeout(() => { mensagem.textContent = ''; }, 2000);
+        setTimeout(() => {
+            mensagem.textContent = '';
+        }, 2000);
     });
 }
 
@@ -1073,7 +1245,9 @@ function iniciarReagendamento() {
         botao.disabled = false;
         botao.textContent = 'Reagendar';
 
-        setTimeout(() => { mensagem.textContent = ''; }, 3000);
+        setTimeout(() => {
+            mensagem.textContent = '';
+        }, 3000);
     });
 }
 
@@ -1083,22 +1257,48 @@ function iniciarReagendamento() {
    ========================================================== */
 
 const emojisPorHumor = {
-    feliz: '😄',
-    neutro: '😐',
-    triste: '😢',
-    estresse: '😠'
+    feliz: document.querySelector('.feliz'),
+    neutro: document.querySelector('.triste'),
+    triste: document.querySelector('.estresse'),
+    estresse: document.querySelector('.neutro')
 };
 
-const dadosHumor = [
-    { data: '2026-05-10T12:00', humor: 'feliz' },
-    { data: '2026-05-11T12:00', humor: 'neutro' },
-    { data: '2026-05-12T12:00', humor: 'triste' },
-    { data: '2026-05-13T12:00', humor: 'neutro' },
-    { data: '2026-05-14T12:00', humor: 'neutro' },
-    { data: '2026-05-15T12:00', humor: 'estresse' },
-    { data: '2026-05-16T12:00', humor: 'feliz' },
-    { data: '2026-05-17T12:00', humor: 'neutro' },
-    { data: '2026-05-18T12:00', humor: 'feliz' }
+const dadosHumor = [{
+        data: '2026-05-10T12:00',
+        humor: 'feliz'
+    },
+    {
+        data: '2026-05-11T12:00',
+        humor: 'neutro'
+    },
+    {
+        data: '2026-05-12T12:00',
+        humor: 'triste'
+    },
+    {
+        data: '2026-05-13T12:00',
+        humor: 'neutro'
+    },
+    {
+        data: '2026-05-14T12:00',
+        humor: 'neutro'
+    },
+    {
+        data: '2026-05-15T12:00',
+        humor: 'estresse'
+    },
+    {
+        data: '2026-05-16T12:00',
+        humor: 'feliz'
+    },
+    {
+        data: '2026-05-17T12:00',
+        humor: 'neutro'
+    },
+    {
+        data: '2026-05-18T12:00',
+        humor: 'feliz'
+    }
 ];
 
 function filtrarHumorPorPeriodo(dataInicio, dataFim) {
@@ -1126,9 +1326,10 @@ function renderizarTimelineHumor(dados) {
         const div = document.createElement('div');
         div.className = 'humor-dia';
         div.innerHTML = `
-            <span class="emoji">${emojisPorHumor[item.humor]}</span>
+            <span class="emoji">${emojisPorHumor[item.humor].outerHTML}</span>
             <span class="data">${dia}/${mes}<br>${hora}:00</span>
         `;
+
         container.appendChild(div);
     });
 }
@@ -1209,283 +1410,283 @@ document.addEventListener('DOMContentLoaded', () => {
 (function () {
     if (!document.querySelector('.login-form')) return;
 
-// Chaves usadas no localStorage
-const CHAVE_USUARIOS = 'medicaMaisUsuarios';
-const CHAVE_LEMBRAR = 'medicaMaisLembrar';
-const CHAVE_LOGADO = 'medicaMaisUsuarioLogado';
- 
-/* ---------- Funcoes auxiliares de mensagem ---------- */
-function mostrarMensagem(elemento, mensagem, tipo) {
-    elemento.textContent = mensagem;
-    elemento.classList.remove('sucesso');
-    if (tipo === 'sucesso') {
-        elemento.classList.add('sucesso');
+    // Chaves usadas no localStorage
+    const CHAVE_USUARIOS = 'medicaMaisUsuarios';
+    const CHAVE_LEMBRAR = 'medicaMaisLembrar';
+    const CHAVE_LOGADO = 'medicaMaisUsuarioLogado';
+
+    /* ---------- Funcoes auxiliares de mensagem ---------- */
+    function mostrarMensagem(elemento, mensagem, tipo) {
+        elemento.textContent = mensagem;
+        elemento.classList.remove('sucesso');
+        if (tipo === 'sucesso') {
+            elemento.classList.add('sucesso');
+        }
+        elemento.classList.add('mostrar');
     }
-    elemento.classList.add('mostrar');
-}
- 
-function esconderMensagem(elemento) {
-    elemento.textContent = '';
-    elemento.classList.remove('mostrar', 'sucesso');
-}
- 
-function ehEmailValido(email) {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-}
- 
-/* ---------- Funcoes de armazenamento (localStorage) ---------- */
-function obterUsuarios() {
-    try {
-        return JSON.parse(localStorage.getItem(CHAVE_USUARIOS)) || [];
-    } catch (e) {
-        return [];
+
+    function esconderMensagem(elemento) {
+        elemento.textContent = '';
+        elemento.classList.remove('mostrar', 'sucesso');
     }
-}
- 
-function salvarUsuarios(lista) {
-    localStorage.setItem(CHAVE_USUARIOS, JSON.stringify(lista));
-}
- 
-function buscarUsuarioPorEmail(email) {
-    const emailNormalizado = email.trim().toLowerCase();
-    return obterUsuarios().find(function (u) {
-        return u.email === emailNormalizado;
-    });
-}
- 
-/* ---------- Elementos: Login ---------- */
-const botaoOlho = document.querySelector('.olho');
-const campoSenha = document.querySelector('.senha-container input');
-const formLogin = document.querySelector('.login-form');
-const campoEmail = document.querySelector('input[type="email"]');
-const erroLogin = document.querySelector('#erro-login');
-const erroEmail = document.querySelector('#erro-email');
-const lembrarSenha = document.querySelector('#lembrar-senha');
- 
-/* ---------- Elementos: Esqueci a senha ---------- */
-const linkEsqueceu = document.querySelector('.esqueceu');
-const overlayEsqueci = document.querySelector('#overlay-esqueci');
-const btnCancelar = document.querySelector('.btn-cancelar');
-const formEsqueci = document.querySelector('.form-esqueci');
-const campoCpfEmail = document.querySelector('#cpf-email');
-const erroEsqueci = document.querySelector('#erro-esqueci');
- 
-/* ---------- Elementos: Cadastro ---------- */
-const linkCadastro = document.querySelector('.cadastro strong');
-const overlayCadastro = document.querySelector('#overlay-cadastro');
-const btnCancelarCadastro = document.querySelector('#cancelar-cadastro');
-const formCadastro = document.querySelector('.form-cadastro');
-const erroCadastro = document.querySelector('#erro-cadastro');
-const erroCpf = document.querySelector('#erro-cpf');
-const campoCpf = document.querySelector('#cpf');
-const campoNome = document.querySelector('#nome');
-const campoEmailCadastro = document.querySelector('#email-cadastro');
-const erroEmailCadastro = document.querySelector('#erro-email-cadastro');
-const campoSenhaCadastro = document.querySelector('#senha-cadastro');
-const campoConfirmaSenha = document.querySelector('#confirma-senha');
- 
-/* ---------- Ao abrir a pagina: preenche o email lembrado ---------- */
-window.addEventListener('DOMContentLoaded', function () {
-    const emailLembrado = localStorage.getItem(CHAVE_LEMBRAR);
-    if (emailLembrado) {
-        campoEmail.value = emailLembrado;
-        if (lembrarSenha) {
-            lembrarSenha.checked = true;
+
+    function ehEmailValido(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
+    /* ---------- Funcoes de armazenamento (localStorage) ---------- */
+    function obterUsuarios() {
+        try {
+            return JSON.parse(localStorage.getItem(CHAVE_USUARIOS)) || [];
+        } catch (e) {
+            return [];
         }
     }
-});
- 
-/* ---------- Mostrar / esconder senha ---------- */
-botaoOlho.addEventListener('click', function () {
-    if (campoSenha.type === 'password') {
-        campoSenha.type = 'text';
-        botaoOlho.textContent = '--';
-    } else {
-        campoSenha.type = 'password';
-        botaoOlho.textContent = '👁';
+
+    function salvarUsuarios(lista) {
+        localStorage.setItem(CHAVE_USUARIOS, JSON.stringify(lista));
     }
-});
- 
-/* ---------- LOGIN ---------- */
-formLogin.addEventListener('submit', function (evento) {
-    evento.preventDefault();
-    esconderMensagem(erroLogin);
-    esconderMensagem(erroEmail);
- 
-    const email = campoEmail.value.trim();
-    const senha = campoSenha.value;
- 
-    if (email === '' || senha === '') {
-        mostrarMensagem(erroLogin, 'Preencha o email e a senha para continuar.', 'erro');
-        return;
+
+    function buscarUsuarioPorEmail(email) {
+        const emailNormalizado = email.trim().toLowerCase();
+        return obterUsuarios().find(function (u) {
+            return u.email === emailNormalizado;
+        });
     }
- 
-    if (!ehEmailValido(email)) {
-        mostrarMensagem(erroEmail, 'Digite um email válido, como exemplo@gmail.com.', 'erro');
-        return;
-    }
- 
-    const usuario = buscarUsuarioPorEmail(email);
- 
-    if (!usuario) {
-        mostrarMensagem(erroLogin, 'Email não encontrado. Clique em "cadastre-se" para criar sua conta.', 'erro');
-        return;
-    }
- 
-    if (usuario.senha !== senha) {
-        mostrarMensagem(erroLogin, 'Senha incorreta. Verifique e tente novamente.', 'erro');
-        return;
-    }
- 
-    // Guarda a preferencia de "lembrar senha"
-    if (lembrarSenha && lembrarSenha.checked) {
-        localStorage.setItem(CHAVE_LEMBRAR, email.toLowerCase());
-    } else {
-        localStorage.removeItem(CHAVE_LEMBRAR);
-    }
- 
-    // Guarda quem esta logado (a pagina logada pode ler isso)
-    localStorage.setItem(CHAVE_LOGADO, JSON.stringify({
-        nome: usuario.nome,
-        email: usuario.email,
-        papel: usuario.papel
-    }));
- 
-    const primeiroNome = usuario.nome ? usuario.nome.split(' ')[0] : '';
-    mostrarMensagem(erroLogin, 'Login realizado com sucesso! Bem-vindo(a), ' + primeiroNome + '. Redirecionando...', 'sucesso');
- 
-    setTimeout(function () {
-        window.location.href = 'logado.html';
-    }, 1500);
-});
- 
-/* ---------- ESQUECI A SENHA ---------- */
-linkEsqueceu.addEventListener('click', function (evento) {
-    evento.preventDefault();
-    overlayEsqueci.classList.add('ativo');
-});
- 
-btnCancelar.addEventListener('click', function () {
-    overlayEsqueci.classList.remove('ativo');
-    esconderMensagem(erroEsqueci);
-});
- 
-formEsqueci.addEventListener('submit', function (evento) {
-    evento.preventDefault();
-    esconderMensagem(erroEsqueci);
- 
-    const valor = campoCpfEmail.value.trim();
-    const pareceEmail = valor.includes('@');
-    const semFormatacao = valor.replace(/[.\-\s]/g, '');
-    const ehCpfValido = /^\d{11}$/.test(semFormatacao);
- 
-    if (valor === '') {
-        mostrarMensagem(erroEsqueci, 'Digite seu CPF ou email para continuar.', 'erro');
-        return;
-    }
- 
-    if (!pareceEmail && !ehCpfValido) {
-        mostrarMensagem(erroEsqueci, 'Digite um CPF com 11 números ou um email válido.', 'erro');
-        return;
-    }
- 
-    mostrarMensagem(erroEsqueci, 'Pronto! Enviamos um link de recuperação. Verifique seu email (e a caixa de spam).', 'sucesso');
- 
-    setTimeout(function () {
+
+    /* ---------- Elementos: Login ---------- */
+    const botaoOlho = document.querySelector('.olho');
+    const campoSenha = document.querySelector('.senha-container input');
+    const formLogin = document.querySelector('.login-form');
+    const campoEmail = document.querySelector('input[type="email"]');
+    const erroLogin = document.querySelector('#erro-login');
+    const erroEmail = document.querySelector('#erro-email');
+    const lembrarSenha = document.querySelector('#lembrar-senha');
+
+    /* ---------- Elementos: Esqueci a senha ---------- */
+    const linkEsqueceu = document.querySelector('.esqueceu');
+    const overlayEsqueci = document.querySelector('#overlay-esqueci');
+    const btnCancelar = document.querySelector('.btn-cancelar');
+    const formEsqueci = document.querySelector('.form-esqueci');
+    const campoCpfEmail = document.querySelector('#cpf-email');
+    const erroEsqueci = document.querySelector('#erro-esqueci');
+
+    /* ---------- Elementos: Cadastro ---------- */
+    const linkCadastro = document.querySelector('.cadastro strong');
+    const overlayCadastro = document.querySelector('#overlay-cadastro');
+    const btnCancelarCadastro = document.querySelector('#cancelar-cadastro');
+    const formCadastro = document.querySelector('.form-cadastro');
+    const erroCadastro = document.querySelector('#erro-cadastro');
+    const erroCpf = document.querySelector('#erro-cpf');
+    const campoCpf = document.querySelector('#cpf');
+    const campoNome = document.querySelector('#nome');
+    const campoEmailCadastro = document.querySelector('#email-cadastro');
+    const erroEmailCadastro = document.querySelector('#erro-email-cadastro');
+    const campoSenhaCadastro = document.querySelector('#senha-cadastro');
+    const campoConfirmaSenha = document.querySelector('#confirma-senha');
+
+    /* ---------- Ao abrir a pagina: preenche o email lembrado ---------- */
+    window.addEventListener('DOMContentLoaded', function () {
+        const emailLembrado = localStorage.getItem(CHAVE_LEMBRAR);
+        if (emailLembrado) {
+            campoEmail.value = emailLembrado;
+            if (lembrarSenha) {
+                lembrarSenha.checked = true;
+            }
+        }
+    });
+
+    /* ---------- Mostrar / esconder senha ---------- */
+    botaoOlho.addEventListener('click', function () {
+        if (campoSenha.type === 'password') {
+            campoSenha.type = 'text';
+            botaoOlho.textContent = '--';
+        } else {
+            campoSenha.type = 'password';
+            botaoOlho.textContent = '👁';
+        }
+    });
+
+    /* ---------- LOGIN ---------- */
+    formLogin.addEventListener('submit', function (evento) {
+        evento.preventDefault();
+        esconderMensagem(erroLogin);
+        esconderMensagem(erroEmail);
+
+        const email = campoEmail.value.trim();
+        const senha = campoSenha.value;
+
+        if (email === '' || senha === '') {
+            mostrarMensagem(erroLogin, 'Preencha o email e a senha para continuar.', 'erro');
+            return;
+        }
+
+        if (!ehEmailValido(email)) {
+            mostrarMensagem(erroEmail, 'Digite um email válido, como exemplo@gmail.com.', 'erro');
+            return;
+        }
+
+        const usuario = buscarUsuarioPorEmail(email);
+
+        if (!usuario) {
+            mostrarMensagem(erroLogin, 'Email não encontrado. Clique em "cadastre-se" para criar sua conta.', 'erro');
+            return;
+        }
+
+        if (usuario.senha !== senha) {
+            mostrarMensagem(erroLogin, 'Senha incorreta. Verifique e tente novamente.', 'erro');
+            return;
+        }
+
+        // Guarda a preferencia de "lembrar senha"
+        if (lembrarSenha && lembrarSenha.checked) {
+            localStorage.setItem(CHAVE_LEMBRAR, email.toLowerCase());
+        } else {
+            localStorage.removeItem(CHAVE_LEMBRAR);
+        }
+
+        // Guarda quem esta logado (a pagina logada pode ler isso)
+        localStorage.setItem(CHAVE_LOGADO, JSON.stringify({
+            nome: usuario.nome,
+            email: usuario.email,
+            papel: usuario.papel
+        }));
+
+        const primeiroNome = usuario.nome ? usuario.nome.split(' ')[0] : '';
+        mostrarMensagem(erroLogin, 'Login realizado com sucesso! Bem-vindo(a), ' + primeiroNome + '. Redirecionando...', 'sucesso');
+
+        setTimeout(function () {
+            window.location.href = 'logado.html';
+        }, 1500);
+    });
+
+    /* ---------- ESQUECI A SENHA ---------- */
+    linkEsqueceu.addEventListener('click', function (evento) {
+        evento.preventDefault();
+        overlayEsqueci.classList.add('ativo');
+    });
+
+    btnCancelar.addEventListener('click', function () {
         overlayEsqueci.classList.remove('ativo');
         esconderMensagem(erroEsqueci);
-        formEsqueci.reset();
-    }, 2500);
-});
- 
-/* ---------- CADASTRO ---------- */
-linkCadastro.addEventListener('click', function () {
-    overlayCadastro.classList.add('ativo');
-});
- 
-btnCancelarCadastro.addEventListener('click', function () {
-    overlayCadastro.classList.remove('ativo');
-    esconderMensagem(erroCadastro);
-    esconderMensagem(erroCpf);
-    esconderMensagem(erroEmailCadastro);
-});
- 
-formCadastro.addEventListener('submit', function (evento) {
-    evento.preventDefault();
-    esconderMensagem(erroCadastro);
-    esconderMensagem(erroCpf);
-    esconderMensagem(erroEmailCadastro);
- 
-    const nome = campoNome.value.trim();
-    const email = campoEmailCadastro.value.trim();
-    const senha = campoSenhaCadastro.value;
-    const confirmaSenha = campoConfirmaSenha.value;
-    const papelSelecionado = document.querySelector('input[name="papel"]:checked');
- 
-    if (nome === '') {
-        mostrarMensagem(erroCadastro, 'Digite seu nome completo.', 'erro');
-        return;
-    }
- 
-    if (campoCpf.value.length !== 11) {
-        mostrarMensagem(erroCpf, 'O CPF deve ter 11 números.', 'erro');
-        return;
-    }
- 
-    if (!ehEmailValido(email)) {
-        mostrarMensagem(erroEmailCadastro, 'Digite um email válido, como exemplo@gmail.com.', 'erro');
-        return;
-    }
- 
-    if (!papelSelecionado) {
-        mostrarMensagem(erroCadastro, 'Selecione se você é Cuidador, Paciente ou Parente.', 'erro');
-        return;
-    }
- 
-    if (senha.length < 6) {
-        mostrarMensagem(erroCadastro, 'A senha deve ter no mínimo 6 caracteres.', 'erro');
-        return;
-    }
- 
-    if (senha !== confirmaSenha) {
-        mostrarMensagem(erroCadastro, 'As senhas não coincidem. Digite a mesma senha nos dois campos.', 'erro');
-        return;
-    }
- 
-    // Nao deixa cadastrar dois usuarios com o mesmo email
-    if (buscarUsuarioPorEmail(email)) {
-        mostrarMensagem(erroEmailCadastro, 'Este email já está cadastrado. Faça login ou use outro email.', 'erro');
-        return;
-    }
- 
-    // Salva o novo usuario
-    const usuarios = obterUsuarios();
-    usuarios.push({
-        nome: nome,
-        cpf: campoCpf.value,
-        email: email.toLowerCase(),
-        senha: senha,
-        papel: papelSelecionado.value
     });
-    salvarUsuarios(usuarios);
- 
-    mostrarMensagem(erroCadastro, 'Cadastro realizado com sucesso! Agora é só fazer login com seu email e senha.', 'sucesso');
- 
-    // Ja deixa o email preenchido na tela de login
-    campoEmail.value = email.toLowerCase();
- 
-    setTimeout(function () {
+
+    formEsqueci.addEventListener('submit', function (evento) {
+        evento.preventDefault();
+        esconderMensagem(erroEsqueci);
+
+        const valor = campoCpfEmail.value.trim();
+        const pareceEmail = valor.includes('@');
+        const semFormatacao = valor.replace(/[.\-\s]/g, '');
+        const ehCpfValido = /^\d{11}$/.test(semFormatacao);
+
+        if (valor === '') {
+            mostrarMensagem(erroEsqueci, 'Digite seu CPF ou email para continuar.', 'erro');
+            return;
+        }
+
+        if (!pareceEmail && !ehCpfValido) {
+            mostrarMensagem(erroEsqueci, 'Digite um CPF com 11 números ou um email válido.', 'erro');
+            return;
+        }
+
+        mostrarMensagem(erroEsqueci, 'Pronto! Enviamos um link de recuperação. Verifique seu email (e a caixa de spam).', 'sucesso');
+
+        setTimeout(function () {
+            overlayEsqueci.classList.remove('ativo');
+            esconderMensagem(erroEsqueci);
+            formEsqueci.reset();
+        }, 2500);
+    });
+
+    /* ---------- CADASTRO ---------- */
+    linkCadastro.addEventListener('click', function () {
+        overlayCadastro.classList.add('ativo');
+    });
+
+    btnCancelarCadastro.addEventListener('click', function () {
         overlayCadastro.classList.remove('ativo');
         esconderMensagem(erroCadastro);
-        formCadastro.reset();
-    }, 2500);
-});
- 
-/* ---------- CPF: aceita apenas numeros (max 11) ---------- */
-campoCpf.addEventListener('input', function () {
-    let valor = campoCpf.value.replace(/\D/g, '');
-    valor = valor.slice(0, 11);
-    campoCpf.value = valor;
-});
+        esconderMensagem(erroCpf);
+        esconderMensagem(erroEmailCadastro);
+    });
+
+    formCadastro.addEventListener('submit', function (evento) {
+        evento.preventDefault();
+        esconderMensagem(erroCadastro);
+        esconderMensagem(erroCpf);
+        esconderMensagem(erroEmailCadastro);
+
+        const nome = campoNome.value.trim();
+        const email = campoEmailCadastro.value.trim();
+        const senha = campoSenhaCadastro.value;
+        const confirmaSenha = campoConfirmaSenha.value;
+        const papelSelecionado = document.querySelector('input[name="papel"]:checked');
+
+        if (nome === '') {
+            mostrarMensagem(erroCadastro, 'Digite seu nome completo.', 'erro');
+            return;
+        }
+
+        if (campoCpf.value.length !== 11) {
+            mostrarMensagem(erroCpf, 'O CPF deve ter 11 números.', 'erro');
+            return;
+        }
+
+        if (!ehEmailValido(email)) {
+            mostrarMensagem(erroEmailCadastro, 'Digite um email válido, como exemplo@gmail.com.', 'erro');
+            return;
+        }
+
+        if (!papelSelecionado) {
+            mostrarMensagem(erroCadastro, 'Selecione se você é Cuidador, Paciente ou Parente.', 'erro');
+            return;
+        }
+
+        if (senha.length < 6) {
+            mostrarMensagem(erroCadastro, 'A senha deve ter no mínimo 6 caracteres.', 'erro');
+            return;
+        }
+
+        if (senha !== confirmaSenha) {
+            mostrarMensagem(erroCadastro, 'As senhas não coincidem. Digite a mesma senha nos dois campos.', 'erro');
+            return;
+        }
+
+        // Nao deixa cadastrar dois usuarios com o mesmo email
+        if (buscarUsuarioPorEmail(email)) {
+            mostrarMensagem(erroEmailCadastro, 'Este email já está cadastrado. Faça login ou use outro email.', 'erro');
+            return;
+        }
+
+        // Salva o novo usuario
+        const usuarios = obterUsuarios();
+        usuarios.push({
+            nome: nome,
+            cpf: campoCpf.value,
+            email: email.toLowerCase(),
+            senha: senha,
+            papel: papelSelecionado.value
+        });
+        salvarUsuarios(usuarios);
+
+        mostrarMensagem(erroCadastro, 'Cadastro realizado com sucesso! Agora é só fazer login com seu email e senha.', 'sucesso');
+
+        // Ja deixa o email preenchido na tela de login
+        campoEmail.value = email.toLowerCase();
+
+        setTimeout(function () {
+            overlayCadastro.classList.remove('ativo');
+            esconderMensagem(erroCadastro);
+            formCadastro.reset();
+        }, 2500);
+    });
+
+    /* ---------- CPF: aceita apenas numeros (max 11) ---------- */
+    campoCpf.addEventListener('input', function () {
+        let valor = campoCpf.value.replace(/\D/g, '');
+        valor = valor.slice(0, 11);
+        campoCpf.value = valor;
+    });
 
 })();
