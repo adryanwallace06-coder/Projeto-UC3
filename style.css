@@ -1931,7 +1931,7 @@ body.pagina-logado .humor-numero{
 
 body.pagina-logado .humor-principal{
     flex: 1;
-    min-width: 20px;
+    min-width: 0;
 }
 
 body.pagina-logado .humor-principal .filtros{
@@ -2096,6 +2096,7 @@ body.pagina-logado footer li{
         width: 100%;
         background-color: #fff;
         flex-direction: column;
+        flex-wrap: nowrap;
         align-items: flex-start;
         gap: 0;
         max-height: 0;
@@ -2182,6 +2183,20 @@ body.pagina-logado .badge{
         min-width: 130px;
     }
 
+    body.pagina-logado .legenda-item{
+        flex-direction: column;
+        text-align: center;
+    }
+
+    body.pagina-logado .legenda-item .faixa{
+        margin-left: 0;
+        white-space: normal;
+    }
+
+    body.pagina-logado .chart-card{
+        padding: 24px 16px;
+    }
+
     body.pagina-logado .filtro{
         flex-wrap: wrap;
         justify-content: center;
@@ -2213,6 +2228,30 @@ body.pagina-logado .badge{
     }
 }
 
+/* Telas bem pequenas (320px): campos de data não cabem lado a lado */
+@media (max-width: 380px) {
+    body.pagina-logado .filtro
+    body.pagina-logado .filtros{
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+    }
+
+    body.pagina-logado .filtro label,
+    body.pagina-logado .filtro > span{
+        text-align: center;
+    }
+
+    body.pagina-logado .filtro input[type="date"]{
+        width: 100%;
+        max-width: 100%;
+    }
+
+    body.pagina-logado .chart-card{
+        padding: 20px 12px;
+    }
+}
+
 /* Login */
 
 body.pagina-login{
@@ -2224,6 +2263,7 @@ body.pagina-login{
 }
  
 body.pagina-login .hero{
+  border: 1px solid #0040ff13;
   display: flex;
   flex-direction: column;
   align-items: center;

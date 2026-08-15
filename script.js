@@ -872,7 +872,7 @@ async function aoEnviarFormulario(evento) {
         mensagemStatus.className = 'mensagem-status sucesso';
 
         const primeiroNome = perfilAtualizado.nome.split(' ')[0];
-        document.getElementById('saudacaoNome').textContent = `Olá, ${primeiroNome}! 👋`;
+        document.getElementById('saudacaoNome').textContent = `Olá, ${primeiroNome}! `;
 
         setTimeout(fecharPerfil, 1200);
 
