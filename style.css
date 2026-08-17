@@ -2126,6 +2126,7 @@ body.pagina-logado footer li{
 
     body.pagina-logado .humor-conteudo{
         flex-direction: column;
+        flex-wrap: nowrap;
     }
 }
 
@@ -2230,8 +2231,7 @@ body.pagina-logado .badge{
 
 /* Telas bem pequenas (320px): campos de data não cabem lado a lado */
 @media (max-width: 380px) {
-    body.pagina-logado .filtro
-    body.pagina-logado .filtros{
+    body.pagina-logado .filtro{
         flex-direction: column;
         align-items: stretch;
         width: 100%;
@@ -2249,6 +2249,22 @@ body.pagina-logado .badge{
 
     body.pagina-logado .chart-card{
         padding: 20px 12px;
+    }
+
+    body.pagina-logado .filtros{
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    body.pagina-logado .filtro,
+    body.pagina-logado .filtro-info,
+    body.pagina-logado .humor-timeline{
+        min-width: 0;
+        width: 100%;
+    }
+
+    body.pagina-logado .filtro-info{
+        text-align: center;
     }
 }
 
