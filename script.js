@@ -689,15 +689,91 @@ function formatarDataCurta(data) {
    PARTE 4: SOBREPOSIÇÃO (MODAL) DE PERFIL
    ========================================================== */
 
-let dadosUsuario = {
-    nome: '',
-    email: '',
-    cpf: '',
-    telefone: '',
-    tipo: '',
-    plano: 'Basic + Anual',
-    foto: null
-};
+/* O cadastro fica em "medicaMaisUsuarios" e quem entrou agora em
+   "medicaMaisUsuarioLogado" (as duas chaves sao gravadas na tela de login).
+   Aqui juntamos as duas para preencher o perfil e a saudacao. */
+
+const CHAVE_USUARIOS = 'medicaMaisUsuarios';
+const CHAVE_LOGADO = 'medicaMaisUsuarioLogado';
+
+function lerJson(chave, padrao) {
+    try {
+        return JSON.parse(localStorage.getItem(chave)) || padrao;
+    } catch (e) {
+        return padrao;
+    }
+}
+
+function formatarCpf(valor) {
+    const numeros = String(valor || '').replace(/\D/g, '').slice(0, 11);
+    return numeros
+        .replace(/(\d{3})(\d)/, '$1.$2')
+        .replace(/(\d{3})(\d)/, '$1.$2')
+        .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+}
+
+function formatarTelefone(valor) {
+    const numeros = String(valor || '').replace(/\D/g, '').slice(0, 11);
+    if (numeros.length <= 10) {
+        return numeros.replace(/(\d{2})(\d)/, '($1) $2').replace(/(\d{4})(\d)/, '$1-$2');
+    }
+    return numeros.replace(/(\d{2})(\d)/, '($1) $2').replace(/(\d{5})(\d)/, '$1-$2');
+}
+
+function carregarUsuarioLogado() {
+    const logado = lerJson(CHAVE_LOGADO, null) || {};
+    const cadastro = lerJson(CHAVE_USUARIOS, []).find(function (u) {
+        return u.email === logado.email;
+    }) || {};
+
+    return {
+        nome: cadastro.nome || logado.nome || '',
+        email: cadastro.email || logado.email || '',
+        cpf: formatarCpf(cadastro.cpf),
+        telefone: formatarTelefone(cadastro.telefone),
+        tipo: cadastro.papel || logado.papel || 'paciente',
+        plano: cadastro.plano || 'Basic + Anual',
+        foto: cadastro.foto || null
+    };
+}
+
+let dadosUsuario = carregarUsuarioLogado();
+
+/* Grava as alteracoes do perfil de volta no cadastro do usuario */
+function gravarUsuarioLogado(dados) {
+    const usuarios = lerJson(CHAVE_USUARIOS, []);
+    const emailAntigo = (lerJson(CHAVE_LOGADO, {}) || {}).email;
+
+    const indice = usuarios.findIndex(function (u) {
+        return u.email === emailAntigo;
+    });
+
+    if (indice >= 0) {
+        usuarios[indice] = Object.assign({}, usuarios[indice], {
+            nome: dados.nome,
+            email: dados.email.toLowerCase(),
+            cpf: dados.cpf,
+            telefone: dados.telefone,
+            papel: dados.tipo,
+            foto: dados.foto || null
+        });
+        localStorage.setItem(CHAVE_USUARIOS, JSON.stringify(usuarios));
+    }
+
+    localStorage.setItem(CHAVE_LOGADO, JSON.stringify({
+        nome: dados.nome,
+        email: dados.email.toLowerCase(),
+        papel: dados.tipo
+    }));
+}
+
+function atualizarSaudacao() {
+    const titulo = document.getElementById('saudacaoNome');
+    if (!titulo) return;
+
+    const primeiroNome = dadosUsuario.nome ? dadosUsuario.nome.split(' ')[0] : '';
+    titulo.textContent = primeiroNome ? 'Olá, ' + primeiroNome + '!' : 'Olá!';
+}
 
 const overlay = document.getElementById('perfilOverlay');
 const overlayFundo = document.getElementById('perfilFundo');
@@ -720,6 +796,7 @@ function salvarPerfilNoServidor(dadosNovos) {
                 ...dadosUsuario,
                 ...dadosNovos
             };
+            gravarUsuarioLogado(dadosUsuario);
             resolve(dadosUsuario);
         }, 900);
     });
@@ -744,7 +821,7 @@ function preencherFormulario(perfil) {
     document.getElementById('campoTelefone').value = perfil.telefone;
     document.getElementById('campoTipo').value = perfil.tipo;
     document.getElementById('campoPlano').textContent = perfil.plano;
-    document.getElementById('fotoPreview').src = perfil.foto || 'img logo/img logo.png';
+    document.getElementById('fotoPreview').src = perfil.foto || 'img/avatar.png';
 }
 
 function fecharPerfil() {
@@ -1369,6 +1446,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Só roda no painel logado (logado.html)
     if (!document.getElementById('saudacaoNome')) return;
 
+    // Nome de quem esta logado
+    atualizarSaudacao();
+
     // Menu mobile
     iniciarMenuMobile();
 
@@ -1483,6 +1563,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const campoNome = document.querySelector('#nome');
     const campoEmailCadastro = document.querySelector('#email-cadastro');
     const erroEmailCadastro = document.querySelector('#erro-email-cadastro');
+    const campoTelefoneCadastro = document.querySelector('#telefone-cadastro');
+    const erroTelefoneCadastro = document.querySelector('#erro-telefone-cadastro');
     const campoSenhaCadastro = document.querySelector('#senha-cadastro');
     const campoConfirmaSenha = document.querySelector('#confirma-senha');
 
@@ -1494,17 +1576,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (lembrarSenha) {
                 lembrarSenha.checked = true;
             }
-        }
-    });
-
-    /* ---------- Mostrar / esconder senha ---------- */
-    botaoOlho.addEventListener('click', function () {
-        if (campoSenha.type === 'password') {
-            campoSenha.type = 'text';
-            botaoOlho.textContent = '--';
-        } else {
-            campoSenha.type = 'password';
-            botaoOlho.textContent = '👁';
         }
     });
 
@@ -1616,6 +1687,7 @@ document.addEventListener('DOMContentLoaded', () => {
         evento.preventDefault();
         esconderMensagem(erroCadastro);
         esconderMensagem(erroCpf);
+        esconderMensagem(erroTelefoneCadastro);
         esconderMensagem(erroEmailCadastro);
 
         const nome = campoNome.value.trim();
@@ -1631,6 +1703,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (campoCpf.value.length !== 11) {
             mostrarMensagem(erroCpf, 'O CPF deve ter 11 números.', 'erro');
+            return;
+        }
+
+        if (campoTelefoneCadastro.value.replace(/\D/g, '').length < 10) {
+            mostrarMensagem(erroTelefoneCadastro, 'Digite um telefone com DDD, como (11) 90000-0000.', 'erro');
             return;
         }
 
@@ -1665,6 +1742,7 @@ document.addEventListener('DOMContentLoaded', () => {
         usuarios.push({
             nome: nome,
             cpf: campoCpf.value,
+            telefone: campoTelefoneCadastro.value,
             email: email.toLowerCase(),
             senha: senha,
             papel: papelSelecionado.value
@@ -1681,6 +1759,14 @@ document.addEventListener('DOMContentLoaded', () => {
             esconderMensagem(erroCadastro);
             formCadastro.reset();
         }, 2500);
+    });
+
+    /* ---------- Telefone: (00) 00000-0000 ---------- */
+    campoTelefoneCadastro.addEventListener('input', function () {
+        const numeros = campoTelefoneCadastro.value.replace(/\D/g, '').slice(0, 11);
+        campoTelefoneCadastro.value = numeros.length <= 10
+            ? numeros.replace(/(\d{2})(\d)/, '($1) $2').replace(/(\d{4})(\d)/, '$1-$2')
+            : numeros.replace(/(\d{2})(\d)/, '($1) $2').replace(/(\d{5})(\d)/, '$1-$2');
     });
 
     /* ---------- CPF: aceita apenas numeros (max 11) ---------- */

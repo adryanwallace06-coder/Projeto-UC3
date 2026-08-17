@@ -7,9 +7,11 @@ html {
     scroll-padding-top: 90px;
 }
 
+/* clip no lugar de hidden: evita barra lateral sem quebrar o position: sticky do menu */
 body {
-    overflow-x: hidden;
+    overflow-x: clip;
 }
+
 
 * {
     margin: 0;
@@ -2278,159 +2280,204 @@ body.pagina-logado .badge{
     }
 }
 
-/* Login */
+/* ==========================================================
+                       LOGIN (login.html)
+   ========================================================== */
 
 body.pagina-login{
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  overflow: hidden;
-  font-family: Arial, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
+  background: linear-gradient(160deg, #eaf2ff 0%, #f8f9fc 55%, #eafaf0 100%);
+  min-height: 100vh;
 }
- 
+
 body.pagina-login .hero{
-  border: 1px solid #0040ff13;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  height: 100vh;
-  padding-top: 30px;
-  box-sizing: border-box;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 40px 20px;
   position: relative;
 }
- 
+
 body.pagina-login .hero .X{
   position: absolute;
-  top: 20px;
-  right: 25px;
-  font-size: 35px;
+  top: 18px;
+  right: 24px;
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(10, 26, 60, 0.12);
+  font-size: 26px;
+  line-height: 1;
   color: #0a1a3c;
   text-decoration: none;
-  font-weight: bold;
+  transition: .2s;
 }
- 
+
 body.pagina-login .hero .X:hover{
-  color: #555;
+  background-color: #0a1a3c;
+  color: #fff;
 }
- 
+
+body.pagina-login .login-card{
+  width: 100%;
+  max-width: 440px;
+  background-color: #fff;
+  border: 1px solid #e6ebf5;
+  border-radius: 18px;
+  padding: 40px 36px 32px;
+  box-shadow: 0 18px 45px rgba(10, 26, 60, 0.10);
+  text-align: center;
+}
+
+body.pagina-login .login-card img{
+  width: 190px;
+  height: auto;
+  margin-bottom: 18px;
+}
+
 body.pagina-login .hero h1{
   color: #0a1a3c;
-  font-size: 60px;
-  margin: 0 0 10px 0;
+  font-size: 28px;
+  margin-bottom: 6px;
 }
- 
-body.pagina-login .hero img{
-  width: 300px;
-  margin-bottom: 20px;
+
+body.pagina-login .login-subtitulo{
+  color: #5b6579;
+  font-size: 15px;
+  margin-bottom: 26px;
 }
- 
+
 body.pagina-login .login-form{
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  width: 92%;
-  max-width: 500px;
-  margin-top: 10px;
+  gap: 16px;
+  text-align: left;
 }
- 
+
+body.pagina-login .campo-login label{
+  display: block;
+  font-size: 14px;
+  font-weight: bold;
+  color: #0a1a3c;
+  margin-bottom: 6px;
+}
+
 body.pagina-login input[type="email"],
 body.pagina-login .senha-container input{
   width: 100%;
-  box-sizing: border-box;
-  padding: 15px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 18px;
+  padding: 13px 15px;
+  border: 1px solid #d8dfea;
+  border-radius: 10px;
+  font-size: 16px;
+  background-color: #fbfcfe;
   outline: none;
+  transition: .2s;
 }
- 
+
 body.pagina-login input[type="email"]:focus,
 body.pagina-login .senha-container input:focus{
   border-color: #1a6fee;
-  box-shadow: 0 0 0 2px rgba(26, 111, 238, 0.2);
+  background-color: #fff;
+  box-shadow: 0 0 0 3px rgba(26, 111, 238, 0.15);
 }
- 
+
 body.pagina-login .senha-container{
   position: relative;
-  width: 100%;
 }
- 
+
 body.pagina-login .senha-container input{
-  padding-right: 45px;
+  padding-right: 46px;
 }
- 
+
 body.pagina-login .olho{
   position: absolute;
-  right: 15px;
+  right: 12px;
   top: 50%;
   transform: translateY(-50%);
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 21px;
+  font-size: 18px;
 }
- 
+
 body.pagina-login .linha-opcoes{
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
-  font-size: 17px;
-  color: #333;
+  gap: 12px;
+  font-size: 14px;
+  color: #5b6579;
 }
- 
+
 body.pagina-login .linha-opcoes label{
   display: flex;
   align-items: center;
   gap: 6px;
   cursor: pointer;
 }
- 
+
 body.pagina-login .esqueceu{
-  color: #000;
-  text-decoration: none;
-}
- 
-body.pagina-login .esqueceu:hover{
   color: #1a6fee;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+body.pagina-login .esqueceu:hover{
   text-decoration: underline;
 }
- 
+
 body.pagina-login .btn-login{
-  width: 85%;
-  align-self: center;
-  margin-top: 40px;
+  width: 100%;
+  margin-top: 6px;
   background-color: #1a6fee;
-  color: white;
+  color: #fff;
   border: none;
-  padding: 15px;
-  border-radius: 8px;
-  font-size: 20px;
+  padding: 14px;
+  border-radius: 10px;
+  font-size: 17px;
+  font-weight: bold;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: .2s;
 }
- 
+
 body.pagina-login .btn-login:hover{
   background-color: #145bc7;
+  box-shadow: 0 8px 18px rgba(26, 111, 238, 0.28);
 }
- 
+
 body.pagina-login .cadastro{
-  margin-top: auto;
-  margin-bottom: 62px;
-  font-size: 19px;
-  color: #333;
-  text-align: center;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid #eef1f6;
+  font-size: 15px;
+  color: #5b6579;
 }
- 
+
 body.pagina-login .cadastro strong{
+  color: #1a6fee;
   cursor: pointer;
 }
- 
+
 body.pagina-login .cadastro strong:hover{
   text-decoration: underline;
 }
- 
+
+@media (max-width: 480px){
+  body.pagina-login .login-card{
+    padding: 32px 22px 26px;
+    border-radius: 14px;
+  }
+
+  body.pagina-login .hero h1{
+    font-size: 24px;
+  }
+}
+
 body.pagina-login .overlay{
   display: none;
   position: fixed;
@@ -2603,5 +2650,71 @@ body.pagina-login .erro-campo.sucesso{
         height: auto;
         min-height: 100vh;
         overflow-y: auto;
+    }
+}
+/* =========================================================
+   MENU EM TABLET
+   A partir de 1024px o menu completo nao cabe ao lado da
+   logo, entao ja troca pelo hamburguer (home e area logada).
+   ========================================================= */
+
+@media (max-width: 1024px) {
+
+    nav img,
+    body.pagina-logado nav img {
+        width: 150px;
+    }
+
+    .nav-container,
+    body.pagina-logado .nav-container {
+        padding: 12px 20px;
+        position: relative;
+    }
+
+    .menu-toggle,
+    body.pagina-logado .menu-toggle {
+        display: flex;
+    }
+
+    nav ul,
+    body.pagina-logado nav ul {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: #fff;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        align-items: flex-start;
+        gap: 0;
+        padding: 0;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height .3s ease;
+        box-shadow: 0 8px 10px rgba(0, 0, 0, 0.08);
+    }
+
+    nav ul.aberto,
+    body.pagina-logado nav ul.aberto {
+        max-height: 420px;
+    }
+
+    nav li,
+    body.pagina-logado nav li {
+        margin: 0;
+        width: 100%;
+        border-top: 1px solid #eef1f6;
+    }
+
+    nav a,
+    body.pagina-logado nav a {
+        padding: 16px 20px;
+        width: 100%;
+    }
+
+    nav a[aria-current="page"],
+    body.pagina-logado nav a.ativo {
+        border-bottom: none;
+        background-color: #f2f7ff;
     }
 }
