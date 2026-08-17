@@ -872,7 +872,7 @@ async function aoEnviarFormulario(evento) {
         mensagemStatus.className = 'mensagem-status sucesso';
 
         const primeiroNome = perfilAtualizado.nome.split(' ')[0];
-        document.getElementById('saudacaoNome').textContent = `Olá, ${primeiroNome}! 👋`;
+        document.getElementById('saudacaoNome').textContent = `Olá, ${primeiroNome}! `;
 
         setTimeout(fecharPerfil, 1200);
 
@@ -895,6 +895,7 @@ function iniciarPerfil() {
     document.getElementById('btnFecharPerfil').addEventListener('click', fecharPerfil);
     document.getElementById('btnCancelarPerfil').addEventListener('click', fecharPerfil);
     document.getElementById('btnSair').addEventListener('click', sairDaConta);
+    document.getElementById('sairDaConta').addEventListener('click', sairDaConta)
     overlayFundo.addEventListener('click', fecharPerfil);
 
     document.addEventListener('keydown', (e) => {
