@@ -394,11 +394,6 @@ ul {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     flex: 1 1 280px;
     max-width: 340px;
-    text-shadow:
-        -1px -1px 50 black,
-         1px -1px 0 black,
-        -1px  1px 0 black,
-         1px  1px 0 black;
 }
 
 .planos .card .card-essencial {
@@ -412,11 +407,7 @@ ul {
 
 .planos .card .card-cuidado-total {
     background-color: #27AE60;
-    color: rgb(255, 255, 255);
-      transform: scale(1.05);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-    z-index: 2;
-    
+    color: white;
 }
 
 .planos .card h3 {
@@ -440,11 +431,10 @@ ul {
     font-size: 18px;
 }
 
-.planos .card .card-essencial,
-.planos .card .card-cuidado,
-.planos .card .card-cuidado-total {
+.planos .card .card-cuidado li,
+.planos .card .card-cuidado-total li {
     text-shadow:
-        -1px -1px 50 black,
+        -1px -1px 0 black,
          1px -1px 0 black,
         -1px  1px 0 black,
          1px  1px 0 black;
@@ -2716,5 +2706,64 @@ body.pagina-login .erro-campo.sucesso{
     body.pagina-logado nav a.ativo {
         border-bottom: none;
         background-color: #f2f7ff;
+    }
+}
+
+/* ==========================================================
+   RODAPÉ - grade responsiva (home e área logada)
+   ========================================================== */
+
+footer .footer-container {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.2fr);
+    align-items: start;
+    gap: 40px;
+}
+
+footer .footer-container > * {
+    min-width: 0;
+}
+
+footer .footer-logo img {
+    width: 100%;
+    max-width: 320px;
+    height: auto;
+}
+
+footer .footer-contact a,
+footer .footer-contact p {
+    overflow-wrap: anywhere;
+}
+
+/* Tablet: logo ocupa a linha inteira e as colunas ficam retas embaixo */
+@media (max-width: 1024px) {
+    footer .footer-container {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 32px;
+    }
+
+    footer .footer-logo {
+        grid-column: 1 / -1;
+    }
+
+    footer .footer-logo img {
+        max-width: 260px;
+    }
+}
+
+/* Telas pequenas: tudo em uma coluna só */
+@media (max-width: 700px) {
+    footer {
+        padding: 40px 20px;
+    }
+
+    footer .footer-container {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 28px;
+        text-align: left;
+    }
+
+    footer .footer-logo img {
+        max-width: min(100%, 220px);
     }
 }
