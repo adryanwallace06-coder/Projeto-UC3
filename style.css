@@ -390,19 +390,15 @@ ul {
     text-align: center;
     padding: 20px;
     border-radius: 30px;
-    border: 1px solid black;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     flex: 1 1 280px;
     max-width: 340px;
-    text-shadow:
-        -1px -1px 50 black,
-         1px -1px 0 black,
-        -1px  1px 0 black,
-         1px  1px 0 black;
+    transition: transform .3s ease;
 }
 
 .planos .card .card-essencial {
     background-color: #ffffff;
+    border: 1px solid #e0e0e0;
 }
 
 .planos .card .card-cuidado {
@@ -413,10 +409,33 @@ ul {
 .planos .card .card-cuidado-total {
     background-color: #27AE60;
     color: rgb(255, 255, 255);
-      transform: scale(1.05);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
     z-index: 2;
-    
+    position: relative;
+    overflow: hidden;
+}
+
+.planos .card .ribbon {
+    position: absolute;
+    top: 18px;
+    left: -38px;
+    width: 150px;
+    background-color: #f30a0a;
+    color: #ffffff;
+    font-size: 9px;
+    font-weight: bold;
+    text-align: center;
+    padding: 5px 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transform: rotate(-45deg);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
+    animation: pulse-ribbon 2s ease-in-out infinite;
+}
+
+@keyframes pulse-ribbon {
+    0%, 100% { transform: rotate(-45deg) scale(1); }
+    50% { transform: rotate(-45deg) scale(1.08); }
 }
 
 .planos .card h3 {
@@ -425,7 +444,7 @@ ul {
     font-weight: bold;
 }
 
-.planos .card span {
+.planos .card span.preco {
     font-size: 50px;
     font-weight: bold;
 }
@@ -440,14 +459,20 @@ ul {
     font-size: 18px;
 }
 
-.planos .card .card-essencial,
-.planos .card .card-cuidado,
-.planos .card .card-cuidado-total {
-    text-shadow:
-        -1px -1px 50 black,
-         1px -1px 0 black,
-        -1px  1px 0 black,
-         1px  1px 0 black;
+.planos .card ul li {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    text-align: left;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.planos .card ul li img {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    margin-top: 3px;
 }
 
 .planos .card .card-cuidado-total p.popular {
@@ -568,6 +593,12 @@ footer {
 
 /* Tablet: hero e planos empilham, mas o menu ainda cabe */
 @media (max-width: 920px) {
+
+      .planos .card .card-essencial,
+    .planos .card .card-cuidado,
+    .planos .card .card-cuidado-total {
+    flex: 1 1 auto;
+}
     .hero {
         flex-direction: column;
         text-align: center;
@@ -588,10 +619,22 @@ footer {
 
     .planos .card {
         padding: 30px 20px;
+        flex-direction: column;
+        align-items: center;
+        flex-wrap: nowrap;
     }
 }
 
 @media (max-width: 768px) {
+    .planos .card .card-essencial,
+    .planos .card .card-cuidado,
+    .planos .card .card-cuidado-total {
+        max-width: 100%;
+        width: 100%;
+        flex-shrink: 0;
+        flex: 1 1 auto;
+    }
+
     .nav-container {
         padding: 14px 20px;
         position: relative;
@@ -641,15 +684,11 @@ footer {
     .planos .card {
         flex-direction: column;
         align-items: center;
+        flex-wrap: nowrap;
     }
-
-    .planos .card > div {
-        max-width: 100%;
-        width: 100%;
-    }
-
-   
 }
+   
+
 
 /* Celular pequeno */
 @media (max-width: 320px) {
