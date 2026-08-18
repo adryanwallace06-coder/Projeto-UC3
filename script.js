@@ -1,8 +1,5 @@
-/* =========================================================
-                        HOME (index.html)
-   Só roda nesta página: verifica se a seção de
-   funcionalidades (exclusiva da Home) existe antes de tudo.
-   ========================================================= */
+/* ====== HOME ====== */
+/*  MENU MOBILE */
 (function () {
     if (!document.getElementById('funcionalidades')) return;
 
@@ -49,10 +46,7 @@
         });
     }
 
-    /* =========================================================
-                             SCROLL-SPY
-       ========================================================= */
-
+    /*  SCROLL-SPY */
     const secoes = [{
             el: document.querySelector('.hero'),
             link: menuNav ? menuNav.querySelector('a[href="index.html"]') : null
@@ -117,10 +111,7 @@
     });
     atualizarScrollSpy();
 
-    /* =========================================================
-                                PLANOS
-       ========================================================= */
-
+    /*  PLANOS */
     const planos = document.querySelectorAll('.planos .card > div');
 
     planos.forEach(function (cartao) {
@@ -129,7 +120,6 @@
 
         botao.addEventListener('click', function () {
             const nomePlano = cartao.querySelector('h3').textContent.replace(/\s+/g, ' ').trim();
-            // Pega o span que está DENTRO do <p> (o preço), e não o "+" do título
             const precoEl = cartao.querySelector('p span');
             const preco = precoEl ? precoEl.textContent.trim() : '0,00';
 
@@ -141,11 +131,8 @@
     });
 })();
 
-/* =========================================================
-                            Checkout (checkout.html)
-   Só roda nesta página: verifica se o formulário de cartão,
-   exclusivo do checkout, existe antes de tudo.
-   ========================================================= */
+
+/* ====== CHECKOUT ====== */
 (function () {
     if (!document.querySelector('.checkout')) return;
 
@@ -159,7 +146,7 @@
     var valorBotao = document.getElementById('valor-botao');
     if (valorBotao) valorBotao.textContent = 'R$ ' + precoStr;
 
-    /* ---------- Se for plano grátis, simplifica ---------- */
+    /*  PLANO GRÁTIS */
     var ehGratis = precoStr.replace(/\D/g, '').replace(/^0+$/, '') === '';
 
     if (ehGratis) {
@@ -177,7 +164,7 @@
         });
     }
 
-    /* ---------- Alternar Cartão / Pix ---------- */
+    /*  CARTÃO / PIX */
     var btnCartao = document.getElementById('btn-cartao');
     var btnPix = document.getElementById('btn-pix');
     var formCartao = document.getElementById('form-cartao');
@@ -201,7 +188,7 @@
         formCartao.classList.add('escondido');
     });
 
-    /* ---------- Mensagens ---------- */
+    /*  MENSAGENS */
     function mostrarMsg(el, texto, tipo) {
         el.textContent = texto;
         el.className = 'mensagem mostrar ' + tipo;
@@ -212,7 +199,7 @@
         el.className = 'mensagem';
     }
 
-    /* ---------- Formatação de campos ---------- */
+    /*  FORMATAÇÃO DE CAMPOS */
     var campoNumero = document.getElementById('numero-cartao');
     var campoValidade = document.getElementById('validade');
     var campoCvv = document.getElementById('cvv');
@@ -235,7 +222,7 @@
         campoCvv.value = campoCvv.value.replace(/\D/g, '').slice(0, 4);
     });
 
-    /* ---------- Pagamento por cartão ---------- */
+    /*  PAGAMENTO POR CARTÃO */
     var msgCartao = document.getElementById('msg-cartao');
 
     formCartao.addEventListener('submit', function (evento) {
@@ -269,7 +256,6 @@
             return;
         }
 
-        // Simula processamento
         var btnPagar = document.getElementById('btn-pagar-cartao');
         btnPagar.disabled = true;
         btnPagar.textContent = 'Processando...';
@@ -282,7 +268,7 @@
         }, 2000);
     });
 
-    /* ---------- Pix ---------- */
+    /*  PIX */
     var msgPix = document.getElementById('msg-pix');
     var btnCopiar = document.getElementById('btn-copiar-pix');
     var codigoPix = document.getElementById('codigo-pix');
@@ -316,7 +302,7 @@
         }, 2500);
     });
 
-    /* ---------- Overlay de sucesso ---------- */
+    /*  OVERLAY DE SUCESSO */
     function mostrarSucesso(texto) {
         var overlay = document.getElementById('overlay-sucesso');
         document.getElementById('sucesso-texto').textContent = texto;
@@ -324,15 +310,9 @@
     }
 })();
 
-/* =========================================================
-                            LOGADO 
-   ========================================================= */
 
-
-/* ==========================================================
-   PARTE 1: CARDS DO TOPO (Picos de pressão aleatórios)
-   ========================================================== */
-
+/* ====== LOGADO ====== */
+/*  CARDS DO TOPO */
 function atualizarPicosDePressao() {
     const cardAlto = document.querySelector('.pico-alto');
     const cardBaixo = document.querySelector('.pico-baixo');
@@ -378,10 +358,7 @@ function preencherCard(elementoLi, pressao, data) {
 }
 
 
-/* ==========================================================
-   PARTE 2: DADOS DE PRESSÃO PARA O GRÁFICO
-   ========================================================== */
-
+/*  DADOS DO GRÁFICO */
 const dadosPressao = [{
         data: '2026-05-01T00:00',
         valor: 115
@@ -498,6 +475,7 @@ const dadosPressao = [{
         data: '2026-05-16T12:00',
         valor: 168
     },
+
     {
         data: '2026-05-17T00:00',
         valor: 172
@@ -530,10 +508,7 @@ const dadosPressao = [{
 ];
 
 
-/* ==========================================================
-   PARTE 3: GRÁFICO + FILTRO + BADGES
-   ========================================================== */
-
+/*  GRÁFICO + FILTRO + BADGES */
 let graficoPressao = null;
 
 function corDoPonto(valor) {
@@ -664,10 +639,7 @@ function aplicarFiltro() {
 }
 
 
-/* ==========================================================
-   FUNÇÕES DE FORMATAÇÃO DE DATA
-   ========================================================== */
-
+/*  FORMATAÇÃO DE DATA */
 function formatarDataCompleta(data) {
     const dia = String(data.getDate()).padStart(2, '0');
     const mes = String(data.getMonth() + 1).padStart(2, '0');
@@ -685,14 +657,7 @@ function formatarDataCurta(data) {
 }
 
 
-/* ==========================================================
-   PARTE 4: SOBREPOSIÇÃO (MODAL) DE PERFIL
-   ========================================================== */
-
-/* O cadastro fica em "medicaMaisUsuarios" e quem entrou agora em
-   "medicaMaisUsuarioLogado" (as duas chaves sao gravadas na tela de login).
-   Aqui juntamos as duas para preencher o perfil e a saudacao. */
-
+/*  PERFIL */
 const CHAVE_USUARIOS = 'medicaMaisUsuarios';
 const CHAVE_LOGADO = 'medicaMaisUsuarioLogado';
 
@@ -739,7 +704,6 @@ function carregarUsuarioLogado() {
 
 let dadosUsuario = carregarUsuarioLogado();
 
-/* Grava as alteracoes do perfil de volta no cadastro do usuario */
 function gravarUsuarioLogado(dados) {
     const usuarios = lerJson(CHAVE_USUARIOS, []);
     const emailAntigo = (lerJson(CHAVE_LOGADO, {}) || {}).email;
@@ -831,14 +795,8 @@ function fecharPerfil() {
     document.getElementById('btnVerPerfil').focus();
 }
 
-/* --- Sair da conta --- */
 function sairDaConta() {
-    // Apaga o registro de "quem está logado" (foi guardado na página de Login).
-    // Os dados de cadastro em si (medicaMaisUsuarios) continuam salvos,
-    // só esquecemos QUEM estava usando o site agora.
     localStorage.removeItem('medicaMaisUsuarioLogado');
-
-    // Volta pra Home (todos os arquivos estão na mesma pasta agora)
     window.location.href = 'index.html';
 }
 
@@ -989,10 +947,7 @@ function iniciarPerfil() {
 }
 
 
-/* ==========================================================
-   PARTE 5: MENU HAMBURGUER (mobile)
-   ========================================================== */
-
+/*  MENU MOBILE */
 function iniciarMenuMobile() {
     const botaoMenu = document.getElementById('menuToggle');
     const menu = document.getElementById('menuNav');
@@ -1007,7 +962,6 @@ function iniciarMenuMobile() {
         );
     });
 
-    // Fecha o menu automaticamente ao clicar em algum link do menu
     menu.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', () => {
             menu.classList.remove('aberto');
@@ -1018,13 +972,8 @@ function iniciarMenuMobile() {
 }
 
 
-/* ==========================================================
-   PARTE 6: MENU ACOMPANHA O SCROLL (scroll-spy)
-   ========================================================== */
-
-/* Destaca no menu o link da seção que está sendo vista no momento. */
+/*  SCROLL-SPY */
 function iniciarScrollSpy() {
-    // Só essas 3 seções têm um item correspondente no menu
     const idsComLink = ['monitoramento', 'contatos', 'suporte'];
     const secoes = idsComLink.map(id => document.getElementById(id)).filter(Boolean);
     const linksNav = document.querySelectorAll('#menuNav a');
@@ -1036,12 +985,6 @@ function iniciarScrollSpy() {
         });
     }
 
-    /* IntersectionObserver "vigia" os elementos passados em observe() e avisa,
-       através do callback, sempre que um deles entra ou sai da área visível.
-       O rootMargin encolhe essa área de detecção: em vez de considerar a seção
-       "vista" assim que qualquer pixel dela aparece, só conta quando ela cruza
-       perto do MEIO da tela - assim o menu troca no momento certo, nem cedo
-       demais nem tarde demais. */
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -1054,8 +997,6 @@ function iniciarScrollSpy() {
 
     secoes.forEach(secao => observer.observe(secao));
 
-    // Enquanto o usuário ainda está lá em cima (antes da primeira seção com
-    // link no menu), garante que "Início" continue destacado
     window.addEventListener('scroll', () => {
         const primeiraSecao = secoes[0];
         if (primeiraSecao && window.scrollY < primeiraSecao.offsetTop - window.innerHeight * 0.5) {
@@ -1065,16 +1006,9 @@ function iniciarScrollSpy() {
 }
 
 
-/* ==========================================================
-   PARTE 7: CARDS DO TOPO LEVAM ATÉ A SEÇÃO COMPLETA
-   ========================================================== */
-
-/* Qualquer elemento com o atributo "data-scroll-to" (ex: data-scroll-to="#contatos")
-   vira clicável e rola suavemente até a seção com aquele id. */
+/*  CARDS RÁPIDOS */
 function iniciarCardsRapidos() {
     document.querySelectorAll('[data-scroll-to]').forEach(card => {
-
-        // torna o card "focável" e reconhecível por leitor de tela como um botão
         card.setAttribute('tabindex', '0');
         card.setAttribute('role', 'button');
 
@@ -1089,14 +1023,10 @@ function iniciarCardsRapidos() {
         };
 
         card.addEventListener('click', (evento) => {
-            // se o clique foi num botão/link DENTRO do card (ex: "Ana (Filha)"),
-            // deixa esse botão agir normalmente e não rola a tela
             if (evento.target.closest('button, a')) return;
             irParaSecao();
         });
 
-        // permite ativar com o teclado (Enter ou Espaço), já que agora o card
-        // se comporta como um botão
         card.addEventListener('keydown', (evento) => {
             if (evento.key === 'Enter' || evento.key === ' ') {
                 evento.preventDefault();
@@ -1107,10 +1037,7 @@ function iniciarCardsRapidos() {
 }
 
 
-/* ==========================================================
-   PARTE 8: CONTATOS (abas + lista + adicionar/remover)
-   ========================================================== */
-
+/*  CONTATOS */
 let listaContatos = [{
         id: 1,
         nome: 'Ana (Filha)',
@@ -1275,10 +1202,7 @@ function iniciarFormularioContato() {
 }
 
 
-/* ==========================================================
-   PARTE 9: SUPORTE PRIORITÁRIO (reagendar visita)
-   ========================================================== */
-
+/*  SUPORTE PRIORITÁRIO */
 let proximaVisita = new Date('2026-06-02T10:00:00');
 
 function atualizarVisualVisita() {
@@ -1330,10 +1254,7 @@ function iniciarReagendamento() {
 }
 
 
-/* ==========================================================
-   PARTE 10: REGISTRO DE HUMOR (timeline + filtro)
-   ========================================================== */
-
+/*  REGISTRO DE HUMOR */
 const emojisPorHumor = {
     feliz: document.querySelector('.feliz'),
     neutro: document.querySelector('.triste'),
@@ -1438,65 +1359,45 @@ function aplicarFiltroHumor() {
 }
 
 
-/* ==========================================================
-   PARTE 11: INICIALIZAÇÃO DE TUDO AO CARREGAR A PÁGINA
-   ========================================================== */
-
+/*  INICIALIZAÇÃO DO LOGADO */
 document.addEventListener('DOMContentLoaded', () => {
-    // Só roda no painel logado (logado.html)
     if (!document.getElementById('saudacaoNome')) return;
 
-    // Nome de quem esta logado
     atualizarSaudacao();
-
-    // Menu mobile
     iniciarMenuMobile();
-
-    // Menu acompanha o scroll
     iniciarScrollSpy();
-
-    // Cards do topo (clicáveis)
     iniciarCardsRapidos();
 
-    // Picos de pressão + gráfico
     atualizarPicosDePressao();
     aplicarFiltro();
     document.getElementById('periodoInicio').addEventListener('change', aplicarFiltro);
     document.getElementById('periodoFim').addEventListener('change', aplicarFiltro);
 
-    // Perfil
     iniciarPerfil();
 
-    // Contatos
     iniciarAbasContatos();
     carregarContatos();
     iniciarRemocaoContatos();
     iniciarFormularioContato();
 
-    // Suporte prioritário
     atualizarVisualVisita();
     iniciarReagendamento();
 
-    // Registro de humor
     aplicarFiltroHumor();
     document.getElementById('humorInicio').addEventListener('change', aplicarFiltroHumor);
     document.getElementById('humorFim').addEventListener('change', aplicarFiltroHumor);
 });
 
-/* =========================================================
-                        LOGIN (login.html)
-   Só roda nesta página: verifica se o formulário de login
-   existe antes de tudo.
-   ========================================================= */
+
+/* ====== LOGIN ====== */
 (function () {
     if (!document.querySelector('.login-form')) return;
 
-    // Chaves usadas no localStorage
     const CHAVE_USUARIOS = 'medicaMaisUsuarios';
     const CHAVE_LEMBRAR = 'medicaMaisLembrar';
     const CHAVE_LOGADO = 'medicaMaisUsuarioLogado';
 
-    /* ---------- Funcoes auxiliares de mensagem ---------- */
+    /*  MENSAGENS */
     function mostrarMensagem(elemento, mensagem, tipo) {
         elemento.textContent = mensagem;
         elemento.classList.remove('sucesso');
@@ -1515,7 +1416,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     }
 
-    /* ---------- Funcoes de armazenamento (localStorage) ---------- */
+    /*  ARMAZENAMENTO */
     function obterUsuarios() {
         try {
             return JSON.parse(localStorage.getItem(CHAVE_USUARIOS)) || [];
@@ -1535,7 +1436,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    /* ---------- Elementos: Login ---------- */
+    /*  ELEMENTOS */
     const botaoOlho = document.querySelector('.olho');
     const campoSenha = document.querySelector('.senha-container input');
     const formLogin = document.querySelector('.login-form');
@@ -1544,7 +1445,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const erroEmail = document.querySelector('#erro-email');
     const lembrarSenha = document.querySelector('#lembrar-senha');
 
-    /* ---------- Elementos: Esqueci a senha ---------- */
     const linkEsqueceu = document.querySelector('.esqueceu');
     const overlayEsqueci = document.querySelector('#overlay-esqueci');
     const btnCancelar = document.querySelector('.btn-cancelar');
@@ -1552,7 +1452,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const campoCpfEmail = document.querySelector('#cpf-email');
     const erroEsqueci = document.querySelector('#erro-esqueci');
 
-    /* ---------- Elementos: Cadastro ---------- */
     const linkCadastro = document.querySelector('.cadastro strong');
     const overlayCadastro = document.querySelector('#overlay-cadastro');
     const btnCancelarCadastro = document.querySelector('#cancelar-cadastro');
@@ -1568,7 +1467,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const campoSenhaCadastro = document.querySelector('#senha-cadastro');
     const campoConfirmaSenha = document.querySelector('#confirma-senha');
 
-    /* ---------- Ao abrir a pagina: preenche o email lembrado ---------- */
+    /*  EMAIL LEMBRADO */
     window.addEventListener('DOMContentLoaded', function () {
         const emailLembrado = localStorage.getItem(CHAVE_LEMBRAR);
         if (emailLembrado) {
@@ -1579,7 +1478,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    /* ---------- LOGIN ---------- */
+    /*  LOGIN */
     formLogin.addEventListener('submit', function (evento) {
         evento.preventDefault();
         esconderMensagem(erroLogin);
@@ -1610,14 +1509,12 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Guarda a preferencia de "lembrar senha"
         if (lembrarSenha && lembrarSenha.checked) {
             localStorage.setItem(CHAVE_LEMBRAR, email.toLowerCase());
         } else {
             localStorage.removeItem(CHAVE_LEMBRAR);
         }
 
-        // Guarda quem esta logado (a pagina logada pode ler isso)
         localStorage.setItem(CHAVE_LOGADO, JSON.stringify({
             nome: usuario.nome,
             email: usuario.email,
@@ -1632,7 +1529,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 1500);
     });
 
-    /* ---------- ESQUECI A SENHA ---------- */
+    /*  ESQUECI A SENHA */
     linkEsqueceu.addEventListener('click', function (evento) {
         evento.preventDefault();
         overlayEsqueci.classList.add('ativo');
@@ -1671,7 +1568,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 2500);
     });
 
-    /* ---------- CADASTRO ---------- */
+    /*  CADASTRO */
     linkCadastro.addEventListener('click', function () {
         overlayCadastro.classList.add('ativo');
     });
@@ -1731,13 +1628,11 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Nao deixa cadastrar dois usuarios com o mesmo email
         if (buscarUsuarioPorEmail(email)) {
             mostrarMensagem(erroEmailCadastro, 'Este email já está cadastrado. Faça login ou use outro email.', 'erro');
             return;
         }
 
-        // Salva o novo usuario
         const usuarios = obterUsuarios();
         usuarios.push({
             nome: nome,
@@ -1751,7 +1646,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         mostrarMensagem(erroCadastro, 'Cadastro realizado com sucesso! Agora é só fazer login com seu email e senha.', 'sucesso');
 
-        // Ja deixa o email preenchido na tela de login
         campoEmail.value = email.toLowerCase();
 
         setTimeout(function () {
@@ -1761,7 +1655,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 2500);
     });
 
-    /* ---------- Telefone: (00) 00000-0000 ---------- */
+    /*  TELEFONE */
     campoTelefoneCadastro.addEventListener('input', function () {
         const numeros = campoTelefoneCadastro.value.replace(/\D/g, '').slice(0, 11);
         campoTelefoneCadastro.value = numeros.length <= 10
@@ -1769,11 +1663,10 @@ document.addEventListener('DOMContentLoaded', () => {
             : numeros.replace(/(\d{2})(\d)/, '($1) $2').replace(/(\d{5})(\d)/, '$1-$2');
     });
 
-    /* ---------- CPF: aceita apenas numeros (max 11) ---------- */
+    /*  CPF */
     campoCpf.addEventListener('input', function () {
         let valor = campoCpf.value.replace(/\D/g, '');
         valor = valor.slice(0, 11);
         campoCpf.value = valor;
     });
-
 })();
