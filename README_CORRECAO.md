@@ -1,5 +1,4 @@
 # Medica+ - versão corrigida após juntar as subpastas
-
 Arquivos:
 - index.html
 - login.html

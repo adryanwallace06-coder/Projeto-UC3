@@ -1764,9 +1764,9 @@ document.addEventListener('DOMContentLoaded', () => {
     /* ---------- Telefone: (00) 00000-0000 ---------- */
     campoTelefoneCadastro.addEventListener('input', function () {
         const numeros = campoTelefoneCadastro.value.replace(/\D/g, '').slice(0, 11);
-        campoTelefoneCadastro.value = numeros.length <= 10
-            ? numeros.replace(/(\d{2})(\d)/, '($1) $2').replace(/(\d{4})(\d)/, '$1-$2')
-            : numeros.replace(/(\d{2})(\d)/, '($1) $2').replace(/(\d{5})(\d)/, '$1-$2');
+        campoTelefoneCadastro.value = numeros.length <= 10 ?
+            numeros.replace(/(\d{2})(\d)/, '($1) $2').replace(/(\d{4})(\d)/, '$1-$2') :
+            numeros.replace(/(\d{2})(\d)/, '($1) $2').replace(/(\d{5})(\d)/, '$1-$2');
     });
 
     /* ---------- CPF: aceita apenas numeros (max 11) ---------- */
