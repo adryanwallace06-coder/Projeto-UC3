@@ -530,13 +530,41 @@ footer {
     display: flex;
     flex-wrap: wrap;
     gap: 40px;
+    align-items: flex-start;
     justify-content: space-between;
 }
 
+/* Logo sempre sozinho na primeira linha, ocupando toda a largura */
+.footer-logo {
+    flex: 1 1 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Cresce junto com a tela, sem estourar no mobile */
 .footer-logo img {
-    max-width: 400px;
+    display: block;
+    width: clamp(220px, 42vw, 560px);
+    max-width: 100%;
     height: auto;
 }
+
+/* As 3 colunas ficam alinhadas em linha embaixo do logo */
+.footer-links,
+.footer-contact {
+    flex: 1 1 200px;
+    min-width: 0;
+}
+
+/* Telas menores: as 3 seções viram coluna, logo continua em cima */
+@media (max-width: 700px) {
+    .footer-links,
+    .footer-contact {
+        flex: 1 1 100%;
+    }
+}
+
 
 .footer-links h3 {
     font-size: 18px;
@@ -2056,13 +2084,37 @@ body.pagina-logado .footer-container{
     display: flex;
     flex-wrap: wrap;
     gap: 40px;
+    align-items: flex-start;
     justify-content: space-between;
 }
 
+body.pagina-logado .footer-logo{
+    flex: 1 1 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
 body.pagina-logado .footer-logo img{
-    max-width: 400px;
+    display: block;
+    width: clamp(220px, 42vw, 560px);
+    max-width: 100%;
     height: auto;
 }
+
+body.pagina-logado .footer-links,
+body.pagina-logado .footer-contact{
+    flex: 1 1 200px;
+    min-width: 0;
+}
+
+@media (max-width: 700px) {
+    body.pagina-logado .footer-links,
+    body.pagina-logado .footer-contact{
+        flex: 1 1 100%;
+    }
+}
+
 
 body.pagina-logado .footer-links h3{
     font-size: 20px;
